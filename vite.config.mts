@@ -22,10 +22,16 @@ export default defineConfig({
     }),
     ViteFonts({
       google: {
-        families: [{
-          name: 'Plus Jakarta Sans',
-          styles: 'wght@200;300;400;500;600;700;800',
-        }],
+        families: [
+          {
+            name: 'Plus Jakarta Sans',
+            styles: 'wght@200;300;400;500;600;700;800',
+          },
+          {
+            name: 'Unbounded',
+            styles: 'wght@200;300;400;500;600;700;800',
+          }
+        ],
       },
     }),
   ],

@@ -3,7 +3,25 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "node",
+      "vite/client",
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["vite.config.mts"]
+  "include": [
+    "vite.config.mts",
+    "/src/**/*",
+    "src/**/*.ts",
+    "src/**/*.ext",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.json",
+    "test/**/*.spec.ts",
+    "vite.config.mts",
+  ]
 }

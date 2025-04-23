@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import InitialScreen from '@/views/InitialScreen.vue';
+import PortfolioView from '@/views/PortfolioView.vue';
+import SplashView from '@/views/SplashView.vue';
 
 const routes = [
-  { path: '/', component: InitialScreen },
+  { path: '/', name: '/', component: SplashView },
+  { path: '/portfolio', name: '/portfolio', component: PortfolioView },
 ];
 
 const router = createRouter({

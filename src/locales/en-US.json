@@ -8,8 +8,13 @@
     "portfolio": "Portfolio"
   },
   "features": {
-    "initial": {
-      "description": "Learn more about me:"
+    "portfolio": {
+      "locale_select": {
+        "description": {
+          "pt": "Portuguese",
+          "en": "English"
+        }
+      }
     }
   }
 }

@@ -1,3 +1,21 @@
+@font-face {
+  font-family: 'Gotham';
+  font-weight: 400;
+  src: url('~@/assets/fonts/GOTHAM-MEDIUM.ttf');
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-weight: 200;
+  src: url('~@/assets/fonts/GOTHAM-LIGHT.ttf');
+}
+
+@font-face {
+  font-family: 'Gotham';
+  font-weight: 600;
+  src: url('~@/assets/fonts/GOTHAM-BOLD.ttf');
+}
+
 html {
   overflow-y: hidden;
 
@@ -10,17 +28,26 @@ html {
   }
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+::-webkit-scrollbar {
+  height: 12px;
+  width: 12px;
+  background: #aaa;
 }
 
-*::-webkit-scrollbar-track {
-  background-color: transparent;
-  border-radius: 100px;
+::-webkit-scrollbar-thumb {
+  background: #393812;
+  -webkit-border-radius: 1ex;
+  -webkit-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.75);
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: $scrollbar-color;
-  border-radius: 100px;
+::-webkit-scrollbar-corner {
+  background: #000;
+}
+
+@supports (not selector(::-webkit-scrollbar)) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: #fff;
+  }
 }
