@@ -20,20 +20,6 @@ export default defineConfig({
         configFile: 'src/assets/styles/scss/settings.scss',
       },
     }),
-    ViteFonts({
-      google: {
-        families: [
-          {
-            name: 'Plus Jakarta Sans',
-            styles: 'wght@200;300;400;500;600;700;800',
-          },
-          {
-            name: 'Unbounded',
-            styles: 'wght@200;300;400;500;600;700;800',
-          }
-        ],
-      },
-    }),
   ],
   define: { 'process.env': {} },
   resolve: {
