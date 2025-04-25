@@ -1,5 +1,8 @@
 <template>
-  <div class="main-container">
+  <div
+    class="main-container"
+    ref="introSection"
+  >
     <nav
       class="nav-bar"
       ref="navBar"
@@ -30,28 +33,46 @@
     </nav>
     <div class="left-aside-content">
       <div class="social-info">
-        <div class="social-link">
-          <Github />
-        </div>
-        <div class="social-link">
-          <Linkedin />
-        </div>
+        <a
+          v-for="socialLink in socialLinks"
+          :key="socialLink.label"
+          :aria-label="socialLink.label"
+          :href="socialLink.url"
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <component :is="socialLink.icon" />
+        </a>
         <div class="separator"></div>
       </div>
     </div>
     <div class="content">
       <section
-        ref="introSection"
         id="intro"
+        class="present-top"
       >
-        <div class="profile">
-          <div class="name-container">
-            <span class="jp-name">{{ t('names.jp_kenji') }}</span>
-            <span
-              class="pt-name sort-letters"
-              data-name="NICOLAS YAMADA"
-              >NICOLAS YAMADA</span
-            >
+        <div class="profile-container">
+          <div class="profile">
+            <div class="name-container">
+              <span
+                class="jp-name"
+                :data-text="t('names.jp_kenji')"
+                >{{ t('names.jp_kenji') }}</span
+              >
+              <div
+                :data-value="`${t('names.author')}*${t('names.author_jp')}`"
+                class="pt-name sort-letters"
+              >
+                Nicolas Yamada
+              </div>
+            </div>
+            <div class="role">Desenvolvedor Fullstack e Mobile</div>
+            <div
+              ref="technologiesList"
+              class="technologies-list"
+              :data-value="technologies.join(',')"
+            ></div>
           </div>
           <div class="photo-container"></div>
         </div>
@@ -60,23 +81,38 @@
         ref="projectsSection"
         id="projects"
       >
-        a
+        PROJETOS
       </section>
 
       <div class="footer">
+        <div
+          :class="['scroll-tip-container', { gone: currentSectionIndex != 0 }]"
+        >
+          <ScrollTip class="scroll-tip" />
+        </div>
         <div class="next-section">Projetos</div>
         <div class="separator"></div>
       </div>
     </div>
     <div class="right-aside-content">
-      <div class="navigation-tiles">
+      <div class="options">
+        <LocaleSelector class="locale-selector" />
+      </div>
+      <div
+        v-if="sections[0].value"
+        class="navigation-tiles"
+      >
         <div
-          class="navigation-bar"
           v-for="section in sections"
           :key="section.value"
+          :class="[
+            'navigation-bar',
+            { active: isCurrentSection(section.value) },
+          ]"
           @click="scrollToSection(section.value)"
         ></div>
       </div>
+      <div class="theme-selector"></div>
     </div>
   </div>
 </template>
@@ -84,17 +120,45 @@
 <script lang="ts" setup>
   import Github from '@/components/icons/Github.vue';
   import Linkedin from '@/components/icons/Linkedin.vue';
+  import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import { onMounted, ref } from 'vue';
+  import type { Component } from 'vue';
+
   import { useI18n } from 'vue-i18n';
   const { t } = useI18n();
 
   const navBar = ref();
+  const technologiesList = ref();
+
   const introSection = ref();
   const projectsSection = ref();
 
+  const socialLinks: SocialLink[] = [
+    {
+      label: 'GitHub',
+      icon: Github,
+      url: 'https://github.com/kenjiroyamada16',
+    },
+    {
+      label: 'LinkedIn',
+      icon: Linkedin,
+      url: 'https://www.linkedin.com/in/nicolas-yamada',
+    },
+  ];
+
   const currentSectionIndex = ref(0);
   const sections = [introSection, projectsSection];
+  const sectionTitles = ['Início', 'Projetos'];
+  const technologies = ['Flutter', 'Dart', 'Kotlin', 'Vue', 'Ruby on Rails'];
+
+  const isCurrentSection = (section: HTMLElement): boolean => {
+    const sectionInList = sections.find(
+      listSection => listSection.value.id == section.id,
+    );
+
+    return sections.indexOf(sectionInList) == currentSectionIndex.value;
+  };
 
   const scrollToSection = (newSection: HTMLElement) => {
     if (newSection) {
@@ -102,57 +166,108 @@
         section => section.value.id == newSection.id,
       );
 
+      presentSection(newSection);
       newSection.scrollIntoView({ behavior: 'smooth' });
       currentSectionIndex.value = sections.indexOf(sectionInList);
     }
   };
 
-  // const sortLettersAnimation = event => {
-  //   const target = event.currentTarget as HTMLElement;
-  //   const original = target.textContent || '';
-  //   const chars =
-  //     'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
-  //   let iteration = 0;
+  const sortLettersAnimation = (element: HTMLElement) => {
+    if (!element) return;
 
-  //   clearInterval(interval);
+    let originalText = element.dataset.value || '';
+    const names = originalText.split('*');
 
-  //   interval = setInterval(() => {
-  //     const text = Array.from(original)
-  //       .map((ch, idx) =>
-  //         ch === ' ' || idx < iteration
-  //           ? original[idx]
-  //           : chars[Math.floor(Math.random() * chars.length)],
-  //       )
-  //       .join('');
+    originalText = element.textContent == names[0] ? names[1] : names[0];
 
-  //     target.innerText = text;
-  //     iteration += 1 / 3;
+    const vocabulary =
+      'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
 
-  //     if (iteration >= original.length) {
-  //       clearInterval(interval);
-  //       target.innerText = original;
-  //     }
-  //   }, 30);
-  // };
+    let iteration = 0;
+    let interval = setInterval(() => {
+      const displayedText = originalText
+        .split('')
+        .map((char, i) => {
+          const firstChar =
+            vocabulary[Math.floor(Math.random() * vocabulary.length)];
+
+          if (i < iteration) return char;
+          return firstChar;
+        })
+        .join('');
+
+      element.textContent = displayedText;
+      iteration += 1 / 2;
+
+      if (iteration >= originalText.length) {
+        clearInterval(interval);
+        element.textContent = originalText;
+      }
+    }, 50);
+  };
+
+  const presentSection = (element: HTMLElement) => {
+    let section = element;
+
+    if (!(section.tagName.toLowerCase() == 'section')) {
+      section = element.querySelector('section');
+    }
+    console.log(section.classList);
+
+    section.classList.remove('present-top');
+    section.classList.remove('present-bottom');
+    console.log(section.classList);
+  };
+
+  const animateTechnologies = (initialIndex?: number) => {
+    const element = technologiesList.value as HTMLElement;
+
+    if (!element) return;
+
+    const initial = technologies[initialIndex || 0];
+
+    element.classList.add('writing');
+    element.textContent = initial;
+  };
 
   onMounted(() => {
-    // document
-    //   .querySelectorAll('.sort-letters')
-    //   .forEach((element: HTMLElement) => {
-    //     element.onmouseover = sortLettersAnimation;
-    //   });
+    setTimeout(() => {
+      presentSection(document.getElementById('intro'));
+      animateTechnologies();
+
+      document
+        .querySelectorAll('.sort-letters')
+        .forEach((element: HTMLElement) => {
+          sortLettersAnimation(element);
+          element.addEventListener('mouseover', event =>
+            sortLettersAnimation(event.target as HTMLElement),
+          );
+        });
+    }, 200);
 
     window.addEventListener('wheel', (event: WheelEvent) => {
       const nextSection = sections[currentSectionIndex.value + 1];
       const previousSection = sections[currentSectionIndex.value - 1];
 
-      if (event.deltaY > 0 && nextSection.value)
+      if (event.deltaY > 0 && nextSection.value) {
+        nextSection.value.classList.add('present-bottom');
         scrollToSection(nextSection.value);
 
-      if (event.deltaY < 0 && previousSection.value)
+        return;
+      }
+
+      if (event.deltaY < 0 && previousSection.value) {
+        previousSection.value.classList.add('present-top');
         scrollToSection(previousSection.value);
+      }
     });
   });
+
+  interface SocialLink {
+    label: string;
+    url: string;
+    icon: Component;
+  }
 </script>
 
 <style lang="scss" scoped>
@@ -164,15 +279,24 @@
     overflow: hidden;
     display: flex;
 
+    > :not(.content) {
+      animation: show-element 1s 3s forwards;
+    }
+
     .right-aside-content {
       height: 100vh;
       padding: 0 24px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       margin-left: 64px;
       position: fixed;
       right: 0;
+      opacity: 0;
+
+      .options {
+        padding: 24px 0;
+      }
 
       .navigation-tiles {
         display: flex;
@@ -185,6 +309,18 @@
           height: 2px;
           transition: 0.3s;
           background-color: $secondary-color;
+
+          &.active {
+            background-color: $primary-color;
+            transform: scale(1.7, 1.5);
+            transform-origin: right;
+
+            &:hover {
+              cursor: pointer;
+              transform-origin: right;
+              transform: scale(1.7, 2.05);
+            }
+          }
 
           &:hover {
             cursor: pointer;
@@ -203,14 +339,39 @@
       justify-content: flex-end;
       margin-right: 64px;
       position: fixed;
+      opacity: 0;
 
       .social-info {
         display: flex;
         bottom: 0;
         flex-direction: column;
         align-items: center;
-        gap: 12px;
+        gap: 24px;
         justify-self: flex-end;
+
+        .social-link {
+          width: 24px;
+          height: 24px;
+          position: relative;
+          transition: 0.5s;
+
+          svg {
+            transform: scale(1.2, 1.2);
+            width: 24px;
+            height: 24px;
+            fill: white;
+            transition: 0.4s;
+          }
+
+          &:hover {
+            cursor: pointer;
+
+            svg,
+            svg path {
+              fill: $primary-color;
+            }
+          }
+        }
 
         .separator {
           height: 64px;
@@ -224,8 +385,29 @@
       display: flex;
       flex-direction: column;
       justify-self: center;
-      width: 100%;
       align-items: center;
+      width: 100%;
+
+      .scroll-tip-container {
+        opacity: 0;
+        transition: 0.5s;
+        animation: show-element 1s 5s forwards;
+
+        &.gone {
+          animation: none;
+        }
+
+        .scroll-tip {
+          width: 24px;
+          height: 24px;
+          margin-bottom: 32px;
+          mask-image: linear-gradient(to top, #e9e8e200, #e9e8e2dc, #e9e8e21b);
+          mask-size: 100% 300%;
+          mask-position: bottom;
+          animation: shimmer 2s infinite;
+          box-sizing: content-box;
+        }
+      }
 
       .footer {
         display: flex;
@@ -254,9 +436,21 @@
         margin-bottom: 50vh;
         padding: 0 100px;
         width: 100%;
+        transition: 1s transform, 5s opacity;
+        transform: translateY(0);
+        opacity: 1;
+
+        &.present-bottom {
+          transform: translateY(25%);
+          opacity: 0;
+        }
+
+        &.present-top {
+          transform: translateY(-25%);
+          opacity: 0;
+        }
 
         &:first-child {
-          height: 80vh;
           max-height: 80vh;
         }
 
@@ -265,45 +459,123 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
+          align-items: stretch;
+          gap: 12px;
 
-          .profile {
+          .profile-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
 
-            .name-container {
+            .profile {
               display: flex;
-              position: relative;
-              overflow: visible;
+              flex-direction: column;
               margin-left: 100px;
+              position: relative;
 
-              .pt-name {
-                text-wrap-style: pretty;
-                width: 460px;
-                font-size: 64px;
-                line-height: 64px;
-                font-weight: 900;
+              .name-container {
+                display: flex;
+                overflow: visible;
+
+                &:hover {
+                  .jp-name {
+                    &::before {
+                      animation: glitch 0.3s
+                        cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+                    }
+
+                    &:after {
+                      animation: glitch 0.3s
+                        cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both
+                        infinite;
+                    }
+                  }
+                }
+
+                .pt-name {
+                  width: 460px;
+                  font-size: 64px;
+                  line-height: 64px;
+                  font-weight: 900;
+                  text-transform: uppercase;
+                }
+
+                .jp-name {
+                  color: $primary-color;
+                  font-size: 100px;
+                  position: absolute;
+                  z-index: -1;
+                  top: 0;
+                  right: 35%;
+                  opacity: 0;
+                  transform: translate(-20px, -25%);
+                  animation: show-element 1s 2s forwards;
+
+                  &:before,
+                  &:after {
+                    display: block;
+                    content: attr(data-text);
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0.8;
+                  }
+
+                  &:before {
+                    color: $primary-color;
+                    z-index: -1;
+                  }
+
+                  &:after {
+                    color: $secondary-color;
+                    z-index: -2;
+                  }
+                }
               }
 
-              .jp-name {
-                color: $primary-color;
-                font-size: 100px;
-                position: absolute;
-                z-index: -1;
-                top: 0;
-                right: 0;
-                transform: translate(-20px, -40px);
+              .role {
+                font-weight: 200;
+                font-size: 40px;
+              }
+
+              .technologies-list {
+                font-size: 48px;
+                font-weight: 700;
+                position: relative;
+                text-transform: uppercase;
+
+                &:after {
+                  content: '';
+                  width: 100%;
+                  height: 100%;
+                  background-color: $primary-color;
+                  position: absolute;
+                }
+
+                &.writing {
+                  opacity: 0;
+                }
+
+                &.ready {
+
+                }
               }
             }
 
             .photo-container {
               width: 400px;
               height: 400px;
-              background-size: contain;
+              background-size: cover;
               margin-right: 100px;
-              box-shadow: 0px 4px 1px 1px $background-color,
+              transition: 0.3s;
+              box-shadow: 2px 2px 1px 1px $background-color,
                 56px 56px 1px 1px $primary-color;
-              background-image: url('/src/assets/images/profile_photo.jpg');
+              background-image: url('/src/assets/images/profile_photo.jpeg');
+
+              &:hover {
+                box-shadow: 2px 2px 1px 1px $background-color,
+                  24px 24px 1px 1px $primary-color;
+              }
             }
           }
         }
@@ -404,6 +676,35 @@
 
     to {
       opacity: 1;
+    }
+  }
+
+  @keyframes shimmer {
+    to {
+      mask-position: 0 250%;
+    }
+  }
+
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+      z-index: 2;
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+      z-index: 1;
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    to {
+      transform: translate(0);
     }
   }
 </style>

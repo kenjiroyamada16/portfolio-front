@@ -1,20 +1,19 @@
 <template>
   <div class="splash">
-    <div class="logo">{{ t('names.jp_kenji') }}</div>
+    <SplashLogoAnimation />
   </div>
 </template>
 
 <script lang="ts" setup>
+  import SplashLogoAnimation from '@/components/icons/SplashLogoAnimation.vue';
   import router from '@/router';
-import { onMounted } from 'vue';
-  import { useI18n } from 'vue-i18n';
+  import { onMounted, ref } from 'vue';
 
-  const { t } = useI18n();
 
   onMounted(() => {
     setTimeout(() => {
       router.replace({ name: '/portfolio' });
-    }, 3500);
+    }, 6500);
   });
 </script>
 
@@ -26,12 +25,17 @@ import { onMounted } from 'vue';
     display: flex;
     justify-content: center;
     align-items: center;
+    animation: transition-logo 1s 5.5s forwards;
+  }
 
-    .logo {
-      position: absolute;
-      color: white;
-      font-size: 5rem;
-      animation: transition-logo 2s ease-in-out 2s;
+  @keyframes fill-color {
+    from {
+      fill: white;
+    }
+    to {
+      fill: $primary-color;
+      stroke: $primary-color;
+      fill-opacity: 1;
     }
   }
 
@@ -42,6 +46,29 @@ import { onMounted } from 'vue';
 
     100% {
       opacity: 0;
+    }
+  }
+
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+      z-index: 2;
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+      z-index: 1;
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    to {
+      transform: translate(0);
     }
   }
 </style>
