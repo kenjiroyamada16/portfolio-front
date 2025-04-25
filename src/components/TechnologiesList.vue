@@ -6,17 +6,27 @@
     <span
       ref="currentTechnology"
       class="current-technology"
-      >0</span
+      >{{ technologies[0] }}</span
     >
   </div>
 </template>
 
 <script lang="ts" setup>
+  import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
   import { ref } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const technologiesList = ref();
   const currentTechnology = ref();
-  const technologies = ['Flutter', 'Dart', 'Kotlin', 'Vue', 'Ruby on Rails'];
+  const technologies = [
+    t('features.portfolio.technologies.flutter'),
+    t('features.portfolio.technologies.dart'),
+    t('features.portfolio.technologies.kotlin'),
+    t('features.portfolio.technologies.vue'),
+    t('features.portfolio.technologies.rails'),
+  ];
 
   const startAnimation = () => animateTechnologies();
 
@@ -35,7 +45,11 @@
     setTimeout(
       () => {
         elementSpan.textContent = initial;
-        sortLettersAnimation(elementSpan, initial);
+        sortLettersAnimation(elementSpan, initial, {
+          speedMs: 15,
+          steps: 0.25,
+          typewrite: true,
+        });
         elementContainer.classList.remove('writing');
         elementContainer.classList.add('ready');
 
@@ -49,36 +63,6 @@
       },
       initialIndex == undefined ? 500 : 800,
     );
-  };
-
-  const sortLettersAnimation = (element: HTMLElement, original: string) => {
-    if (!element) return;
-
-    const vocabulary =
-      'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
-
-    let iteration = 0;
-    let interval = setInterval(() => {
-      const displayedText = original
-        .split('')
-        .map((originalChar, i) => {
-          const char =
-            vocabulary[Math.floor(Math.random() * vocabulary.length)];
-
-          if (i < iteration) return originalChar;
-          return char;
-        })
-        .join('');
-
-      element.textContent = displayedText.slice(0, iteration + 1);
-
-      iteration += 1 / 4;
-
-      if (iteration >= original.length) {
-        clearInterval(interval);
-        element.textContent = original;
-      }
-    }, 15);
   };
 
   defineExpose({

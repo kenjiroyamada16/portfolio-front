@@ -11,10 +11,25 @@
   },
   "features": {
     "portfolio": {
+      "technologies": {
+        "flutter": "Flutter",
+        "rails": "Ruby on Rails",
+        "dart": "dart",
+        "vue": "Vue",
+        "kotlin": "Kotlin"
+      },
       "locale_select": {
         "description": {
           "pt": "Portuguese",
           "en": "English"
+        }
+      },
+      "sections": {
+        "intro": {
+          "role": "Full stack and Mobile Developer"
+        },
+        "projects": {
+          "title": "Projects"
         }
       }
     }

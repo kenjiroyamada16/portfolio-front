@@ -66,7 +66,7 @@
                 class="pt-name"
               ></div>
             </div>
-            <div class="role">Desenvolvedor Fullstack e Mobile</div>
+            <div class="role">{{ t('features.portfolio.sections.intro.role') }}</div>
             <TechnologiesList ref="technologiesList" />
           </div>
           <div class="photo-container"></div>
@@ -76,7 +76,7 @@
         ref="projectsSection"
         id="projects"
       >
-        PROJETOS
+      {{ t('features.portfolio.sections.projects.title') }}
       </section>
 
       <div class="footer">
@@ -85,7 +85,7 @@
         >
           <ScrollTip class="scroll-tip" />
         </div>
-        <div class="next-section">Projetos</div>
+        <div class="next-section"></div>
         <div class="separator"></div>
       </div>
     </div>
@@ -118,6 +118,7 @@
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import TechnologiesList from '@/components/TechnologiesList.vue';
+import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
   import { onMounted, ref } from 'vue';
   import type { Component } from 'vue';
 
@@ -168,36 +169,36 @@
     }
   };
 
-  const sortLettersAnimation = (element: HTMLElement, initialText?: string) => {
-    if (!element) return;
+  // const sortLettersAnimation = (element: HTMLElement, initialText?: string) => {
+  //   if (!element) return;
 
-    let originalText = initialText || element.dataset.value || '';
+  //   let originalText = initialText || element.dataset.value || '';
 
-    const vocabulary =
-      'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
+  //   const vocabulary =
+  //     'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
 
-    let iteration = 0;
-    let interval = setInterval(() => {
-      const displayedText = originalText
-        .split('')
-        .map((char, i) => {
-          const firstChar =
-            vocabulary[Math.floor(Math.random() * vocabulary.length)];
+  //   let iteration = 0;
+  //   let interval = setInterval(() => {
+  //     const displayedText = originalText
+  //       .split('')
+  //       .map((char, i) => {
+  //         const firstChar =
+  //           vocabulary[Math.floor(Math.random() * vocabulary.length)];
 
-          if (i < iteration) return char;
-          return firstChar;
-        })
-        .join('');
+  //         if (i < iteration) return char;
+  //         return firstChar;
+  //       })
+  //       .join('');
 
-      element.textContent = displayedText;
-      iteration += 1 / 2;
+  //     element.textContent = displayedText;
+  //     iteration += 1 / 2;
 
-      if (iteration >= originalText.length) {
-        clearInterval(interval);
-        element.textContent = originalText;
-      }
-    }, 50);
-  };
+  //     if (iteration >= originalText.length) {
+  //       clearInterval(interval);
+  //       element.textContent = originalText;
+  //     }
+  //   }, 50);
+  // };
 
   const startMainNameAnimation = () => {
     const element = sortLettersName.value as HTMLElement;

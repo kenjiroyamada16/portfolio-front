@@ -44,6 +44,9 @@
 
   const { t, locale } = useI18n();
 
+  const isOpen = ref(false);
+  const elementOutsideClicksListener = ref();
+
   const languages = computed(() => [
     {
       locale: 'en-US',
@@ -56,8 +59,6 @@
       label: 'PT',
     },
   ]);
-  const isOpen = ref(false);
-  const elementOutsideClicksListener = ref();
   const currentLanguage = computed(() =>
     languages.value.find(language => language.locale == locale.value),
   );

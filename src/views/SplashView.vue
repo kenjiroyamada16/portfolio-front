@@ -9,7 +9,6 @@
   import router from '@/router';
   import { onMounted, ref } from 'vue';
 
-
   onMounted(() => {
     setTimeout(() => {
       router.replace({ name: '/portfolio' });
@@ -28,17 +27,6 @@
     animation: transition-logo 1s 5.5s forwards;
   }
 
-  @keyframes fill-color {
-    from {
-      fill: white;
-    }
-    to {
-      fill: $primary-color;
-      stroke: $primary-color;
-      fill-opacity: 1;
-    }
-  }
-
   @keyframes transition-logo {
     0% {
       opacity: 1;
@@ -46,29 +34,6 @@
 
     100% {
       opacity: 0;
-    }
-  }
-
-  @keyframes glitch {
-    0% {
-      transform: translate(0);
-    }
-    20% {
-      transform: translate(-2px, 2px);
-      z-index: 2;
-    }
-    40% {
-      transform: translate(-2px, -2px);
-    }
-    60% {
-      transform: translate(2px, 2px);
-      z-index: 1;
-    }
-    80% {
-      transform: translate(2px, -2px);
-    }
-    to {
-      transform: translate(0);
     }
   }
 </style>
