@@ -12,8 +12,11 @@
         :text="currentLanguage?.description"
       >
         <template v-slot:activator="{ props }">
-          <div class="icon" v-bind="props">
-            <component :is="currentLanguage?.icon" />
+          <div
+            class="label"
+            v-bind="props"
+          >
+            {{ currentLanguage.label }}
           </div>
         </template>
       </v-tooltip>
@@ -28,7 +31,7 @@
         :key="language.locale"
         @click="changeLocale(language.locale)"
       >
-        <component :is="language.icon" />
+        <span class="label">{{ language.label }}</span>
         <span class="description">{{ language.description }}</span>
       </div>
     </div>
@@ -37,20 +40,26 @@
 
 <script lang="ts" setup>
   import { computed, onMounted, ref } from 'vue';
-  import BRFlag from './icons/BRFlag.vue';
-  import USFlag from './icons/USFlag.vue';
   import { useI18n } from 'vue-i18n';
 
   const { t, locale } = useI18n();
 
-  const languages =  computed(() => [
-    { locale: 'en-US', description: t('features.portfolio.locale_select.description.en'), icon: USFlag },
-    { locale: 'pt-BR', description: t('features.portfolio.locale_select.description.pt'), icon: BRFlag },
+  const languages = computed(() => [
+    {
+      locale: 'en-US',
+      description: t('features.portfolio.locale_select.description.en'),
+      label: 'EN',
+    },
+    {
+      locale: 'pt-BR',
+      description: t('features.portfolio.locale_select.description.pt'),
+      label: 'PT',
+    },
   ]);
   const isOpen = ref(false);
   const elementOutsideClicksListener = ref();
   const currentLanguage = computed(() =>
-    languages.value.find((language) => language.locale == locale.value)
+    languages.value.find(language => language.locale == locale.value),
   );
 
   const changeLocale = (newLocale: string) => {
@@ -58,10 +67,10 @@
 
     isOpen.value = false;
     locale.value = newLocale;
-  }
+  };
 
   onMounted(() => {
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       if (elementOutsideClicksListener.value.contains(event.target)) return;
 
       isOpen.value = false;
@@ -71,6 +80,7 @@
 
 <style lang="scss" scoped>
   .selector-container {
+    user-select: none;
     display: flex;
     align-items: end;
     flex-direction: column;
@@ -86,14 +96,14 @@
       flex-direction: column;
       margin-top: 32px;
       border-radius: 12px;
-      transform: translateX(200%);
+      transform: translate(200%, 12px);
       transition: transform 0.7s, opacity 0.5s, visibility 0.45s;
       background-color: $background-color;
       border: 1px solid $primary-color;
 
       &.open {
         visibility: visible;
-        transform: translateX(0);
+        transform: translate(0, 12px);
         opacity: 1;
       }
 
@@ -117,7 +127,11 @@
         &:hover {
           cursor: pointer;
           background-color: $primary-color;
-          color: $background-color
+          color: $background-color;
+        }
+
+        span.label {
+          font-weight: 700;
         }
 
         span.description {
@@ -142,13 +156,14 @@
         border: 1px solid $primary-color;
       }
 
-      .icon {
+      .label {
         display: flex;
+        font-size: 12px;
         justify-content: center;
+        font-weight: 700;
         align-items: center;
         overflow-x: hidden;
-        width: 24px;
-        height: 24px;
+        padding: 4px 6px;
         border-radius: 50%;
 
         svg {

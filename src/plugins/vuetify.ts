@@ -5,8 +5,6 @@ import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 import Github from '@/components/icons/Github.vue'
 import Linkedin from '@/components/icons/Linkedin.vue'
-import USFlag from '@/components/icons/USFlag.vue'
-import BRFlag from '@/components/icons/BRFlag.vue'
 
 export default createVuetify({
   theme: {
@@ -26,8 +24,6 @@ export default createVuetify({
       ...aliases,
       github: Github,
       linkedin: Linkedin,
-      us_flag: USFlag,
-      br_flag: BRFlag,
     },
     sets: {
       mdi,

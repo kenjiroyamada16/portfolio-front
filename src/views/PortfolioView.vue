@@ -61,18 +61,13 @@
                 >{{ t('names.jp_kenji') }}</span
               >
               <div
+                ref="sortLettersName"
                 :data-value="`${t('names.author')}*${t('names.author_jp')}`"
-                class="pt-name sort-letters"
-              >
-                Nicolas Yamada
-              </div>
+                class="pt-name"
+              ></div>
             </div>
             <div class="role">Desenvolvedor Fullstack e Mobile</div>
-            <div
-              ref="technologiesList"
-              class="technologies-list"
-              :data-value="technologies.join(',')"
-            ></div>
+            <TechnologiesList ref="technologiesList" />
           </div>
           <div class="photo-container"></div>
         </div>
@@ -122,6 +117,7 @@
   import Linkedin from '@/components/icons/Linkedin.vue';
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
+  import TechnologiesList from '@/components/TechnologiesList.vue';
   import { onMounted, ref } from 'vue';
   import type { Component } from 'vue';
 
@@ -129,6 +125,7 @@
   const { t } = useI18n();
 
   const navBar = ref();
+  const sortLettersName = ref();
   const technologiesList = ref();
 
   const introSection = ref();
@@ -150,7 +147,6 @@
   const currentSectionIndex = ref(0);
   const sections = [introSection, projectsSection];
   const sectionTitles = ['Início', 'Projetos'];
-  const technologies = ['Flutter', 'Dart', 'Kotlin', 'Vue', 'Ruby on Rails'];
 
   const isCurrentSection = (section: HTMLElement): boolean => {
     const sectionInList = sections.find(
@@ -172,13 +168,10 @@
     }
   };
 
-  const sortLettersAnimation = (element: HTMLElement) => {
+  const sortLettersAnimation = (element: HTMLElement, initialText?: string) => {
     if (!element) return;
 
-    let originalText = element.dataset.value || '';
-    const names = originalText.split('*');
-
-    originalText = element.textContent == names[0] ? names[1] : names[0];
+    let originalText = initialText || element.dataset.value || '';
 
     const vocabulary =
       'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
@@ -206,34 +199,39 @@
     }, 50);
   };
 
+  const startMainNameAnimation = () => {
+    const element = sortLettersName.value as HTMLElement;
+
+    if (!element) return;
+
+    let originalText = element.dataset.value || '';
+    const names = originalText.split('*');
+
+    originalText = element.textContent == names[0] ? names[1] : names[0];
+
+    sortLettersAnimation(element, originalText);
+  };
+
   const presentSection = (element: HTMLElement) => {
     let section = element;
 
     if (!(section.tagName.toLowerCase() == 'section')) {
       section = element.querySelector('section');
     }
-    console.log(section.classList);
 
     section.classList.remove('present-top');
     section.classList.remove('present-bottom');
-    console.log(section.classList);
   };
 
-  const animateTechnologies = (initialIndex?: number) => {
-    const element = technologiesList.value as HTMLElement;
-
-    if (!element) return;
-
-    const initial = technologies[initialIndex || 0];
-
-    element.classList.add('writing');
-    element.textContent = initial;
-  };
-
-  onMounted(() => {
+  const setupInitialAnimations = () => {
     setTimeout(() => {
+      startMainNameAnimation();
       presentSection(document.getElementById('intro'));
-      animateTechnologies();
+      setTimeout(() => {
+        technologiesList.value.startAnimation();
+      }, 1000);
+
+      sortLettersName.value.addEventListener('mouseover', startMainNameAnimation);
 
       document
         .querySelectorAll('.sort-letters')
@@ -244,6 +242,18 @@
           );
         });
     }, 200);
+
+    const nameContainer = document.querySelector('.name-container');
+
+    if (nameContainer) {
+      setTimeout(() => {
+        nameContainer.classList.add('presented');
+      }, 2000);
+    }
+  };
+
+  onMounted(() => {
+    setupInitialAnimations();
 
     window.addEventListener('wheel', (event: WheelEvent) => {
       const nextSection = sections[currentSectionIndex.value + 1];
@@ -477,6 +487,20 @@
                 display: flex;
                 overflow: visible;
 
+                &.presented {
+                  .jp-name {
+                    &::before {
+                      animation: glitch-more 0.3s
+                        cubic-bezier(0.25, 0.46, 0.45, 0.94) 1;
+                    }
+
+                    &:after {
+                      animation: glitch-more 0.3s
+                        cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse 1;
+                    }
+                  }
+                }
+
                 &:hover {
                   .jp-name {
                     &::before {
@@ -536,29 +560,6 @@
               .role {
                 font-weight: 200;
                 font-size: 40px;
-              }
-
-              .technologies-list {
-                font-size: 48px;
-                font-weight: 700;
-                position: relative;
-                text-transform: uppercase;
-
-                &:after {
-                  content: '';
-                  width: 100%;
-                  height: 100%;
-                  background-color: $primary-color;
-                  position: absolute;
-                }
-
-                &.writing {
-                  opacity: 0;
-                }
-
-                &.ready {
-
-                }
               }
             }
 
@@ -702,6 +703,29 @@
     }
     80% {
       transform: translate(2px, -2px);
+    }
+    to {
+      transform: translate(0);
+    }
+  }
+
+  @keyframes glitch-more {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-6px, 4px);
+      z-index: 2;
+    }
+    40% {
+      transform: translate(-4px, -4px);
+    }
+    60% {
+      transform: translate(4px, 6px);
+      z-index: 1;
+    }
+    80% {
+      transform: translate(4px, -4px);
     }
     to {
       transform: translate(0);
