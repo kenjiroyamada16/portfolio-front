@@ -1,3 +1,13 @@
-@use 'vuetify' with (
-  $body-font-family: ("Plus Jakarta Sans", sans-serif)
-);
+html {
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100%;
+
+  #app {
+    overflow: hidden;
+    height: 100%;
+  }
+}

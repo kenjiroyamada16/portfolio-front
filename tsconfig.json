@@ -5,15 +5,12 @@
     "lib": ["DOM", "ESNext"],
     "baseUrl": ".",
     "module": "ESNext",
-    "moduleResolution": "node",
-    "paths": {
-      "@/*": ["src/*"]
-    },
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": [
       "vite/client",
+      "vite-plugin-vue-layouts/client",
       "unplugin-fonts/client",
-      "node"
     ],
     "allowJs": true,
     "strict": true,
@@ -26,8 +23,7 @@
     "skipLibCheck": true
   },
   "include": [
-    "src/**/*",
-    "src/**/*.vue"
+    "./src/typed-router.d.ts"
   ],
   "exclude": ["dist", "node_modules", "cypress"],
   "references": [{ "path": "./tsconfig.node.json" }],

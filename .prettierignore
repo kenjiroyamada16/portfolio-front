@@ -1,0 +1,11 @@
+.vscode/
+.yarn/
+build
+coverage
+dist/
+public/assets/
+*.d.ts
+*.config.js
+tsconfig.json
+tsconfig.node.json
+vite.config.ts

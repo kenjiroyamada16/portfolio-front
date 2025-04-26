@@ -1,6 +1,8 @@
 {
   "app_name": "Nicolas Yamada",
   "names": {
+    "author": "Nicolas Yamada",
+    "author_jp": "Kenji Yamada",
     "jp_kenji": "賢児",
     "kenji": "Kenji",
     "github": "Github",
@@ -8,8 +10,28 @@
     "portfolio": "Portfolio"
   },
   "features": {
-    "initial": {
-      "description": "Learn more about me:"
+    "portfolio": {
+      "technologies": {
+        "flutter": "Flutter",
+        "rails": "Ruby on Rails",
+        "dart": "dart",
+        "vue": "Vue",
+        "kotlin": "Kotlin"
+      },
+      "locale_select": {
+        "description": {
+          "pt": "Portuguese",
+          "en": "English"
+        }
+      },
+      "sections": {
+        "intro": {
+          "role": "Full stack and Mobile Developer"
+        },
+        "projects": {
+          "title": "Projects"
+        }
+      }
     }
   }
 }
