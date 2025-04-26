@@ -169,37 +169,6 @@ import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
     }
   };
 
-  // const sortLettersAnimation = (element: HTMLElement, initialText?: string) => {
-  //   if (!element) return;
-
-  //   let originalText = initialText || element.dataset.value || '';
-
-  //   const vocabulary =
-  //     'アカサタナイキシチニウクスツヌネテセケエオコソトノンホヘフヒハマミムメモヨユヤマラリルレロ';
-
-  //   let iteration = 0;
-  //   let interval = setInterval(() => {
-  //     const displayedText = originalText
-  //       .split('')
-  //       .map((char, i) => {
-  //         const firstChar =
-  //           vocabulary[Math.floor(Math.random() * vocabulary.length)];
-
-  //         if (i < iteration) return char;
-  //         return firstChar;
-  //       })
-  //       .join('');
-
-  //     element.textContent = displayedText;
-  //     iteration += 1 / 2;
-
-  //     if (iteration >= originalText.length) {
-  //       clearInterval(interval);
-  //       element.textContent = originalText;
-  //     }
-  //   }, 50);
-  // };
-
   const startMainNameAnimation = () => {
     const element = sortLettersName.value as HTMLElement;
 
