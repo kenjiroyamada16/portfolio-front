@@ -66,7 +66,9 @@
                 class="pt-name"
               ></div>
             </div>
-            <div class="role">{{ t('features.portfolio.sections.intro.role') }}</div>
+            <div class="role">
+              {{ t('features.portfolio.sections.intro.role') }}
+            </div>
             <TechnologiesList ref="technologiesList" />
           </div>
           <div class="photo-container"></div>
@@ -76,7 +78,7 @@
         ref="projectsSection"
         id="projects"
       >
-      {{ t('features.portfolio.sections.projects.title') }}
+        {{ t('features.portfolio.sections.projects.title') }}
       </section>
 
       <div class="footer">
@@ -118,7 +120,7 @@
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import TechnologiesList from '@/components/TechnologiesList.vue';
-import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
+  import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
   import { onMounted, ref } from 'vue';
   import type { Component } from 'vue';
 
@@ -134,12 +136,12 @@ import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
 
   const socialLinks: SocialLink[] = [
     {
-      label: 'GitHub',
+      label: t('names.github'),
       icon: Github,
       url: 'https://github.com/kenjiroyamada16',
     },
     {
-      label: 'LinkedIn',
+      label: t('names.linkedin'),
       icon: Linkedin,
       url: 'https://www.linkedin.com/in/nicolas-yamada',
     },
@@ -195,13 +197,24 @@ import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
 
   const setupInitialAnimations = () => {
     setTimeout(() => {
+      const nameContainer = document.querySelector('.name-container');
+
+      if (nameContainer) {
+        setTimeout(() => {
+          nameContainer.classList.add('presented');
+        }, 2000);
+      }
+
       startMainNameAnimation();
       presentSection(document.getElementById('intro'));
       setTimeout(() => {
         technologiesList.value.startAnimation();
       }, 1000);
 
-      sortLettersName.value.addEventListener('mouseover', startMainNameAnimation);
+      sortLettersName.value.addEventListener(
+        'mouseover',
+        startMainNameAnimation,
+      );
 
       document
         .querySelectorAll('.sort-letters')
