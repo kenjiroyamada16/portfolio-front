@@ -74,6 +74,7 @@
         border: 1px solid $primary-color;
 
         .technology-label {
+          font-weight: 200;
         }
       }
     }
