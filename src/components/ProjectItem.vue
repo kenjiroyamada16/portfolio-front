@@ -1,0 +1,81 @@
+<template>
+  <div class="project">
+    <img
+      :src="project.bannerUrl"
+      :alt="project.title"
+      class="banner"
+    />
+    <div class="title">{{ project.title }}</div>
+    <div class="author">{{ project.author }}</div>
+    <span class="short-description">{{ project.shortDescription }}</span>
+    <div class="technologies-list">
+      <div
+        v-for="(technology, index) in project.technologies"
+        :key="index"
+        class="technology"
+      >
+        <span class="technology-label">{{ technology.name }}</span>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+  import { IProject } from '@/interfaces/api/project';
+
+  const props = defineProps<{
+    project: IProject;
+  }>();
+</script>
+
+<style scoped lang="scss">
+  .project {
+    display: flex;
+    gap: 4px;
+    width: 600px;
+    flex-direction: column;
+
+    .banner {
+      margin: 4px 0;
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .author {
+      font-size: 16px;
+      font-weight: 200;
+      color: $secondary-color;
+    }
+
+    .short-description {
+      font-size: 16px;
+      width: 100%;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+    }
+
+    .technologies-list {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      .technology {
+        padding: 8px 20px;
+        border-radius: 50px;
+        border: 1px solid $primary-color;
+
+        .technology-label {
+        }
+      }
+    }
+  }
+</style>

@@ -151,6 +151,11 @@
       padding: 2px;
       border-radius: 50%;
       transition: 0.5s;
+      height: 40px;
+      width: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       cursor: pointer;
 
       &:hover {
@@ -164,7 +169,6 @@
         font-weight: 700;
         align-items: center;
         overflow-x: hidden;
-        padding: 4px 6px;
         border-radius: 50%;
 
         svg {
