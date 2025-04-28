@@ -73,6 +73,13 @@
               {{ t('features.portfolio.sections.intro.role') }}
             </div>
             <TechnologiesList ref="technologiesList" />
+            <a
+              href="/src/assets/files/Curriculo_Nicolas.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cv-link"
+              >Baixar CV</a
+            >
           </div>
           <div class="photo-container"></div>
         </div>
@@ -410,6 +417,7 @@
     padding: 0 4px;
     overflow: hidden;
     display: flex;
+    background-color: $background-color;
 
     > :not(.content) {
       animation: show-element 1s 3s forwards;
@@ -706,6 +714,31 @@
                 font-weight: 200;
                 font-size: 40px;
               }
+
+              .cv-link {
+                text-decoration: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $background-color;
+                color: white;
+                font-weight: 200;
+                cursor: pointer;
+                align-self: flex-start;
+                transition: 0.3s;
+                text-transform: uppercase;
+                padding: 24px 40px;
+                font-size: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                margin-top: 24px;
+
+                &:hover {
+                  font-weight: 500;
+                  border: 1px solid transparent;
+                  background-color: $primary-color;
+                  color: $background-color;
+                }
+              }
             }
 
             .photo-container {
@@ -773,16 +806,24 @@
             height: 100%;
             position: relative;
 
+            &:hover {
+              .previous-button,
+              .next-button {
+                opacity: 1;
+                transform: translate(0, -100%);
+              }
+            }
+
             .previous-button,
             .next-button {
               position: absolute;
               display: flex;
+              opacity: 0;
               justify-content: center;
               align-items: center;
               backdrop-filter: blur(4px);
               top: 50%;
-              padding: 8px;
-              transform: translateY(-100%);
+              padding: 12px;
               border-radius: 50px;
               transition: 0.5s, opacity 0.2s;
               background-color: #0d0f1279;
@@ -802,10 +843,12 @@
 
             .previous-button {
               left: 0;
+              transform: translate(50px, -100%);
             }
 
             .next-button {
               right: 0;
+              transform: translate(-50px, -100%);
             }
 
             .projects-list {

@@ -12,7 +12,7 @@
   onMounted(() => {
     setTimeout(() => {
       router.replace({ name: '/portfolio' });
-    }, 6500);
+    }, 6000);
   });
 </script>
 
@@ -24,7 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: transition-logo 1s 5.5s forwards;
+    animation: transition-logo 0.6s 5.5s forwards;
   }
 
   @keyframes transition-logo {

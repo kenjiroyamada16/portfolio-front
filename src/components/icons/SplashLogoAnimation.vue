@@ -46,7 +46,7 @@
 
   @keyframes filling {
     0% {
-      fill: white;
+      fill: transparent;
       fill-opacity: 0;
     }
     100% {
