@@ -18,7 +18,6 @@
           <li
             v-for="section in sections"
             :key="section.index"
-            @click="console.log(section.index, currentSectionIndex)"
             :class="{ active: currentSectionIndex == section.index }"
           >
             <a
@@ -95,14 +94,32 @@
           >
         </div>
         <div class="projects-container">
-          <div class="projects-list">
+          <div
+            class="projects-list"
+            ref="projectsList"
+          >
             <div
               class="project"
               v-for="project in projects"
               :key="project.id"
             >
-              <ProjectItem :project="project" />
+              <ProjectItem
+                @click="console.log()"
+                :project="project"
+              />
             </div>
+          </div>
+          <div
+            class="previous-button hidden"
+            ref="projectsListPreviousButton"
+          >
+            <v-icon icon="mdi-chevron-left"></v-icon>
+          </div>
+          <div
+            class="next-button"
+            ref="projectsListNextButton"
+          >
+            <v-icon icon="mdi-chevron-right"></v-icon>
           </div>
         </div>
       </section>
@@ -172,6 +189,9 @@
 
   const navBar = ref();
   const sortLettersName = ref();
+  const projectsList = ref();
+  const projectsListPreviousButton = ref();
+  const projectsListNextButton = ref();
   const technologiesList = ref();
 
   const introSection = ref();
@@ -208,14 +228,14 @@
   ];
 
   const scrollToSection = (newSectionIndex: number) => {
-    presentSections();
-
     const sectionInList = sections.find(
       section => section.index == newSectionIndex,
     );
 
     if (!sectionInList) return;
 
+    currentSectionIndex.value = newSectionIndex;
+    presentSections();
     sectionInList.ref.value.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -298,27 +318,73 @@
     if (nextSection) nextSection.classList.add('present');
   });
 
+  const setupProjectsList = () => {
+    projectsList.value.addEventListener('scroll', event => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const scrollWidth = projectsList.value.scrollWidth;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth) {
+        projectsListNextButton.value.classList.add('hidden');
+      } else {
+        projectsListNextButton.value.classList.remove('hidden');
+      }
+
+      if (scrollLeft <= 0) {
+        projectsListPreviousButton.value.classList.add('hidden');
+      } else {
+        projectsListPreviousButton.value.classList.remove('hidden');
+      }
+    });
+
+    projectsListNextButton.value.addEventListener('click', () => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const scrollWidth = projectsList.value.scrollWidth;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth) return;
+
+      projectsList.value.scrollTo({
+        left: scrollLeft + clientWidth / 2,
+        behavior: 'smooth',
+      });
+    });
+
+    projectsListPreviousButton.value.addEventListener('click', () => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (scrollLeft <= 0) return;
+
+      projectsList.value.scrollTo({
+        left: scrollLeft - clientWidth / 2,
+        behavior: 'smooth',
+      });
+    });
+  };
+
+  const handleMainScroll = (event: WheelEvent) => {
+    const nextSection = sections[currentSectionIndex.value + 1];
+    const previousSection = sections[currentSectionIndex.value - 1];
+
+    if (event.deltaY > 0 && nextSection?.ref.value) {
+      return scrollToSection(nextSection.index);
+    }
+
+    if (event.deltaY < 0 && previousSection?.ref.value) {
+      scrollToSection(previousSection.index);
+    }
+  };
+
   onMounted(() => {
     scrollToSection(sections[0].index);
 
+    setupProjectsList();
     setupInitialAnimations();
 
-    window.addEventListener('wheel', (event: WheelEvent) => {
-      const nextSection = sections[currentSectionIndex.value + 1];
-      const previousSection = sections[currentSectionIndex.value - 1];
-
-      if (event.deltaY > 0 && nextSection?.ref.value) {
-        currentSectionIndex.value = nextSection.index;
-        scrollToSection(nextSection.index);
-
-        return;
-      }
-
-      if (event.deltaY < 0 && previousSection?.ref.value) {
-        currentSectionIndex.value = previousSection.index;
-        scrollToSection(previousSection.index);
-      }
-    });
+    window.addEventListener('wheel', (event: WheelEvent) =>
+      handleMainScroll(event),
+    );
   });
 
   interface ISection {
@@ -484,9 +550,11 @@
         display: flex;
         flex-direction: column;
         bottom: 0;
+        opacity: 0;
         position: fixed;
         justify-content: center;
         align-items: center;
+        animation: show-element 1s 3s forwards;
 
         .next-section-container {
           display: flex;
@@ -703,27 +771,65 @@
             display: flex;
             width: 100%;
             height: 100%;
+            position: relative;
+
+            .previous-button,
+            .next-button {
+              position: absolute;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              backdrop-filter: blur(4px);
+              top: 50%;
+              padding: 8px;
+              transform: translateY(-100%);
+              border-radius: 50px;
+              transition: 0.5s, opacity 0.2s;
+              background-color: #0d0f1279;
+              border: 1px solid rgba(255, 255, 255, 0.7);
+              cursor: pointer;
+
+              &:hover {
+                backdrop-filter: blur(8px);
+                background-color: #0d0f12b8;
+              }
+
+              &.hidden {
+                cursor: default;
+                opacity: 0;
+              }
+            }
+
+            .previous-button {
+              left: 0;
+            }
+
+            .next-button {
+              right: 0;
+            }
 
             .projects-list {
               display: flex;
               gap: 24px;
-              overflow-x: visible;
+              overflow-x: auto;
               width: 100%;
               height: 100%;
+              padding-bottom: 16px;
+              padding-right: 100px;
 
               mask-image: linear-gradient(
                 to left,
                 transparent,
-                #0d0f1232 10%,
-                #0d0f12b8 20%,
-                $background-color,
+                $background-color 1%,
+                $background-color 99%,
+                transparent
               );
               -webkit-mask-image: linear-gradient(
                 to left,
                 transparent,
-                #0d0f1232 10%,
-                #0d0f12b8 20%,
-                $background-color,
+                $background-color 1%,
+                $background-color 99%,
+                transparent
               );
             }
           }
@@ -748,7 +854,7 @@
 
       .vertical-line {
         width: 1px;
-        height: 32px;
+        height: 24px;
         background-color: white;
       }
 

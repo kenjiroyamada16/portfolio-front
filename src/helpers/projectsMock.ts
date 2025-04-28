@@ -60,7 +60,7 @@ export const projectsMock: IProject[] = [
     id: 5,
     title: "ECX Pay",
     author: "Jera Software",
-    shortDescription: "O melhor cartão multibenefícios do mercado aceito em milhões de estabelecimentos pelo o mundo.",
+    shortDescription: "O app do melhor cartão multibenefícios do mercado, aceito em milhões de estabelecimentos pelo o mundo.",
     bannerUrl: ecxpayBanner,
     technologies: [
       { id: 1, name: "Flutter", iconUrl: "" },
@@ -76,7 +76,6 @@ export const projectsMock: IProject[] = [
     technologies: [
       { id: 1, name: "Flutter", iconUrl: "" },
       { id: 2, name: "Dart", iconUrl: "" },
-      { id: 3, name: "Vue.js", iconUrl: "" },
     ],
   },
 ]

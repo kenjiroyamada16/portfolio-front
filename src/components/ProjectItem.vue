@@ -1,8 +1,12 @@
 <template>
-  <div class="project">
+  <div
+    class="project"
+    @click.prevent="emit('click', project)"
+  >
     <img
       :src="project.bannerUrl"
       :alt="project.title"
+      draggable="false"
       class="banner"
     />
     <div class="title">{{ project.title }}</div>
@@ -23,6 +27,10 @@
 <script lang="ts" setup>
   import { IProject } from '@/interfaces/api/project';
 
+  const emit = defineEmits<{
+    (e: 'click', project: IProject): void;
+  }>();
+
   const props = defineProps<{
     project: IProject;
   }>();
@@ -33,7 +41,20 @@
     display: flex;
     gap: 4px;
     width: 600px;
+    height: 100%;
+    padding: 12px;
     flex-direction: column;
+    border-radius: 12px;
+    transition: 0.5s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #1c1c1c;
+    }
+
+    & * {
+      user-select: none;
+    }
 
     .banner {
       margin: 4px 0;
@@ -56,8 +77,8 @@
       font-size: 16px;
       width: 100%;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
       overflow: hidden;
       -webkit-box-orient: vertical;
     }
