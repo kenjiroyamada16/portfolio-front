@@ -27,10 +27,12 @@
       "sections": {
         "intro": {
           "title": "Início",
-          "role": "Desenvolvedor Full stack e Mobile"
+          "role": "Desenvolvedor Full stack e Mobile",
+          "download_cv": "Baixar CV"
         },
         "projects": {
-          "title": "Projetos"
+          "title": "Projetos",
+          "description": "Aqui você encontra todos os projetos em que já trabalhei, sejam pessoais ou aqueles realizados com vínculo empregatício, nos quais atuei no time de desenvolvimento."
         }
       }
     }

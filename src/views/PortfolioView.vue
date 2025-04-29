@@ -3,34 +3,37 @@
     class="main-container"
     ref="introSection"
   >
-    <nav
-      class="nav-bar"
+    <div
       ref="navBar"
+      :class="['navbar-container', { hidden: currentSectionIndex == 0 }]"
     >
-      <a
-        href="/"
-        class="logo"
-        >{{ t('names.jp_kenji') }}</a
-      >
-      <ul>
-        <li>
-          <a
-            class="nav-item"
-            href="#"
-            >Início</a
+      <nav class="nav-bar">
+        <a
+          href="/"
+          class="logo"
+          :data-text="t('names.jp_kenji')"
+          >{{ t('names.jp_kenji') }}</a
+        >
+        <ul>
+          <li
+            v-for="section in sections"
+            :key="section.index"
+            :class="{ active: currentSectionIndex == section.index }"
           >
-        </li>
-        <li>
-          <a
-            class="nav-item"
-            href=""
-          >
-            Início
-          </a>
-        </li>
-      </ul>
-      <LocaleSelector class="locale-selector" />
-    </nav>
+            <a
+              class="nav-item"
+              :href="section.navBarHref"
+              @click.prevent="scrollToSection(section.index)"
+            >
+              {{ section.title }}
+            </a>
+          </li>
+        </ul>
+        <a class="logo">{{ t('names.jp_kenji') }}</a>
+      </nav>
+      <div class="horizontal-line"></div>
+      <div class="vertical-line"></div>
+    </div>
     <div class="left-aside-content">
       <div class="social-info">
         <a
@@ -50,7 +53,7 @@
     <div class="content">
       <section
         id="intro"
-        class="present-top"
+        class="present"
       >
         <div class="profile-container">
           <div class="profile">
@@ -70,6 +73,13 @@
               {{ t('features.portfolio.sections.intro.role') }}
             </div>
             <TechnologiesList ref="technologiesList" />
+            <a
+              href="/src/assets/files/Curriculo_Nicolas.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cv-link"
+              >{{ t('features.portfolio.sections.intro.download_cv') }}</a
+            >
           </div>
           <div class="photo-container"></div>
         </div>
@@ -78,17 +88,64 @@
         ref="projectsSection"
         id="projects"
       >
-        {{ t('features.portfolio.sections.projects.title') }}
+        <div class="title-container">
+          <span :data-text="KATAKANA_PROJECT">{{
+            t('features.portfolio.sections.projects.title')
+          }}</span>
+        </div>
+        <div class="description">
+          <span>{{ t('features.portfolio.sections.projects.description') }}</span>
+        </div>
+        <div class="projects-container">
+          <div
+            class="projects-list"
+            ref="projectsList"
+          >
+            <div
+              class="project"
+              v-for="project in projects"
+              :key="project.id"
+            >
+              <ProjectItem
+                @click="openProjectUrl(project.url)"
+                :project="project"
+              />
+            </div>
+          </div>
+          <div
+            class="previous-button hidden"
+            ref="projectsListPreviousButton"
+          >
+            <v-icon icon="mdi-chevron-left"></v-icon>
+          </div>
+          <div
+            class="next-button"
+            ref="projectsListNextButton"
+          >
+            <v-icon icon="mdi-chevron-right"></v-icon>
+          </div>
+        </div>
       </section>
-
       <div class="footer">
         <div
           :class="['scroll-tip-container', { gone: currentSectionIndex != 0 }]"
         >
           <ScrollTip class="scroll-tip" />
         </div>
-        <div class="next-section"></div>
-        <div class="separator"></div>
+        <div
+          :class="[
+            'next-section-container',
+            { hidden: currentSectionIndex >= sections.length - 1 },
+          ]"
+        >
+          <div class="next-section">
+            {{
+              sections[currentSectionIndex + 1]?.title ||
+              sections[currentSectionIndex].title
+            }}
+          </div>
+          <div class="separator"></div>
+        </div>
       </div>
     </div>
     <div class="right-aside-content">
@@ -96,17 +153,17 @@
         <LocaleSelector class="locale-selector" />
       </div>
       <div
-        v-if="sections[0].value"
+        v-if="sections[0].ref.value"
         class="navigation-tiles"
       >
         <div
           v-for="section in sections"
-          :key="section.value"
+          :key="section.ref.value.id"
+          @click="scrollToSection(section.index)"
           :class="[
             'navigation-bar',
-            { active: isCurrentSection(section.value) },
+            { active: currentSectionIndex == section.index },
           ]"
-          @click="scrollToSection(section.value)"
         ></div>
       </div>
       <div class="theme-selector"></div>
@@ -119,22 +176,31 @@
   import Linkedin from '@/components/icons/Linkedin.vue';
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
+  import ProjectItem from '@/components/ProjectItem.vue';
   import TechnologiesList from '@/components/TechnologiesList.vue';
+  import { KATAKANA_PROJECT } from '@/helpers/constants';
+  import { projectsMock } from '@/helpers/projectsMock';
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
-  import { onMounted, ref } from 'vue';
-  import type { Component } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
+  import type { Component, Ref } from 'vue';
 
   import { useI18n } from 'vue-i18n';
   const { t } = useI18n();
 
+  const currentSectionIndex = ref(0);
+  const projects = ref(projectsMock);
+
   const navBar = ref();
   const sortLettersName = ref();
+  const projectsList = ref();
+  const projectsListPreviousButton = ref();
+  const projectsListNextButton = ref();
   const technologiesList = ref();
 
   const introSection = ref();
   const projectsSection = ref();
 
-  const socialLinks: SocialLink[] = [
+  const socialLinks: ISocialLink[] = [
     {
       label: t('names.github'),
       icon: Github,
@@ -147,28 +213,38 @@
     },
   ];
 
-  const currentSectionIndex = ref(0);
-  const sections = [introSection, projectsSection];
-  const sectionTitles = ['Início', 'Projetos'];
 
-  const isCurrentSection = (section: HTMLElement): boolean => {
-    const sectionInList = sections.find(
-      listSection => listSection.value.id == section.id,
-    );
+  const sections = computed<ISection[]>(() => [
+    {
+      id: 'intro',
+      index: 0,
+      title: t('features.portfolio.sections.intro.title'),
+      ref: introSection,
+      navBarHref: '#',
+    },
+    {
+      id: 'projects',
+      index: 1,
+      title: t('features.portfolio.sections.projects.title'),
+      ref: projectsSection,
+      navBarHref: '#projects',
+    },
+  ]);
 
-    return sections.indexOf(sectionInList) == currentSectionIndex.value;
+  const openProjectUrl = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const scrollToSection = (newSection: HTMLElement) => {
-    if (newSection) {
-      const sectionInList = sections.find(
-        section => section.value.id == newSection.id,
-      );
+  const scrollToSection = (newSectionIndex: number) => {
+    const sectionInList = sections.value.find(
+      section => section.index == newSectionIndex,
+    );
 
-      presentSection(newSection);
-      newSection.scrollIntoView({ behavior: 'smooth' });
-      currentSectionIndex.value = sections.indexOf(sectionInList);
-    }
+    if (!sectionInList) return;
+
+    currentSectionIndex.value = newSectionIndex;
+    presentSections();
+    sectionInList.ref.value.scrollIntoView({ behavior: 'smooth' });
   };
 
   const startMainNameAnimation = () => {
@@ -184,15 +260,14 @@
     sortLettersAnimation(element, originalText);
   };
 
-  const presentSection = (element: HTMLElement) => {
-    let section = element;
+  const presentSections = () => {
+    let presentingSections = document.querySelectorAll('section');
 
-    if (!(section.tagName.toLowerCase() == 'section')) {
-      section = element.querySelector('section');
-    }
+    if (!presentingSections) return;
 
-    section.classList.remove('present-top');
-    section.classList.remove('present-bottom');
+    presentingSections.forEach(section => {
+      section.classList.remove('present');
+    });
   };
 
   const setupInitialAnimations = () => {
@@ -201,12 +276,12 @@
 
       if (nameContainer) {
         setTimeout(() => {
-          nameContainer.classList.add('presented');
+          nameContainer.classList.add('present');
         }, 2000);
       }
 
       startMainNameAnimation();
-      presentSection(document.getElementById('intro'));
+      presentSections();
       setTimeout(() => {
         technologiesList.value.startAnimation();
       }, 1000);
@@ -235,28 +310,100 @@
     }
   };
 
-  onMounted(() => {
-    setupInitialAnimations();
+  watch(currentSectionIndex, (newValue: number) => {
+    let previousSection = sections[newValue - 1]?.ref.value;
+    let nextSection = sections[newValue + 1]?.ref.value;
 
-    window.addEventListener('wheel', (event: WheelEvent) => {
-      const nextSection = sections[currentSectionIndex.value + 1];
-      const previousSection = sections[currentSectionIndex.value - 1];
+    if (!(previousSection?.tagName.toLowerCase() == 'section')) {
+      previousSection = previousSection?.querySelector('section');
+    }
 
-      if (event.deltaY > 0 && nextSection.value) {
-        nextSection.value.classList.add('present-bottom');
-        scrollToSection(nextSection.value);
+    if (!(nextSection?.tagName.toLowerCase() == 'section')) {
+      nextSection = nextSection?.querySelector('section');
+    }
 
-        return;
-      }
-
-      if (event.deltaY < 0 && previousSection.value) {
-        previousSection.value.classList.add('present-top');
-        scrollToSection(previousSection.value);
-      }
-    });
+    if (previousSection) previousSection.classList.add('present');
+    if (nextSection) nextSection.classList.add('present');
   });
 
-  interface SocialLink {
+  const setupProjectsList = () => {
+    projectsList.value.addEventListener('scroll', event => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const scrollWidth = projectsList.value.scrollWidth;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth) {
+        projectsListNextButton.value.classList.add('hidden');
+      } else {
+        projectsListNextButton.value.classList.remove('hidden');
+      }
+
+      if (scrollLeft <= 0) {
+        projectsListPreviousButton.value.classList.add('hidden');
+      } else {
+        projectsListPreviousButton.value.classList.remove('hidden');
+      }
+    });
+
+    projectsListNextButton.value.addEventListener('click', () => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const scrollWidth = projectsList.value.scrollWidth;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth) return;
+
+      projectsList.value.scrollTo({
+        left: scrollLeft + clientWidth / 2,
+        behavior: 'smooth',
+      });
+    });
+
+    projectsListPreviousButton.value.addEventListener('click', () => {
+      const scrollLeft = projectsList.value.scrollLeft;
+      const clientWidth = projectsList.value.clientWidth;
+
+      if (scrollLeft <= 0) return;
+
+      projectsList.value.scrollTo({
+        left: scrollLeft - clientWidth / 2,
+        behavior: 'smooth',
+      });
+    });
+  };
+
+  const handleMainScroll = (event: WheelEvent) => {
+    const nextSection = sections.value[currentSectionIndex.value + 1];
+    const previousSection = sections.value[currentSectionIndex.value - 1];
+
+    if (event.deltaY > 0 && nextSection?.ref.value) {
+      return scrollToSection(nextSection.index);
+    }
+
+    if (event.deltaY < 0 && previousSection?.ref.value) {
+      scrollToSection(previousSection.index);
+    }
+  };
+
+  onMounted(() => {
+    scrollToSection(sections.value[0].index);
+
+    setupProjectsList();
+    setupInitialAnimations();
+
+    window.addEventListener('wheel', (event: WheelEvent) =>
+      handleMainScroll(event),
+    );
+  });
+
+  interface ISection {
+    id: string;
+    index: number;
+    title: string;
+    ref: Ref<HTMLElement>;
+    navBarHref: string;
+  }
+
+  interface ISocialLink {
     label: string;
     url: string;
     icon: Component;
@@ -271,6 +418,7 @@
     padding: 0 4px;
     overflow: hidden;
     display: flex;
+    background-color: $background-color;
 
     > :not(.content) {
       animation: show-element 1s 3s forwards;
@@ -286,9 +434,14 @@
       position: fixed;
       right: 0;
       opacity: 0;
+      z-index: 10;
 
       .options {
         padding: 24px 0;
+
+        .locale-selector {
+          z-index: 15;
+        }
       }
 
       .navigation-tiles {
@@ -406,40 +559,56 @@
         display: flex;
         flex-direction: column;
         bottom: 0;
+        opacity: 0;
         position: fixed;
         justify-content: center;
         align-items: center;
+        animation: show-element 1s 3s forwards;
 
-        .next-section {
-          font-weight: 300;
-          text-transform: uppercase;
-        }
+        .next-section-container {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          opacity: 0.8;
 
-        .separator {
-          width: 1px;
-          height: 40px;
-          background-color: white;
+          &.hidden {
+            .next-section {
+              opacity: 0;
+            }
+
+            .separator {
+              height: 0;
+            }
+          }
+
+          .next-section {
+            font-weight: 300;
+            transition: opacity 1s;
+            text-transform: uppercase;
+          }
+
+          .separator {
+            width: 1px;
+            height: 40px;
+            transform-origin: bottom;
+            transition: 0.7s;
+            background-color: white;
+          }
         }
       }
 
       section {
         height: 100vh;
-        position: relative;
         max-height: 100vh;
         margin-bottom: 50vh;
         padding: 0 100px;
         width: 100%;
-        transition: 1s transform, 5s opacity;
-        transform: translateY(0);
+        transition: 4s;
         opacity: 1;
 
-        &.present-bottom {
-          transform: translateY(25%);
-          opacity: 0;
-        }
-
-        &.present-top {
-          transform: translateY(-25%);
+        &.present {
           opacity: 0;
         }
 
@@ -454,6 +623,7 @@
           justify-content: center;
           align-items: stretch;
           gap: 12px;
+          animation: present-intro 3s forwards;
 
           .profile-container {
             display: flex;
@@ -544,6 +714,32 @@
                 font-weight: 200;
                 font-size: 40px;
               }
+
+              .cv-link {
+                text-decoration: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $background-color;
+                color: white;
+                font-weight: 200;
+                cursor: pointer;
+                align-self: flex-start;
+                transition: 0.3s;
+                text-transform: uppercase;
+                padding: 24px 40px;
+                font-size: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                line-height: 20px;
+                margin-top: 24px;
+
+                &:hover {
+                  font-weight: 500;
+                  border: 1px solid transparent;
+                  background-color: $primary-color;
+                  color: $background-color;
+                }
+              }
             }
 
             .photo-container {
@@ -563,86 +759,305 @@
             }
           }
         }
+
+        &#projects {
+          display: flex;
+          flex-direction: column;
+          padding: 100px;
+          gap: 12px;
+
+          .title-container {
+            display: flex;
+
+            span {
+              z-index: 1;
+              font-size: 40px;
+              font-weight: 700;
+              position: relative;
+              text-transform: uppercase;
+
+              &::before {
+                content: attr(data-text);
+                font-size: 24px;
+                text-wrap: nowrap;
+                font-weight: 700;
+                color: $primary-color;
+                letter-spacing: 0;
+                line-height: 24px;
+                position: absolute;
+                box-sizing: content-box;
+                top: 50%;
+                z-index: -1;
+                left: 50%;
+                transform: translate(-10%, -120%);
+                text-transform: uppercase;
+              }
+            }
+          }
+
+          .description {
+            width: 50%;
+            font-size: 20px;
+            font-weight: 300;
+            margin-bottom: 32px;
+          }
+
+          .projects-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+
+            &:hover {
+              .previous-button,
+              .next-button {
+                opacity: 1;
+                transform: translate(0, -100%);
+              }
+            }
+
+            .previous-button,
+            .next-button {
+              position: absolute;
+              display: flex;
+              opacity: 0;
+              justify-content: center;
+              align-items: center;
+              backdrop-filter: blur(4px);
+              top: 50%;
+              padding: 12px;
+              border-radius: 50px;
+              transition: 0.5s, opacity 0.2s;
+              background-color: #0d0f1279;
+              border: 1px solid rgba(255, 255, 255, 0.7);
+              cursor: pointer;
+
+              &:hover {
+                backdrop-filter: blur(8px);
+                background-color: #0d0f12b8;
+              }
+
+              &.hidden {
+                cursor: default;
+                opacity: 0;
+              }
+            }
+
+            .previous-button {
+              left: 0;
+              transform: translate(50px, -100%);
+            }
+
+            .next-button {
+              right: 0;
+              transform: translate(-50px, -100%);
+            }
+
+            .projects-list {
+              display: flex;
+              gap: 24px;
+              overflow-x: auto;
+              width: 100%;
+              height: 100%;
+              padding-bottom: 16px;
+              padding-right: 100px;
+
+              mask-image: linear-gradient(
+                to left,
+                transparent,
+                $background-color 1%,
+                $background-color 99%,
+                transparent
+              );
+              -webkit-mask-image: linear-gradient(
+                to left,
+                transparent,
+                $background-color 1%,
+                $background-color 99%,
+                transparent
+              );
+            }
+          }
+        }
       }
     }
 
-    .nav-bar {
-      background-color: #0d0f1246;
-      backdrop-filter: blur(8px);
+    .navbar-container {
       position: fixed;
-      display: flex;
       width: 100%;
-      justify-content: space-between;
-      padding: 16px 32px;
+      z-index: 10;
+      animation: show-element 1s forwards;
+      transform: translateY(0);
       transition: 0.5s;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      transform: translateY(-100%);
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
 
-      .logo {
-        color: white;
-        transition: 0.4s;
-        font-size: 1.5rem;
-        text-decoration: none;
-        animation: show-element 1s forwards;
+      &.hidden {
+        transform: translateY(-100%);
+      }
+
+      .vertical-line {
+        width: 1px;
+        height: 24px;
+        background-color: white;
+      }
+
+      .horizontal-line {
+        width: 10%;
+        height: 1px;
+        transition: 1s;
+        background-color: white;
+      }
+
+      .nav-bar {
+        z-index: 5;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 0 32px;
 
         &:hover {
-          user-select: none;
-          color: $primary-color;
-          transform: translateY(-4px);
+          ~ .horizontal-line {
+            width: 40%;
+          }
         }
-      }
 
-      .locale-selector {
-        position: static;
-      }
-
-      ul {
-        padding: 12px 0;
-        gap: 20px;
-        display: flex;
-        list-style: none;
-
-        .nav-item {
-          font-size: 12px;
-          text-transform: uppercase;
-          text-decoration: none;
+        .logo {
           color: white;
+          transition: 0.4s scale, 0.8s color;
+          font-size: 1.5rem;
+          text-decoration: none;
+          user-select: none;
           position: relative;
+          animation: show-element 1s forwards;
 
-          &:hover {
-            color: $secondary-color;
+          &:last-child {
+            color: transparent;
+            pointer-events: none;
+          }
 
-            &::before {
-              opacity: 1;
-              transform: translate(-16px);
-            }
-
-            &::after {
-              opacity: 1;
-              transform: translate(12px);
-            }
+          &:before,
+          &:after {
+            display: block;
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.8;
           }
 
           &::before {
-            content: '{';
-            position: absolute;
-            color: $primary-color;
-            font-size: 1.1rem;
-            opacity: 0;
-            left: 0;
-            transition: 0.4s;
-            transform: translate(50%);
+            color: $primary-color !important;
+            z-index: -1;
           }
 
-          &::after {
-            content: '}';
-            position: absolute;
+          &::before {
+            color: $primary-color !important;
+            z-index: -1;
+          }
+
+          &:hover {
             color: $primary-color;
-            font-size: 1.1rem;
-            opacity: 0;
-            right: 0;
-            transition: 0.4s;
-            transform: translate(-50%);
+            scale: 1.1;
+
+            &::before {
+              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+            }
+
+            &:after {
+              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+            }
+          }
+        }
+
+        ul {
+          padding: 12px 0;
+          gap: 20px;
+          display: flex;
+          list-style: none;
+
+          li {
+            width: 100%;
+            position: relative;
+
+            &:hover {
+              color: $secondary-color;
+
+              .nav-item::before {
+                opacity: 1;
+                transform: translate(-12px, -50%);
+              }
+
+              .nav-item::after {
+                opacity: 1;
+                transform: translate(12px, -50%);
+              }
+            }
+
+            &::after {
+              content: '';
+              position: absolute;
+              width: 0;
+              height: 2px;
+              border-radius: 8px;
+              background-color: $primary-color;
+              bottom: 0;
+              left: 0;
+              transition: 0.5s;
+            }
+
+            &.active {
+              .nav-item {
+                font-weight: 500;
+              }
+
+              &::after {
+                width: 50%;
+              }
+
+              &:hover {
+                &::after {
+                  width: 0;
+                }
+              }
+            }
+
+            .nav-item {
+              font-size: 16px;
+              font-weight: 300;
+              text-transform: uppercase;
+              text-decoration: none;
+              color: white;
+              position: relative;
+              box-sizing: content-box;
+              width: 100%;
+              transition: 0.5s;
+
+              &::before {
+                content: '{';
+                position: absolute;
+                color: $primary-color;
+                font-size: 20px;
+                opacity: 0;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                transition: 0.4s;
+              }
+
+              &::after {
+                content: '}';
+                position: absolute;
+                color: $primary-color;
+                font-size: 20px;
+                opacity: 0;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                transition: 0.4s;
+              }
+            }
           }
         }
       }
@@ -650,6 +1065,21 @@
 
     .content {
       padding: 80px 40px;
+    }
+  }
+
+  @keyframes present-intro {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    50% {
+      transform: translateY(0);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 
