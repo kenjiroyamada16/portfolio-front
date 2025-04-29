@@ -26,10 +26,13 @@
       },
       "sections": {
         "intro": {
-          "role": "Full stack and Mobile Developer"
+          "title": "Home",
+          "role": "Full stack and Mobile Developer",
+          "download_cv": "Download CV"
         },
         "projects": {
-          "title": "Projects"
+          "title": "Projects",
+          "description": "Here you can find all the projects I've worked on, whether personal or those done through employment, where I was part of the development team."
         }
       }
     }

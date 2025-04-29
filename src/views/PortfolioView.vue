@@ -78,7 +78,7 @@
               target="_blank"
               rel="noopener noreferrer"
               class="cv-link"
-              >Baixar CV</a
+              >{{ t('features.portfolio.sections.intro.download_cv') }}</a
             >
           </div>
           <div class="photo-container"></div>
@@ -94,11 +94,7 @@
           }}</span>
         </div>
         <div class="description">
-          <span
-            >Aqui você encontra todos os projetos em que já trabalhei, sejam
-            pessoais ou aqueles realizados com vínculo empregatício, onde atuei
-            no time de desenvolvimento.</span
-          >
+          <span>{{ t('features.portfolio.sections.projects.description') }}</span>
         </div>
         <div class="projects-container">
           <div
@@ -111,7 +107,7 @@
               :key="project.id"
             >
               <ProjectItem
-                @click="console.log()"
+                @click="openProjectUrl(project.url)"
                 :project="project"
               />
             </div>
@@ -185,7 +181,7 @@
   import { KATAKANA_PROJECT } from '@/helpers/constants';
   import { projectsMock } from '@/helpers/projectsMock';
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
-  import { onMounted, ref, watch } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
   import type { Component, Ref } from 'vue';
 
   import { useI18n } from 'vue-i18n';
@@ -217,7 +213,8 @@
     },
   ];
 
-  const sections: ISection[] = [
+
+  const sections = computed<ISection[]>(() => [
     {
       id: 'intro',
       index: 0,
@@ -232,10 +229,14 @@
       ref: projectsSection,
       navBarHref: '#projects',
     },
-  ];
+  ]);
+
+  const openProjectUrl = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 
   const scrollToSection = (newSectionIndex: number) => {
-    const sectionInList = sections.find(
+    const sectionInList = sections.value.find(
       section => section.index == newSectionIndex,
     );
 
@@ -371,8 +372,8 @@
   };
 
   const handleMainScroll = (event: WheelEvent) => {
-    const nextSection = sections[currentSectionIndex.value + 1];
-    const previousSection = sections[currentSectionIndex.value - 1];
+    const nextSection = sections.value[currentSectionIndex.value + 1];
+    const previousSection = sections.value[currentSectionIndex.value - 1];
 
     if (event.deltaY > 0 && nextSection?.ref.value) {
       return scrollToSection(nextSection.index);
@@ -384,7 +385,7 @@
   };
 
   onMounted(() => {
-    scrollToSection(sections[0].index);
+    scrollToSection(sections.value[0].index);
 
     setupProjectsList();
     setupInitialAnimations();
