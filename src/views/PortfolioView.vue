@@ -600,7 +600,6 @@
 
       section {
         height: 100vh;
-        position: relative;
         max-height: 100vh;
         margin-bottom: 50vh;
         padding: 0 100px;
@@ -730,6 +729,7 @@
                 padding: 24px 40px;
                 font-size: 16px;
                 border: 1px solid rgba(255, 255, 255, 0.3);
+                line-height: 20px;
                 margin-top: 24px;
 
                 &:hover {
@@ -769,6 +769,7 @@
             display: flex;
 
             span {
+              z-index: 1;
               font-size: 40px;
               font-weight: 700;
               position: relative;
@@ -782,10 +783,10 @@
                 color: $primary-color;
                 letter-spacing: 0;
                 line-height: 24px;
-                z-index: -10;
                 position: absolute;
                 box-sizing: content-box;
                 top: 50%;
+                z-index: -1;
                 left: 50%;
                 transform: translate(-10%, -120%);
                 text-transform: uppercase;
