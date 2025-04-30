@@ -1,8 +1,8 @@
 <template>
   <v-snackbar
     class="snackbar"
-    v-model="getShow"
-    timeout="3000"
+    v-model="showSnackbar"
+    :timeout="3000"
     color="#39DFAA"
   >
     {{ getMessage }}
@@ -11,11 +11,17 @@
 
 <script lang="ts" setup>
   import { useSnackbarStore } from '@/stores/snackbar_store';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { storeToRefs } from 'pinia';
+
+  const showSnackbar = ref(false);
 
   const snackBarStore = useSnackbarStore();
   const { getShow, getMessage } = storeToRefs(snackBarStore);
+
+  watch(getShow, newValue => {
+    showSnackbar.value = newValue;
+  });
 </script>
 
 <style lang="scss" scoped>

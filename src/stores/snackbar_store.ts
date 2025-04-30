@@ -12,6 +12,9 @@ export const useSnackbarStore = defineStore('snackbar', {
   actions: {
     showSnackbar(message: string) {
       this.$patch({ show: true, message: message });
+      setTimeout(() => {
+        this.$patch({ show: false });
+      }, 3000);
     },
   },
 });

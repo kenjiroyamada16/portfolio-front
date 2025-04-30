@@ -36,7 +36,16 @@
         },
         "contact": {
           "title": "Contact",
-          "description": "Feel free to reach out and connect!"
+          "description": "Feel free to reach out and connect!",
+          "email_copied_message": "Email copied!",
+          "footer": {
+            "description": "Handcrafted by Nicolas Yamada © 2025",
+            "repo_tip": {
+              "first_part": "Check out this project's",
+              "link": "repository",
+              "second_part": "too."
+            }
+          }
         }
       }
     }

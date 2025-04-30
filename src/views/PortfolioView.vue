@@ -136,7 +136,7 @@
         id="contact"
         ref="contactSection"
       >
-      <div class="separator"></div>
+        <div class="separator"></div>
         <div class="contact-container">
           <SectionTitle :jp-text="KATAKANA_CONTACT">{{
             t('features.portfolio.sections.contact.title')
@@ -150,7 +150,10 @@
               class="email-contact"
               >{{ MY_EMAIL }}</a
             >
-            <div class="clipboard-button">
+            <div
+              ref="clipboardButton"
+              class="clipboard-button"
+            >
               <ClipboardCheck
                 class="clipboard-checked"
                 v-if="clipboardShowCheck"
@@ -189,16 +192,32 @@
               <component :is="socialLink.icon" />
             </a>
           </div>
-          <span class="label">Desenvolvido por Nicolas Yamada © 2025</span>
+          <span class="label">{{
+            t('features.portfolio.sections.contact.footer.description')
+          }}</span>
           <div class="repo-tip">
-            <span>Veja o</span>
-            <a :href="GITHUB_REPO_URL">repositório</a>
-            <span>desse projeto</span>
+            <span>{{
+              t(
+                'features.portfolio.sections.contact.footer.repo_tip.first_part',
+              )
+            }}</span>
+            <a
+              :href="GITHUB_REPO_URL"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{
+                t('features.portfolio.sections.contact.footer.repo_tip.link')
+              }}</a
+            >
+            <span>{{
+              t(
+                'features.portfolio.sections.contact.footer.repo_tip.second_part',
+              )
+            }}</span>
           </div>
         </footer>
       </section>
-
-      <div class="footer">
+      <div class="tip-footer">
         <div
           :class="['scroll-tip-container', { gone: currentSectionIndex != 0 }]"
         >
@@ -282,6 +301,7 @@
   const projectsListPreviousButton = ref();
   const projectsListNextButton = ref();
   const technologiesList = ref();
+  const clipboardButton = ref();
 
   const introSection = ref();
   const projectsSection = ref();
@@ -487,6 +507,22 @@
     setupProjectsList();
     setupInitialAnimations();
 
+    clipboardButton.value.addEventListener('click', () => {
+      if (clipboardShowCheck.value) return;
+
+      navigator.clipboard.writeText(MY_EMAIL).then(() => {
+        clipboardShowCheck.value = true;
+
+        snackbarStore.showSnackbar(
+          t('features.portfolio.sections.contact.email_copied_message'),
+        );
+
+        setTimeout(() => {
+          clipboardShowCheck.value = false;
+        }, 3000);
+      });
+    });
+
     window.addEventListener('wheel', (event: WheelEvent) =>
       handleMainScroll(event),
     );
@@ -658,7 +694,7 @@
         }
       }
 
-      .footer {
+      .tip-footer {
         display: flex;
         flex-direction: column;
         bottom: 0;
@@ -988,13 +1024,13 @@
                 &:hover {
                   cursor: pointer;
 
-                  & :deep(svg) {
-                    rect:first-child {
+                  .clipboard-plain {
+                    &:deep(rect:first-child) {
                       stroke: $primary-color !important;
                       fill: $primary-color !important;
                     }
 
-                    rect:last-child {
+                    &:deep(rect:last-child) {
                       stroke: $primary-color !important;
                     }
                   }
@@ -1006,7 +1042,7 @@
           footer {
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-evenly;
             justify-self: stretch;
             border-top: 1px solid #ffffff25;
             gap: 12px;
@@ -1016,7 +1052,8 @@
               height: 20px;
             }
 
-            span, a {
+            span,
+            a {
               font-size: 12px;
             }
 

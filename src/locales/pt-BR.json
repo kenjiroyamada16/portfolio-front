@@ -36,7 +36,16 @@
         },
         "contact": {
           "title": "Contato",
-          "description": "Sinta-se à vontade para entrar em contato e se conectar!"
+          "description": "Sinta-se à vontade para entrar em contato e se conectar!",
+          "email_copied_message": "Email copiado!",
+          "footer": {
+            "description": "Desenvolvido por Nicolas Yamada © 2025",
+            "repo_tip": {
+              "first_part": "Veja também o",
+              "link": "repositório",
+              "second_part": "desse projeto."
+            }
+          }
         }
       }
     }
