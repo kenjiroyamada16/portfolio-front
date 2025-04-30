@@ -81,20 +81,21 @@
               >{{ t('features.portfolio.sections.intro.download_cv') }}</a
             >
           </div>
-          <div class="photo-container"></div>
         </div>
+        <!-- Descomentar quando tiver certeza do conteúdo a mostrar aqui -->
+        <!-- <div class="languages-showcase-container"></div> -->
       </section>
       <section
         ref="projectsSection"
         id="projects"
       >
-        <div class="title-container">
-          <span :data-text="KATAKANA_PROJECT">{{
-            t('features.portfolio.sections.projects.title')
-          }}</span>
-        </div>
+        <SectionTitle :jp-text="KATAKANA_PROJECT">{{
+          t('features.portfolio.sections.projects.title')
+        }}</SectionTitle>
         <div class="description">
-          <span>{{ t('features.portfolio.sections.projects.description') }}</span>
+          <span>{{
+            t('features.portfolio.sections.projects.description')
+          }}</span>
         </div>
         <div class="projects-container">
           <div
@@ -177,6 +178,7 @@
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import ProjectItem from '@/components/ProjectItem.vue';
+  import SectionTitle from '@/components/SectionTitle.vue';
   import TechnologiesList from '@/components/TechnologiesList.vue';
   import { KATAKANA_PROJECT } from '@/helpers/constants';
   import { projectsMock } from '@/helpers/projectsMock';
@@ -212,7 +214,6 @@
       url: 'https://www.linkedin.com/in/nicolas-yamada',
     },
   ];
-
 
   const sections = computed<ISection[]>(() => [
     {
@@ -257,7 +258,7 @@
 
     originalText = element.textContent == names[0] ? names[1] : names[0];
 
-    sortLettersAnimation(element, originalText);
+    sortLettersAnimation(element, { original: originalText });
   };
 
   const presentSections = () => {
@@ -294,9 +295,13 @@
       document
         .querySelectorAll('.sort-letters')
         .forEach((element: HTMLElement) => {
-          sortLettersAnimation(element);
+          sortLettersAnimation(element, {
+            speedMs: 30,
+          });
           element.addEventListener('mouseover', event =>
-            sortLettersAnimation(event.target as HTMLElement),
+            sortLettersAnimation(event.target as HTMLElement, {
+              speedMs: 30,
+            }),
           );
         });
     }, 200);
@@ -619,9 +624,8 @@
         &#intro {
           position: relative;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: stretch;
+          justify-content: space-between;
+          align-items: center;
           gap: 12px;
           animation: present-intro 3s forwards;
 
@@ -750,7 +754,6 @@
               transition: 0.3s;
               box-shadow: 2px 2px 1px 1px $background-color,
                 56px 56px 1px 1px $primary-color;
-              background-image: url('/src/assets/images/profile_photo.jpeg');
 
               &:hover {
                 box-shadow: 2px 2px 1px 1px $background-color,
@@ -765,35 +768,6 @@
           flex-direction: column;
           padding: 100px;
           gap: 12px;
-
-          .title-container {
-            display: flex;
-
-            span {
-              z-index: 1;
-              font-size: 40px;
-              font-weight: 700;
-              position: relative;
-              text-transform: uppercase;
-
-              &::before {
-                content: attr(data-text);
-                font-size: 24px;
-                text-wrap: nowrap;
-                font-weight: 700;
-                color: $primary-color;
-                letter-spacing: 0;
-                line-height: 24px;
-                position: absolute;
-                box-sizing: content-box;
-                top: 50%;
-                z-index: -1;
-                left: 50%;
-                transform: translate(-10%, -120%);
-                text-transform: uppercase;
-              }
-            }
-          }
 
           .description {
             width: 50%;
@@ -924,9 +898,12 @@
         }
 
         .logo {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           color: white;
           transition: 0.4s scale, 0.8s color;
-          font-size: 1.5rem;
+          font-size: 24px;
           text-decoration: none;
           user-select: none;
           position: relative;
@@ -939,11 +916,14 @@
 
           &:before,
           &:after {
+            width: 100%;
             display: block;
+            font-size: 24px;
             content: attr(data-text);
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             opacity: 0.8;
           }
 
@@ -962,11 +942,13 @@
             scale: 1.1;
 
             &::before {
-              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+              animation: glitch-logo 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+                both 1;
             }
 
             &:after {
-              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+              animation: glitch-logo 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+                both 1;
             }
           }
         }
@@ -1119,6 +1101,29 @@
     }
     to {
       transform: translate(0);
+    }
+  }
+
+  @keyframes glitch-logo {
+    0% {
+      transform: translate(-50%, -50%);
+    }
+    20% {
+      transform: translate(-40%, -60%);
+      z-index: 2;
+    }
+    40% {
+      transform: translate(-40%, -40%);
+    }
+    60% {
+      transform: translate(-60%, -60%);
+      z-index: 1;
+    }
+    80% {
+      transform: translate(-51%, -40%);
+    }
+    to {
+      transform: translate(-50%, -50%);
     }
   }
 

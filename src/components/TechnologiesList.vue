@@ -45,9 +45,10 @@
     setTimeout(
       () => {
         elementSpan.textContent = initial;
-        sortLettersAnimation(elementSpan, initial, {
+        sortLettersAnimation(elementSpan, {
+          original: initial,
           speedMs: 15,
-          steps: 0.25,
+          steps: 1 / 4,
           typewrite: true,
         });
         elementContainer.classList.remove('writing');
