@@ -25,7 +25,14 @@ jobs:
           chmod 600 private_key
 
       - name: Copy image to EC2
-        run: scp -i private_key -o StrictHostKeyChecking=no portfolio.tar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "portfolio.tar"
+          target: "/home/ec2-user/portfolio.tar"
+          debug: true
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
