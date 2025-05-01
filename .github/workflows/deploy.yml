@@ -1,0 +1,42 @@
+name: Deploy to EC2 (no Docker Hub)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t portfolio:latest .
+
+      - name: Save Docker image as tarball
+        run: docker save portfolio:latest -o portfolio.tar
+
+      - name: Copy image to EC2
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "portfolio.tar"
+          target: "~/"
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker load -i ~/portfolio.tar
+            docker stop portfolio || true
+            docker rm portfolio || true
+            docker run -d -p 80:80 --name portfolio portfolio:latest
+            rm ~/portfolio.tar

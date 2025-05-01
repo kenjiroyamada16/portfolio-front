@@ -24,6 +24,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $background-color;
     animation: transition-logo 0.6s 5.5s forwards;
   }
 

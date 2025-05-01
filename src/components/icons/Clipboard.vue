@@ -1,0 +1,27 @@
+<template>
+  <svg
+    width="20"
+    height="24"
+    viewBox="0 0 23 27"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="3.5"
+      y="3.5"
+      width="19"
+      height="23"
+      rx="3.5"
+      stroke="#E9E8E2"
+    />
+    <rect
+      x="0.5"
+      y="0.5"
+      width="19"
+      height="23"
+      rx="3.5"
+      fill="#0D0F12"
+      stroke="#E9E8E2"
+    />
+  </svg>
+</template>

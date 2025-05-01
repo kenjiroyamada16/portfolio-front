@@ -34,7 +34,12 @@
       <div class="horizontal-line"></div>
       <div class="vertical-line"></div>
     </div>
-    <div class="left-aside-content">
+    <div
+      :class="[
+        'left-aside-content',
+        { hidden: currentSectionIndex == sections.length - 1 },
+      ]"
+    >
       <div class="social-info">
         <a
           v-for="socialLink in socialLinks"
@@ -81,20 +86,21 @@
               >{{ t('features.portfolio.sections.intro.download_cv') }}</a
             >
           </div>
-          <div class="photo-container"></div>
         </div>
+        <!-- Descomentar quando tiver certeza do conteúdo a mostrar aqui -->
+        <!-- <div class="languages-showcase-container"></div> -->
       </section>
       <section
         ref="projectsSection"
         id="projects"
       >
-        <div class="title-container">
-          <span :data-text="KATAKANA_PROJECT">{{
-            t('features.portfolio.sections.projects.title')
-          }}</span>
-        </div>
+        <SectionTitle :jp-text="KATAKANA_PROJECT">{{
+          t('features.portfolio.sections.projects.title')
+        }}</SectionTitle>
         <div class="description">
-          <span>{{ t('features.portfolio.sections.projects.description') }}</span>
+          <span>{{
+            t('features.portfolio.sections.projects.description')
+          }}</span>
         </div>
         <div class="projects-container">
           <div
@@ -126,7 +132,92 @@
           </div>
         </div>
       </section>
-      <div class="footer">
+      <section
+        id="contact"
+        ref="contactSection"
+      >
+        <div class="separator"></div>
+        <div class="contact-container">
+          <SectionTitle :jp-text="KATAKANA_CONTACT">{{
+            t('features.portfolio.sections.contact.title')
+          }}</SectionTitle>
+          <div class="description">
+            {{ t('features.portfolio.sections.contact.description') }}
+          </div>
+          <div class="email-contact-container">
+            <a
+              :href="`mailto:${MY_EMAIL}`"
+              class="email-contact"
+              >{{ MY_EMAIL }}</a
+            >
+            <div
+              ref="clipboardButton"
+              class="clipboard-button"
+            >
+              <ClipboardCheck
+                class="clipboard-checked"
+                v-if="clipboardShowCheck"
+              />
+              <Clipboard
+                class="clipboard-plain"
+                v-else
+              />
+            </div>
+          </div>
+          <div class="social-links-container">
+            <a
+              v-for="socialLink in socialLinks"
+              :key="socialLink.label"
+              :aria-label="socialLink.label"
+              :href="socialLink.url"
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <component :is="socialLink.icon" />
+            </a>
+          </div>
+        </div>
+        <footer>
+          <div class="social-links-container">
+            <a
+              v-for="socialLink in socialLinks"
+              :key="socialLink.label"
+              :aria-label="socialLink.label"
+              :href="socialLink.url"
+              class="social-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <component :is="socialLink.icon" />
+            </a>
+          </div>
+          <span class="label">{{
+            t('features.portfolio.sections.contact.footer.description')
+          }}</span>
+          <div class="repo-tip">
+            <span>{{
+              t(
+                'features.portfolio.sections.contact.footer.repo_tip.first_part',
+              )
+            }}</span>
+            <a
+              :href="GITHUB_REPO_URL"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{
+                t('features.portfolio.sections.contact.footer.repo_tip.link')
+              }}</a
+            >
+            <span>{{
+              t(
+                'features.portfolio.sections.contact.footer.repo_tip.second_part',
+              )
+            }}</span>
+          </div>
+        </footer>
+      </section>
+      <div class="tip-footer">
         <div
           :class="['scroll-tip-container', { gone: currentSectionIndex != 0 }]"
         >
@@ -174,21 +265,35 @@
 <script lang="ts" setup>
   import Github from '@/components/icons/Github.vue';
   import Linkedin from '@/components/icons/Linkedin.vue';
+  import Clipboard from '@/components/icons/Clipboard.vue';
+  import ClipboardCheck from '@/components/icons/ClipboardCheck.vue';
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import ProjectItem from '@/components/ProjectItem.vue';
+  import SectionTitle from '@/components/SectionTitle.vue';
   import TechnologiesList from '@/components/TechnologiesList.vue';
-  import { KATAKANA_PROJECT } from '@/helpers/constants';
+  import {
+    GITHUB_URL,
+    GITHUB_REPO_URL,
+    KATAKANA_CONTACT,
+    KATAKANA_PROJECT,
+    LINKEDIN_URL,
+    MY_EMAIL,
+  } from '@/helpers/constants';
   import { projectsMock } from '@/helpers/projectsMock';
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
+  import { useSnackbarStore } from '@/stores/snackbar_store';
   import { computed, onMounted, ref, watch } from 'vue';
   import type { Component, Ref } from 'vue';
 
   import { useI18n } from 'vue-i18n';
   const { t } = useI18n();
 
+  const snackbarStore = useSnackbarStore();
+
   const currentSectionIndex = ref(0);
   const projects = ref(projectsMock);
+  const clipboardShowCheck = ref(false);
 
   const navBar = ref();
   const sortLettersName = ref();
@@ -196,23 +301,24 @@
   const projectsListPreviousButton = ref();
   const projectsListNextButton = ref();
   const technologiesList = ref();
+  const clipboardButton = ref();
 
   const introSection = ref();
   const projectsSection = ref();
+  const contactSection = ref();
 
   const socialLinks: ISocialLink[] = [
     {
       label: t('names.github'),
       icon: Github,
-      url: 'https://github.com/kenjiroyamada16',
+      url: GITHUB_URL,
     },
     {
       label: t('names.linkedin'),
       icon: Linkedin,
-      url: 'https://www.linkedin.com/in/nicolas-yamada',
+      url: LINKEDIN_URL,
     },
   ];
-
 
   const sections = computed<ISection[]>(() => [
     {
@@ -228,6 +334,13 @@
       title: t('features.portfolio.sections.projects.title'),
       ref: projectsSection,
       navBarHref: '#projects',
+    },
+    {
+      id: 'contact',
+      index: 2,
+      title: t('features.portfolio.sections.contact.title'),
+      ref: contactSection,
+      navBarHref: '#contact',
     },
   ]);
 
@@ -257,7 +370,7 @@
 
     originalText = element.textContent == names[0] ? names[1] : names[0];
 
-    sortLettersAnimation(element, originalText);
+    sortLettersAnimation(element, { original: originalText });
   };
 
   const presentSections = () => {
@@ -294,9 +407,13 @@
       document
         .querySelectorAll('.sort-letters')
         .forEach((element: HTMLElement) => {
-          sortLettersAnimation(element);
+          sortLettersAnimation(element, {
+            speedMs: 30,
+          });
           element.addEventListener('mouseover', event =>
-            sortLettersAnimation(event.target as HTMLElement),
+            sortLettersAnimation(event.target as HTMLElement, {
+              speedMs: 30,
+            }),
           );
         });
     }, 200);
@@ -309,22 +426,6 @@
       }, 2000);
     }
   };
-
-  watch(currentSectionIndex, (newValue: number) => {
-    let previousSection = sections[newValue - 1]?.ref.value;
-    let nextSection = sections[newValue + 1]?.ref.value;
-
-    if (!(previousSection?.tagName.toLowerCase() == 'section')) {
-      previousSection = previousSection?.querySelector('section');
-    }
-
-    if (!(nextSection?.tagName.toLowerCase() == 'section')) {
-      nextSection = nextSection?.querySelector('section');
-    }
-
-    if (previousSection) previousSection.classList.add('present');
-    if (nextSection) nextSection.classList.add('present');
-  });
 
   const setupProjectsList = () => {
     projectsList.value.addEventListener('scroll', event => {
@@ -384,11 +485,43 @@
     }
   };
 
+  watch(currentSectionIndex, (newValue: number) => {
+    let previousSection = sections[newValue - 1]?.ref.value;
+    let nextSection = sections[newValue + 1]?.ref.value;
+
+    if (!(previousSection?.tagName.toLowerCase() == 'section')) {
+      previousSection = previousSection?.querySelector('section');
+    }
+
+    if (!(nextSection?.tagName.toLowerCase() == 'section')) {
+      nextSection = nextSection?.querySelector('section');
+    }
+
+    if (previousSection) previousSection.classList.add('present');
+    if (nextSection) nextSection.classList.add('present');
+  });
+
   onMounted(() => {
     scrollToSection(sections.value[0].index);
 
     setupProjectsList();
     setupInitialAnimations();
+
+    clipboardButton.value.addEventListener('click', () => {
+      if (clipboardShowCheck.value) return;
+
+      navigator.clipboard.writeText(MY_EMAIL).then(() => {
+        clipboardShowCheck.value = true;
+
+        snackbarStore.showSnackbar(
+          t('features.portfolio.sections.contact.email_copied_message'),
+        );
+
+        setTimeout(() => {
+          clipboardShowCheck.value = false;
+        }, 3000);
+      });
+    });
 
     window.addEventListener('wheel', (event: WheelEvent) =>
       handleMainScroll(event),
@@ -486,6 +619,12 @@
       margin-right: 64px;
       position: fixed;
       opacity: 0;
+      transform: translateY(0);
+      transition: transform 1s;
+
+      &.hidden {
+        transform: translateY(100%);
+      }
 
       .social-info {
         display: flex;
@@ -555,7 +694,7 @@
         }
       }
 
-      .footer {
+      .tip-footer {
         display: flex;
         flex-direction: column;
         bottom: 0;
@@ -591,7 +730,7 @@
 
           .separator {
             width: 1px;
-            height: 40px;
+            height: 24px;
             transform-origin: bottom;
             transition: 0.7s;
             background-color: white;
@@ -619,9 +758,8 @@
         &#intro {
           position: relative;
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: stretch;
+          justify-content: space-between;
+          align-items: center;
           gap: 12px;
           animation: present-intro 3s forwards;
 
@@ -750,7 +888,6 @@
               transition: 0.3s;
               box-shadow: 2px 2px 1px 1px $background-color,
                 56px 56px 1px 1px $primary-color;
-              background-image: url('/src/assets/images/profile_photo.jpeg');
 
               &:hover {
                 box-shadow: 2px 2px 1px 1px $background-color,
@@ -765,35 +902,6 @@
           flex-direction: column;
           padding: 100px;
           gap: 12px;
-
-          .title-container {
-            display: flex;
-
-            span {
-              z-index: 1;
-              font-size: 40px;
-              font-weight: 700;
-              position: relative;
-              text-transform: uppercase;
-
-              &::before {
-                content: attr(data-text);
-                font-size: 24px;
-                text-wrap: nowrap;
-                font-weight: 700;
-                color: $primary-color;
-                letter-spacing: 0;
-                line-height: 24px;
-                position: absolute;
-                box-sizing: content-box;
-                top: 50%;
-                z-index: -1;
-                left: 50%;
-                transform: translate(-10%, -120%);
-                text-transform: uppercase;
-              }
-            }
-          }
 
           .description {
             width: 50%;
@@ -879,6 +987,87 @@
             }
           }
         }
+
+        &#contact {
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          justify-content: space-between;
+          padding: 0;
+
+          .contact-container {
+            padding: 120px;
+            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .description {
+              font-size: 20px;
+              font-weight: 400;
+            }
+
+            .email-contact-container {
+              display: flex;
+              gap: 12px;
+              align-items: center;
+
+              .email-contact {
+                color: white;
+              }
+
+              .clipboard-button {
+                width: 24px;
+                height: 24px;
+
+                &:hover {
+                  cursor: pointer;
+
+                  .clipboard-plain {
+                    &:deep(rect:first-child) {
+                      stroke: $primary-color !important;
+                      fill: $primary-color !important;
+                    }
+
+                    &:deep(rect:last-child) {
+                      stroke: $primary-color !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            justify-self: stretch;
+            border-top: 1px solid #ffffff25;
+            gap: 12px;
+
+            .social-links-container .social-link svg {
+              width: 20px;
+              height: 20px;
+            }
+
+            span,
+            a {
+              font-size: 12px;
+            }
+
+            .repo-tip {
+              display: flex;
+              gap: 4px;
+              font-size: 12px;
+
+              a {
+                color: $secondary-color;
+              }
+            }
+          }
+        }
       }
     }
 
@@ -924,9 +1113,12 @@
         }
 
         .logo {
+          display: flex;
+          justify-content: center;
+          align-items: center;
           color: white;
           transition: 0.4s scale, 0.8s color;
-          font-size: 1.5rem;
+          font-size: 24px;
           text-decoration: none;
           user-select: none;
           position: relative;
@@ -939,11 +1131,14 @@
 
           &:before,
           &:after {
+            width: 100%;
             display: block;
+            font-size: 24px;
             content: attr(data-text);
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             opacity: 0.8;
           }
 
@@ -962,11 +1157,13 @@
             scale: 1.1;
 
             &::before {
-              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+              animation: glitch-logo 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+                both 1;
             }
 
             &:after {
-              animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both 1;
+              animation: glitch-logo 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+                both 1;
             }
           }
         }
@@ -1068,6 +1265,36 @@
     }
   }
 
+  .social-links-container {
+    display: flex;
+    gap: 12px;
+    margin: 12px 0;
+
+    .social-link {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      transition: 0.5s;
+
+      svg {
+        transform: scale(1.2, 1.2);
+        width: 24px;
+        height: 24px;
+        fill: white;
+        transition: 0.4s;
+      }
+
+      &:hover {
+        cursor: pointer;
+
+        svg,
+        svg path {
+          fill: $primary-color;
+        }
+      }
+    }
+  }
+
   @keyframes present-intro {
     0% {
       transform: translateY(-100%);
@@ -1119,6 +1346,29 @@
     }
     to {
       transform: translate(0);
+    }
+  }
+
+  @keyframes glitch-logo {
+    0% {
+      transform: translate(-50%, -50%);
+    }
+    20% {
+      transform: translate(-40%, -60%);
+      z-index: 2;
+    }
+    40% {
+      transform: translate(-40%, -40%);
+    }
+    60% {
+      transform: translate(-60%, -60%);
+      z-index: 1;
+    }
+    80% {
+      transform: translate(-51%, -40%);
+    }
+    to {
+      transform: translate(-50%, -50%);
     }
   }
 

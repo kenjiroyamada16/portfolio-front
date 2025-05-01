@@ -40,7 +40,7 @@
   .project {
     display: flex;
     gap: 4px;
-    width: 600px;
+    width: 480px;
     height: 100%;
     padding: 12px;
     flex-direction: column;
