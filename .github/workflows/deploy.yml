@@ -14,10 +14,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build Docker image
-        run: docker build -t portfolio:latest .
+        run: docker build -t portfolio .
 
       - name: Save Docker image as tarball
-        run: docker save portfolio:latest -o portfolio.tar
+        run: docker save portfolio -o portfolio.tar
 
       - name: Write SSH key to file
         run: |
@@ -37,5 +37,5 @@ jobs:
             docker load -i ~/portfolio.tar
             docker stop portfolio || true
             docker rm portfolio || true
-            docker run -d -p 80:80 --name portfolio portfolio:latest
+            docker run -d -p 80:80 --name portfolio portfolio
             rm ~/portfolio.tar
