@@ -37,5 +37,5 @@ jobs:
             docker load -i ~/portfolio.tar
             docker stop portfolio || true
             docker rm portfolio || true
-            docker run -d -p 80:80 --name portfolio portfolio
+            docker run -d -p 80:80 --name portfolio portfolio:latest
             rm ~/portfolio.tar
