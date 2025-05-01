@@ -19,8 +19,13 @@ jobs:
       - name: Save Docker image as tarball
         run: docker save portfolio:latest -o portfolio.tar
 
+      - name: Write SSH key to file
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > private_key
+          chmod 600 private_key
+
       - name: Copy image to EC2
-        run: scp -i ${{ secrets.EC2_SSH_KEY }} -o StrictHostKeyChecking=no portfolio.tar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/
+        run: scp -i private_key -o StrictHostKeyChecking=no portfolio.tar ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.3
