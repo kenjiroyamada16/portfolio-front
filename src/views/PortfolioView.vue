@@ -1047,9 +1047,20 @@
             border-top: 1px solid #ffffff25;
             gap: 12px;
 
-            .social-links-container .social-link svg {
-              width: 20px;
-              height: 20px;
+            > div,
+            > span {
+              flex: 1 0;
+              display: flex;
+              justify-content: center;
+            }
+
+            .social-links-container {
+              flex: 1 0;
+
+              .social-link svg {
+                width: 20px;
+                height: 20px;
+              }
             }
 
             span,
