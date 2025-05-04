@@ -6,15 +6,13 @@
 </template>
 
 <script lang="ts" setup>
-import DefaultSnackbar from './components/DefaultSnackbar.vue';
-
+  import DefaultSnackbar from './components/DefaultSnackbar.vue';
 </script>
 
 <style lang="scss" scoped>
   .container {
     display: flex;
-    max-width: 100vw;
-    width: 100vw;
+    width: 100%;
     height: 100%;
     overflow: hidden;
   }
