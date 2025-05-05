@@ -1,4 +1,4 @@
-name: Deploy to EC2 (no Docker Hub)
+name: Deploy to EC2
 
 on:
   push:

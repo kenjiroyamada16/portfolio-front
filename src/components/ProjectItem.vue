@@ -84,7 +84,7 @@
     }
 
     .technologies-list {
-      margin-top: 20px;
+      margin-top: auto;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
@@ -96,6 +96,39 @@
 
         .technology-label {
           font-weight: 200;
+        }
+      }
+    }
+
+    @media (width <= $desktop-min-width) {
+      width: 280px;
+      padding: 8px;
+      gap: 4px;
+
+      .title {
+        font-size: 20px;
+      }
+
+      .author {
+        font-size: 12px;
+      }
+
+      .short-description {
+        font-size: 14px;
+      }
+
+      .technologies-list {
+        gap: 8px;
+
+        .technology {
+          padding: 4px 16px;
+          border-radius: 50px;
+          border: 1px solid $primary-color;
+
+          .technology-label {
+            font-size: 12px;
+            font-weight: 400;
+          }
         }
       }
     }

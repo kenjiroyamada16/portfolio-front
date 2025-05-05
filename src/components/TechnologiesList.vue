@@ -123,4 +123,12 @@
       }
     }
   }
+
+  @media (width <= $desktop-min-width) {
+    .technologies-list {
+      .current-technology {
+        font-size: 32px;
+      }
+    }
+  }
 </style>

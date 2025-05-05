@@ -22,8 +22,10 @@
       </v-tooltip>
     </div>
     <div
-      class="selector-items"
-      :class="{ open: isOpen }"
+      :class="[
+        'selector-items ',
+        { 'no-animation': props.disableAnimation, open: isOpen },
+      ]"
     >
       <div
         class="item"
@@ -46,6 +48,10 @@
 
   const isOpen = ref(false);
   const elementOutsideClicksListener = ref();
+
+  const props = defineProps<{
+    disableAnimation?: boolean;
+  }>();
 
   const languages = computed(() => [
     {
@@ -101,6 +107,18 @@
       transition: transform 0.7s, opacity 0.5s, visibility 0.45s;
       background-color: $background-color;
       border: 1px solid $primary-color;
+
+      &.no-animation {
+        left: 50%;
+        transform: translate(0, 12px);
+
+        &.open {
+          visibility: visible;
+          opacity: 1;
+          left: 50%;
+          transform: translate(-50%, 12px);
+        }
+      }
 
       &.open {
         visibility: visible;
