@@ -24,11 +24,111 @@ body {
 
 *::-webkit-scrollbar {
   height: 8px;
-  width: 8px;
+  width: 4px;
   background: transparent;
 }
 
 *::-webkit-scrollbar-thumb {
   background: $scrollbar-color;
   -webkit-border-radius: 50px;
+}
+
+@keyframes present-intro {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes show-element {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    mask-position: 0 250%;
+  }
+}
+
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+    z-index: 2;
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+    z-index: 1;
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-logo {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  20% {
+    transform: translate(-40%, -60%);
+    z-index: 2;
+  }
+  40% {
+    transform: translate(-40%, -40%);
+  }
+  60% {
+    transform: translate(-60%, -60%);
+    z-index: 1;
+  }
+  80% {
+    transform: translate(-51%, -40%);
+  }
+  to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes glitch-more {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-6px, 4px);
+    z-index: 2;
+  }
+  40% {
+    transform: translate(-4px, -4px);
+  }
+  60% {
+    transform: translate(4px, 6px);
+    z-index: 1;
+  }
+  80% {
+    transform: translate(4px, -4px);
+  }
+  to {
+    transform: translate(0);
+  }
 }

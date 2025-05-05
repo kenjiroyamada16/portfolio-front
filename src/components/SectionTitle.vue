@@ -57,5 +57,16 @@
       opacity: 0;
       transition: 0.3s;
     }
+
+    @media (width <= $desktop-min-width) {
+      span {
+        font-size: 32px;
+
+        &::before {
+          font-size: 20px;
+          line-height: 20px;
+        }
+      }
+    }
   }
 </style>
