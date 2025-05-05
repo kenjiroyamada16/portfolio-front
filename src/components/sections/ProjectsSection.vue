@@ -59,7 +59,7 @@
     projectsList.value.scrollIntoView({
       behavior: 'smooth',
     });
-  }
+  };
 
   const openProjectUrl = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -92,7 +92,7 @@
       if (Math.ceil(scrollLeft + clientWidth) >= scrollWidth) return;
 
       projectsList.value.scrollTo({
-        left: scrollLeft + clientWidth / 2,
+        left: scrollLeft + clientWidth / 1.05,
         behavior: 'smooth',
       });
     });
@@ -104,7 +104,7 @@
       if (scrollLeft <= 0) return;
 
       projectsList.value.scrollTo({
-        left: scrollLeft - clientWidth / 2,
+        left: scrollLeft - clientWidth / 1.05,
         behavior: 'smooth',
       });
     });
@@ -121,7 +121,9 @@
 
 <style lang="scss" scoped>
   #projects {
+    min-height: 100vh;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     padding: 100px;
     gap: 12px;
@@ -136,14 +138,15 @@
     .projects-container {
       display: flex;
       width: 100%;
-      height: 100%;
       position: relative;
 
-      &:hover {
-        .previous-button,
-        .next-button {
-          opacity: 1;
-          transform: translate(0, -100%);
+      @media (width > $desktop-min-width) {
+        &:hover {
+          .previous-button,
+          .next-button {
+            opacity: 1;
+            transform: translate(0, -100%);
+          }
         }
       }
 
@@ -169,7 +172,7 @@
         }
 
         &.hidden {
-          cursor: default;
+          pointer-events: none;
           opacity: 0;
         }
       }
@@ -207,6 +210,32 @@
           $background-color 99%,
           transparent
         );
+      }
+    }
+
+    @media (width <= $desktop-min-width) {
+      padding: 24px;
+
+      .projects-container {
+        .projects-list {
+          gap: 16px;
+        }
+
+        .previous-button,
+        .next-button {
+          opacity: 1;
+          top: 100%;
+          transform: translateX(0);
+        }
+      }
+    }
+
+    @media (width <= 900px) {
+      padding: 16px;
+
+      .description {
+        width: 100%;
+        font-size: 16px;
       }
     }
   }

@@ -347,12 +347,16 @@
     background-color: #0d0f12ac;
     backdrop-filter: blur(16px);
     z-index: 20;
-    display: flex;
+    display: none;
     justify-content: space-between;
     flex-direction: column;
     align-items: stretch;
     transform: translateX(0);
     transition: 0.7s;
+
+    @media (width <= $desktop-min-width) {
+      display: flex;
+    }
 
     &.hidden {
       transform: translateX(100%);
