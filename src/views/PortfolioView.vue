@@ -121,6 +121,10 @@
           </a>
         </li>
       </ul>
+      <LocaleSelector
+        style="margin-top: 40px"
+        :disable-animation="true"
+      />
     </div>
     <div class="social-links-container">
       <div
@@ -139,6 +143,22 @@
           <component :is="socialLink.icon" />
         </a>
       </div>
+      <div class="repo-tip">
+        <span>{{
+          t('features.portfolio.sections.contact.footer.repo_tip.first_part')
+        }}</span>
+        <a
+          :href="GITHUB_REPO_URL"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{
+            t('features.portfolio.sections.contact.footer.repo_tip.link')
+          }}</a
+        >
+        <span>{{
+          t('features.portfolio.sections.contact.footer.repo_tip.second_part')
+        }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -151,7 +171,11 @@
   import ProjectsSection from '@/components/sections/ProjectsSection.vue';
   import ContactSection from '@/components/sections/ContactSection.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
-  import { GITHUB_URL, LINKEDIN_URL, MY_EMAIL } from '@/helpers/constants';
+  import {
+    GITHUB_URL,
+    LINKEDIN_URL,
+    GITHUB_REPO_URL,
+  } from '@/helpers/constants';
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
   import { computed, onMounted, ref, watch } from 'vue';
   import type { Component, Ref } from 'vue';
@@ -436,8 +460,27 @@
 
     .social-links-container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       padding: 32px;
+      gap: 24px;
+
+      .repo-tip {
+        display: flex;
+        justify-content: center;
+        flex-wrap: nowrap;
+        gap: 4px;
+        font-size: 12px;
+
+        a {
+          color: $secondary-color;
+        }
+
+        @media (width <= 290px) {
+          flex-direction: column;
+          text-align: center;
+        }
+      }
     }
   }
 

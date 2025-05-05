@@ -3,7 +3,6 @@
     id="contact"
     ref="contactSection"
   >
-    <div class="separator"></div>
     <div class="contact-container">
       <SectionTitle :jp-text="KATAKANA_CONTACT">{{
         t('features.portfolio.sections.contact.title')
@@ -128,7 +127,7 @@
 
 <style lang="scss" scoped>
   #contact {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -141,10 +140,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      flex: 2;
 
       .description {
         font-size: 20px;
         font-weight: 400;
+        text-align: center;
       }
 
       .email-contact-container {
@@ -244,6 +246,61 @@
           svg path {
             fill: $primary-color;
           }
+        }
+      }
+    }
+
+    @media (width <= $desktop-min-width) {
+      height: 100%;
+      padding: 0;
+
+      .contact-container {
+        padding: 0 24px;
+        gap: 16px;
+
+        .description {
+          font-size: 16px;
+          text-align: center;
+        }
+
+        .email-contact-container {
+          flex-wrap: wrap;
+          gap: 8px;
+          justify-content: center;
+
+          .email-contact {
+            font-size: 16px;
+          }
+        }
+
+        .social-links-container {
+          gap: 4px;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+
+      footer {
+        padding: 8px 0;
+        flex-direction: column-reverse;
+
+        .label {
+          text-align: center;
+        }
+
+        .social-links-container {
+          gap: 4px;
+
+          svg {
+            width: 12px;
+          }
+        }
+
+        .repo-tip {
+          display: none;
         }
       }
     }

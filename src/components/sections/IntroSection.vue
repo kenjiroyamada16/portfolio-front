@@ -372,6 +372,15 @@
           }
         }
       }
+
+      .scroll-tip-container {
+        position: absolute;
+        bottom: 0;
+
+        .scroll-tip {
+          margin: 0;
+        }
+      }
     }
   }
 </style>

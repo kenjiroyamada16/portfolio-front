@@ -127,6 +127,7 @@
     flex-direction: column;
     padding: 100px;
     gap: 12px;
+    margin-bottom: 40px;
 
     .description {
       width: 50%;
