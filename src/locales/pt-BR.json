@@ -63,7 +63,8 @@
             "github": "Github",
             "git": "Git",
             "docker": "Docker",
-            "firebase": "Firebase"
+            "firebase": "Firebase",
+            "node": "Node.js"
           }
         },
         "contact": {
