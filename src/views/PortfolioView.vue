@@ -45,6 +45,7 @@
         ref="projectsSection"
         :social-links="socialLinks"
       />
+      <SkillsSection ref="skillsSection" />
       <ContactSection
         ref="contactSection"
         :social-links="socialLinks"
@@ -183,15 +184,18 @@
   import { useI18n } from 'vue-i18n';
   import MainNavBar from '@/components/MainNavBar.vue';
   import { useDisplay } from 'vuetify';
+  import SkillsSection from '@/components/sections/SkillsSection.vue';
 
-  const { t } = useI18n();
-  const { mobile } = useDisplay({ mobileBreakpoint: 600 });
+  const { t, locale } = useI18n();
+  const { mobile } = useDisplay({ mobileBreakpoint: 760 });
 
   const currentSectionIndex = ref(0);
 
   const introSection = ref();
   const projectsSection = ref();
   const contactSection = ref();
+  const skillsSection = ref();
+
   const content = ref();
 
   const isMobileMenuOpen = ref(false);
@@ -226,8 +230,15 @@
       navBarHref: '#projects',
     },
     {
-      id: 'contact',
+      id: 'skills',
       index: 2,
+      title: t('features.portfolio.sections.skills.title'),
+      ref: skillsSection,
+      navBarHref: '#skills',
+    },
+    {
+      id: 'contact',
+      index: 3,
       title: t('features.portfolio.sections.contact.title'),
       ref: contactSection,
       navBarHref: '#contact',
@@ -641,6 +652,7 @@
         opacity: 0;
         position: fixed;
         left: 50%;
+        transform: translate(-50%, 0);
         justify-content: center;
         align-items: center;
         animation: show-element 1s 3s forwards;

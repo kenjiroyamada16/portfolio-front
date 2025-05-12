@@ -26,11 +26,15 @@
           target="_blank"
           rel="noopener noreferrer"
           class="cv-link"
+          download
           >{{ t('features.portfolio.sections.intro.download_cv') }}</a
         >
       </div>
       <div class="photo-container">
-        <img src="/src/assets/images/profile_photo.jpg" />
+        <img
+          src="/src/assets/images/profile_photo.webp"
+          loading="lazy"
+        />
       </div>
     </div>
     <div :class="['scroll-tip-container', { gone: !isMobile }]">
