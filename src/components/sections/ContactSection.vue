@@ -1,12 +1,11 @@
 <template>
-  <section
-    id="contact"
-    ref="contactSection"
-  >
+  <section id="contact">
     <div class="contact-container">
-      <SectionTitle :jp-text="KATAKANA_CONTACT">{{
-        t('features.portfolio.sections.contact.title')
-      }}</SectionTitle>
+      <SectionTitle
+        :key="$i18n.locale"
+        :jp-text="KATAKANA_CONTACT"
+        >{{ $t('features.portfolio.sections.contact.title') }}</SectionTitle
+      >
       <div class="description">
         {{ t('features.portfolio.sections.contact.description') }}
       </div>

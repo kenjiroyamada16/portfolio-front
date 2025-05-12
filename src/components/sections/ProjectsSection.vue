@@ -1,13 +1,12 @@
 <template>
-  <section
-    ref="projectsSection"
-    id="projects"
-  >
-    <SectionTitle :jp-text="KATAKANA_PROJECT">{{
-      t('features.portfolio.sections.projects.title')
-    }}</SectionTitle>
+  <section id="projects">
+    <SectionTitle
+      :key="$i18n.locale"
+      :jp-text="KATAKANA_PROJECT"
+      >{{ $t('features.portfolio.sections.projects.title') }}</SectionTitle
+    >
     <div class="description">
-      <span>{{ t('features.portfolio.sections.projects.description') }}</span>
+      <span>{{ $t('features.portfolio.sections.projects.description') }}</span>
     </div>
     <div class="projects-container">
       <div
@@ -47,9 +46,6 @@
   import { KATAKANA_PROJECT } from '@/helpers/constants';
   import { projectsMock } from '@/helpers/projectsMock';
   import { onMounted, ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
-
-  const { t } = useI18n();
 
   const projectsList = ref();
   const projectsListPreviousButton = ref();
