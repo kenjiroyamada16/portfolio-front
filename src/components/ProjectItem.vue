@@ -8,6 +8,7 @@
       :alt="project.title"
       draggable="false"
       class="banner"
+      loading="lazy"
     />
     <div class="title">{{ project.title }}</div>
     <div class="author">{{ project.author }}</div>

@@ -14,7 +14,7 @@
       "technologies": {
         "flutter": "Flutter",
         "rails": "Ruby on Rails",
-        "dart": "dart",
+        "dart": "Dart",
         "vue": "Vue",
         "kotlin": "Kotlin"
       },
@@ -36,7 +36,35 @@
         },
         "skills": {
           "title": "Technologies",
-          "description": "Languages, frameworks, and tools I use in my day-to-day work"
+          "description": "Languages, frameworks, and tools I use in my day-to-day work.",
+          "used_in_portfolio_label": "This portfolio was built with:",
+          "areas": {
+            "mobile": "Mobile",
+            "backend": "Backend and Database",
+            "frontend": "Frontend",
+            "devops": "DevOps and Development"
+          },
+          "technologies": {
+            "flutter": "Flutter",
+            "rails": "Ruby on Rails",
+            "dart": "Dart",
+            "vue": "Vue.js",
+            "react": "React",
+            "kotlin": "Kotlin",
+            "android": "Android",
+            "mysql": "MySQL",
+            "redis": "Redis",
+            "javascript": "JavaScript",
+            "typescript": "TypeScript",
+            "aws": "AWS",
+            "html": "HTML",
+            "css": "CSS",
+            "scss": "SCSS",
+            "github": "Github",
+            "git": "Git",
+            "docker": "Docker",
+            "firebase": "Firebase"
+          }
         },
         "contact": {
           "title": "Contact",

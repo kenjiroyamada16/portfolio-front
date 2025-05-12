@@ -26,12 +26,49 @@
               :text="skill.name"
             >
               <template #activator="{ props }">
-                <div v-bind="props">
+                <div
+                  v-bind="props"
+                  style="
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  "
+                >
                   <component :is="skill.icon" />
                 </div>
               </template>
             </v-tooltip>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-skills-container">
+      <span class="label">{{
+        $t('features.portfolio.sections.skills.used_in_portfolio_label')
+      }}</span>
+      <div class="portfolio-skills">
+        <div
+          v-for="skill in skillsInPortfolio"
+          :key="skill.id"
+          class="skill"
+        >
+          <v-tooltip
+            :open-on-click="true"
+            :text="skill.name"
+          >
+            <template #activator="{ props }">
+              <div
+                v-bind="props"
+                style="
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
+                <component :is="skill.icon" />
+              </div>
+            </template>
+          </v-tooltip>
         </div>
       </div>
     </div>
@@ -41,30 +78,17 @@
 <script lang="ts" setup>
   import { KATAKANA_SKILLS } from '@/helpers/constants';
   import SectionTitle from '../SectionTitle.vue';
-  import { computed, type Component } from 'vue';
+  import { computed, defineAsyncComponent, type Component } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
-  import FlutterLogo from '../icons/skills/FlutterLogo.vue';
-  import DartLogo from '../icons/skills/DartLogo.vue';
-  import KotlinLogo from '../icons/skills/KotlinLogo.vue';
-  import AndroidLogo from '../icons/skills/AndroidLogo.vue';
-  import VueLogo from '../icons/skills/VueLogo.vue';
-  import ReactLogo from '../icons/skills/ReactLogo.vue';
-  import HtmlLogo from '../icons/skills/HtmlLogo.vue';
-  import CssLogo from '../icons/skills/CssLogo.vue';
-  import JavascriptLogo from '../icons/skills/JavascriptLogo.vue';
-  import TypescriptLogo from '../icons/skills/TypescriptLogo.vue';
-  import ScssLogo from '../icons/skills/ScssLogo.vue';
-  import RailsLogo from '../icons/skills/RailsLogo.vue';
-  import MySqlLogo from '../icons/skills/MySqlLogo.vue';
-  import RedisLogo from '../icons/skills/RedisLogo.vue';
-  import AwsLogo from '../icons/skills/AwsLogo.vue';
-  import DockerLogo from '../icons/skills/DockerLogo.vue';
-  import GitLogo from '../icons/skills/GitLogo.vue';
-  import GithubLogo from '../icons/skills/GithubLogo.vue';
-  import GitlabLogo from '../icons/skills/GitlabLogo.vue';
+  const { t } = useI18n();
+
+  const skillsInPortfolio = computed(() => {
+    return skills.value.filter(skill => skill.usedInPortfolio);
+  });
 
   const skillsByStack = computed(() => {
-    return skills.reduce((acc, skill) => {
+    return skills.value.reduce((acc, skill) => {
       if (!acc[skill.stack]) {
         acc[skill.stack] = [];
       }
@@ -73,132 +97,186 @@
     }, {} as Record<string, ISkill[]>);
   });
 
-  const skills: ISkill[] = [
+  const skills = computed<ISkill[]>(() => [
     {
       id: 1,
-      name: 'Flutter',
-      stack: 'Mobile',
-      icon: FlutterLogo,
+      name: t('features.portfolio.sections.skills.technologies.flutter'),
+      stack: t('features.portfolio.sections.skills.areas.mobile'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/FlutterLogo.vue'),
+      ),
     },
     {
       id: 2,
-      name: 'Dart',
-      stack: 'Mobile',
-      icon: DartLogo,
+      name: t('features.portfolio.sections.skills.technologies.dart'),
+      stack: t('features.portfolio.sections.skills.areas.mobile'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/DartLogo.vue'),
+      ),
     },
     {
       id: 3,
-      name: 'Kotlin',
-      stack: 'Mobile',
-      icon: KotlinLogo,
+      name: t('features.portfolio.sections.skills.technologies.kotlin'),
+      stack: t('features.portfolio.sections.skills.areas.mobile'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/KotlinLogo.vue'),
+      ),
     },
     {
       id: 4,
-      name: 'Android',
-      stack: 'Mobile',
-      icon: AndroidLogo,
+      name: t('features.portfolio.sections.skills.technologies.android'),
+      stack: t('features.portfolio.sections.skills.areas.mobile'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/AndroidLogo.vue'),
+      ),
     },
     {
       id: 5,
-      name: 'React',
-      stack: 'Frontend',
-      icon: ReactLogo,
+      name: t('features.portfolio.sections.skills.technologies.react'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/ReactLogo.vue'),
+      ),
     },
     {
       id: 6,
-      name: 'Vue.js',
-      stack: 'Frontend',
-      icon: VueLogo,
+      name: t('features.portfolio.sections.skills.technologies.vue'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/VueLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 7,
-      name: 'HTML',
-      stack: 'Frontend',
-      icon: HtmlLogo,
+      name: t('features.portfolio.sections.skills.technologies.html'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/HtmlLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 8,
-      name: 'CSS',
-      stack: 'Frontend',
-      icon: CssLogo,
+      name: t('features.portfolio.sections.skills.technologies.css'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/CssLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 9,
-      name: 'Javascript',
-      stack: 'Frontend',
-      icon: JavascriptLogo,
+      name: t('features.portfolio.sections.skills.technologies.javascript'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/JavascriptLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 10,
-      name: 'Typescript',
-      stack: 'Frontend',
-      icon: TypescriptLogo,
+      name: t('features.portfolio.sections.skills.technologies.typescript'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/TypescriptLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 11,
-      name: 'SCSS',
-      stack: 'Frontend',
-      icon: ScssLogo,
+      name: t('features.portfolio.sections.skills.technologies.scss'),
+      stack: t('features.portfolio.sections.skills.areas.frontend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/ScssLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 12,
-      name: 'Ruby on Rails',
-      stack: 'Backend e Banco de Dados',
-      icon: RailsLogo,
+      name: t('features.portfolio.sections.skills.technologies.rails'),
+      stack: t('features.portfolio.sections.skills.areas.backend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/RailsLogo.vue'),
+      ),
     },
     {
       id: 13,
-      name: 'MySQL',
-      stack: 'Backend e Banco de Dados',
-      icon: MySqlLogo,
+      name: t('features.portfolio.sections.skills.technologies.mysql'),
+      stack: t('features.portfolio.sections.skills.areas.backend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/MySqlLogo.vue'),
+      ),
     },
     {
       id: 14,
-      name: 'Redis',
-      stack: 'Backend e Banco de Dados',
-      icon: RedisLogo,
+      name: t('features.portfolio.sections.skills.technologies.redis'),
+      stack: t('features.portfolio.sections.skills.areas.backend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/RedisLogo.vue'),
+      ),
     },
     {
       id: 15,
-      name: 'Docker',
-      stack: 'DevOps',
-      icon: DockerLogo,
+      name: t('features.portfolio.sections.skills.technologies.docker'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/DockerLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 16,
-      name: 'AWS',
-      stack: 'DevOps',
-      icon: AwsLogo,
+      name: t('features.portfolio.sections.skills.technologies.aws'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/AwsLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 17,
-      name: 'Git',
-      stack: 'DevOps',
-      icon: GitLogo,
+      name: t('features.portfolio.sections.skills.technologies.git'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/GitLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 18,
-      name: 'GitHub',
-      stack: 'DevOps',
-      icon: GithubLogo,
+      name: t('features.portfolio.sections.skills.technologies.github'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/GithubLogo.vue'),
+      ),
       usedInPortfolio: true,
     },
     {
       id: 19,
-      name: 'GitLab',
-      stack: 'DevOps',
-      icon: GitlabLogo,
+      name: t('features.portfolio.sections.skills.technologies.gitlab'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/GitlabLogo.vue'),
+      ),
     },
-  ];
+    {
+      id: 20,
+      name: t('features.portfolio.sections.skills.technologies.firebase'),
+      stack: t('features.portfolio.sections.skills.areas.devops'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/FirebaseLogo.vue'),
+      ),
+    },
+    {
+      id: 20,
+      name: t('features.portfolio.sections.skills.technologies.node'),
+      stack: t('features.portfolio.sections.skills.areas.backend'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/NodeLogo.vue'),
+      ),
+    },
+  ]);
 
   interface ISkill {
     id: number;
@@ -231,7 +309,7 @@
         box-shadow: 2px 2px rgba(0, 0, 0, 0.3), -2px -2px rgba(0, 0, 0, 0.3);
         transition: 0.5s;
         position: relative;
-        padding: 24px;
+        padding: 40px 24px;
         justify-content: center;
         box-sizing: border-box;
         width: 100%;
@@ -244,10 +322,11 @@
         }
 
         .stack-name {
-          font-size: 24px;
+          font-size: 20px;
           font-weight: 700;
           text-transform: uppercase;
           position: absolute;
+          text-overflow: ellipsis;
           top: 0;
           left: 0;
           padding: 0 4px;
@@ -259,6 +338,7 @@
           display: flex;
           gap: 8px;
           flex-wrap: wrap;
+          width: 100%;
 
           .skill {
             display: flex;
@@ -277,6 +357,42 @@
               width: 40px;
               height: 40px;
             }
+          }
+        }
+      }
+    }
+
+    .portfolio-skills-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+
+      .label {
+        text-align: center;
+        font-size: 20px;
+      }
+
+      .portfolio-skills {
+        display: flex;
+        gap: 4px;
+        justify-content: center;
+
+        .skill {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 12px;
+          border-radius: 50%;
+          transition: 0.2s;
+
+          &:hover {
+            background-color: #1c1c1c;
+          }
+
+          &:deep(svg) {
+            width: 32px;
+            height: 32px;
           }
         }
       }
@@ -313,7 +429,21 @@
             top: -8px;
             left: -8px;
             transform: translate(-12px, -16px);
+            display: -webkit-box;
+            line-clamp: 2;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            width: 100%;
+            -webkit-box-orient: vertical;
           }
+        }
+      }
+
+      .portfolio-skills-container {
+        .portfolio-skills {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
         }
       }
     }

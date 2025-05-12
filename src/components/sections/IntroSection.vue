@@ -32,7 +32,7 @@
       </div>
       <div class="photo-container">
         <img
-          src="/src/assets/images/profile_photo.jpg"
+          src="/src/assets/images/profile_photo.webp"
           loading="lazy"
         />
       </div>
