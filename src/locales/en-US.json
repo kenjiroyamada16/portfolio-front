@@ -60,8 +60,9 @@
             "html": "HTML",
             "css": "CSS",
             "scss": "SCSS",
-            "github": "Github",
+            "github": "GitHub",
             "git": "Git",
+            "gitlab": "GitLab",
             "docker": "Docker",
             "firebase": "Firebase",
             "node": "Node.js"
