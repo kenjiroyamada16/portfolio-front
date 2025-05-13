@@ -34,6 +34,11 @@
           "title": "Projects",
           "description": "Here you can find all the projects I've worked on, whether personal or those done through employment, where I was part of the development team."
         },
+        "experience": {
+          "title": "Work Experience",
+          "navbar_title": "Experience",
+          "description": "Discover my professional journey, from the most recent roles to my earliest projects."
+        },
         "skills": {
           "title": "Technologies",
           "description": "Languages, frameworks, and tools I use in my day-to-day work.",

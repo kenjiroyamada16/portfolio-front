@@ -34,6 +34,11 @@
           "title": "Projetos",
           "description": "Aqui você encontra todos os projetos em que já trabalhei, sejam pessoais ou aqueles realizados com vínculo empregatício, nos quais atuei no time de desenvolvimento."
         },
+        "experience": {
+          "title": "Experiência Profissional",
+          "navbar_title": "Experiência",
+          "description": "Conheça minha trajetória profissional, da atuação mais recente aos primeiros projetos."
+        },
         "skills": {
           "title": "Tecnologias",
           "description": "Linguagens, frameworks e ferramentas que utilizo no meu dia-a-dia.",

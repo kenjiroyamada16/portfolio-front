@@ -21,7 +21,7 @@
             :href="section.navBarHref"
             @click.prevent="emits('scrollToSection', section.index)"
           >
-            {{ section.title }}
+            {{ section.navBarTitle || section.title }}
           </a>
         </li>
       </ul>

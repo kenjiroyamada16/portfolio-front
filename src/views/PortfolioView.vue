@@ -45,6 +45,7 @@
         ref="projectsSection"
         :social-links="socialLinks"
       />
+      <ExperienceSection ref="experienceSection" />
       <SkillsSection ref="skillsSection" />
       <ContactSection
         ref="contactSection"
@@ -118,7 +119,7 @@
             :href="section.navBarHref"
             @click.prevent="mobileNavSection(section.index)"
           >
-            {{ section.title }}
+            {{ section.navBarTitle || section.title }}
           </a>
         </li>
       </ul>
@@ -171,6 +172,7 @@
   import IntroSection from '@/components/sections/IntroSection.vue';
   import ProjectsSection from '@/components/sections/ProjectsSection.vue';
   import ContactSection from '@/components/sections/ContactSection.vue';
+  import ExperienceSection from '@/components/sections/ExperienceSection.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import {
     GITHUB_URL,
@@ -193,6 +195,7 @@
 
   const introSection = ref();
   const projectsSection = ref();
+  const experienceSection = ref();
   const contactSection = ref();
   const skillsSection = ref();
 
@@ -230,15 +233,23 @@
       navBarHref: '#projects',
     },
     {
-      id: 'skills',
+      id: 'experience',
       index: 2,
+      title: t('features.portfolio.sections.experience.title'),
+      ref: experienceSection,
+      navBarHref: '#experience',
+      navBarTitle: t('features.portfolio.sections.experience.navbar_title'),
+    },
+    {
+      id: 'skills',
+      index: 3,
       title: t('features.portfolio.sections.skills.title'),
       ref: skillsSection,
       navBarHref: '#skills',
     },
     {
       id: 'contact',
-      index: 3,
+      index: 4,
       title: t('features.portfolio.sections.contact.title'),
       ref: contactSection,
       navBarHref: '#contact',
@@ -362,6 +373,7 @@
     title: string;
     ref: Ref<HTMLElement>;
     navBarHref: string;
+    navBarTitle?: string;
   }
 
   export interface ISocialLink {
