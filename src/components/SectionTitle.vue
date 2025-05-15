@@ -57,6 +57,12 @@
       transition: 0.3s;
     }
 
+    @media (width <= 800px) {
+      span {
+        font-size: 32px;
+      }
+    }
+
     @media (width <= $desktop-min-width) {
       span {
         font-size: 28px;

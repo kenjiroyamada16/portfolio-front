@@ -45,7 +45,11 @@
         ref="projectsSection"
         :social-links="socialLinks"
       />
-      <ExperienceSection ref="experienceSection" />
+      <ExperienceSection
+        @on-mouse-leave-experience-list="toggleMainScroll(true)"
+        @on-mouse-enter-experience-list="toggleMainScroll(false)"
+        ref="experienceSection"
+      />
       <SkillsSection ref="skillsSection" />
       <ContactSection
         ref="contactSection"
@@ -334,6 +338,14 @@
     closeMobileMenu();
   };
 
+  const toggleMainScroll = (isActive: boolean) => {
+    if (isActive) {
+      window.addEventListener('wheel', handleMainScroll);
+    } else {
+      window.removeEventListener('wheel', handleMainScroll);
+    }
+  };
+
   const openMobileMenu = () => (isMobileMenuOpen.value = true);
   const closeMobileMenu = () => (isMobileMenuOpen.value = false);
 
@@ -358,9 +370,8 @@
 
     setupInitialAnimations();
 
-    window.addEventListener('wheel', (event: WheelEvent) =>
-      handleMainScroll(event),
-    );
+    window.addEventListener('wheel', handleMainScroll);
+
     content.value.addEventListener(
       'scroll',
       () => (showMobileHeader.value = content.value.scrollTop >= 400),

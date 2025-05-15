@@ -9,6 +9,14 @@
     "linkedin": "LinkedIn",
     "portfolio": "Portfolio"
   },
+  "conjunctives": {
+    "and": "e"
+   },
+  "date_time": {
+    "count_years": "{count}_ano | {count}_anos",
+    "count_months": "{count}_mês | {count}_meses",
+    "count_days": "{count}_dia | {count}_dias"
+  },
   "features": {
     "portfolio": {
       "technologies": {
