@@ -46,7 +46,7 @@ export const experiencesMock: IExperience[] = [
     bannerUrl: jeraBanner,
     description:
       'Desenvolvimento Android utilizando Kotlin: Injeção de dependências com Koin e Hilt, Room Database, consumo de RESTful APIs com Retrofit, Android Jetpack, Coroutines, Flows, Jetpack Compose, Configuração do Gradle e Android SDK. Além de aplicação de arquiteturas como MVVM e deploy da aplicação na Play Store.',
-    startDate: '2022-09',
+    startDate: '2021-07',
     finishDate: '2022-11',
     skills: [
       'Android',
