@@ -46,7 +46,10 @@
               {{ skill }}
             </div>
           </div>
-          <div class="details-tip-container">
+          <div
+            v-if="enableDetails"
+            class="details-tip-container"
+          >
             <span
               v-if="isExpanded"
               class="details-tip"
@@ -81,6 +84,10 @@
 
   const isExpanded = ref(false);
 
+  const enableDetails = computed(() => {
+    return props.experience.description || props.experience.skills.length >= 1;
+  });
+
   const getSkills = computed<string[]>(() => {
     const skillsList = props.experience.skills.slice();
 
@@ -91,10 +98,10 @@
     skillsList.splice(3, 0, '...');
 
     return skillsList.slice(0, 4);
-  })
+  });
 
   const toggleExpandable = () => {
-    isExpanded.value = !isExpanded.value;
+    if (enableDetails.value) isExpanded.value = !isExpanded.value;
   };
 
   const emits = defineEmits([

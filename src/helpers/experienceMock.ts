@@ -74,9 +74,20 @@ export const experiencesMock: IExperience[] = [
     company: 'Jera',
     role: 'Desenvolvedor Full Stack',
     bannerUrl: jeraBanner,
-    description: '',
+    description:
+      'Desenvolvimento Full Stack paralelo ao Desenvolvimento Mobile com Flutter (realizei os dois ao mesmo tempo). Criação de interfaces utilizando Vue.js com Typescript e desenvolvimento de APIs RESTful com Ruby on Rails; Deploy de aplicações na AWS (S3 e EC2) utilizando Gitlab CI; Desenvolvimento e deploy na AWS de API interna para mensagens automatizadas via Whatsapp, consumindo a Evolution API;',
     startDate: '2024-11',
     finishDate: '2025-04',
-    skills: [],
+    skills: [
+      'Vue.js',
+      'Ruby on Rails',
+      'AWS',
+      'HTML',
+      'CSS',
+      'Javascript',
+      'Typescript',
+      'SASS',
+      'GitLab CI',
+    ],
   },
 ];
