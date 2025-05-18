@@ -191,6 +191,7 @@
   import MainNavBar from '@/components/MainNavBar.vue';
   import { useDisplay } from 'vuetify';
   import SkillsSection from '@/components/sections/SkillsSection.vue';
+  import { debouncer } from '@/helpers/debouncer';
 
   const { t, locale } = useI18n();
   const { mobile } = useDisplay({ mobileBreakpoint: 760 });
@@ -319,6 +320,10 @@
   };
 
   const handleMainScroll = (event: WheelEvent) => {
+    debouncedMainNavigation(event);
+  };
+
+  const handleMainNavigation = (event: WheelEvent) => {
     if (mobile.value) return;
 
     const nextSection = sections.value[currentSectionIndex.value + 1];
@@ -364,6 +369,8 @@
     if (previousSection) previousSection.classList.add('present');
     if (nextSection) nextSection.classList.add('present');
   });
+
+  const debouncedMainNavigation = debouncer(handleMainNavigation, 100);
 
   onMounted(() => {
     scrollToSection(sections.value[0].index);

@@ -1,29 +1,74 @@
-import { IExperience } from "@/interfaces/api/experience";
+import { IExperience } from '@/interfaces/api/experience';
 import jeraBanner from '@/assets/images/jera_banner.jpg';
 
 export const experiencesMock: IExperience[] = [
   {
     id: 1,
     company: 'Jera',
-    role: 'Desenvolvedor Flutter',
+    role: 'Desenvolvedor Mobile - Flutter',
     bannerUrl: jeraBanner,
-    description: '',
+    description:
+      'Desenvolvimento multiplataformas (Android e iOS) utilizando Flutter. MVVM/MVVM-C como architecture pattern; Consumo de APIs RESTful com Dio; Implementação de serviços do Firebase como: Messaging, Remote Config, Firebase Events, Crashlytics, Analytics e App Distribution; Comunicação com código nativo (Kotlin e Swift) por meio de Method Channels e Platform Views; Permanência de dados do usuário por meio do Shared Preferencese, SQFlite e armazenamento de sessão com Flutter Secure Storage; Navegação e tratamento de Deeplinks feitos com GoRouter; Injeção de dependências por meio do Service Locator e a biblioteca GetIt; Animações dinâmicas com a biblioteca do Lottie para Flutter; Implementação do Spotify SDK para personalização da experiência do usuário; Integração de WebViews na aplicação para visualização de sites externos e implementação de Javascript Channels para comunicação entre a WebView e o código Flutter; OAuth com bibliotecas para a realização de login com redes como Google e Facebook; Publicação para as lojas de aplicativo, Play Store e App Store; Automação para publicação e atualização do aplicativo na App Store com Bitrise e recursos personalizados de geolocalização com o Google Maps SDK para Flutter.',
     startDate: '2022-11',
     finishDate: '2025-04',
-    skills: []
+    skills: [
+      'Flutter',
+      'Dart',
+      'Dio',
+      'MVVM',
+      'MVVM-C',
+      'Native Bridge',
+      'Platform Channels',
+      'Method Channels',
+      'Firebase',
+      'Deeplinks',
+      'Shared Preferences',
+      'Flutter Secure Storage',
+      'SQFlite / SQLite',
+      'Google Maps SDK',
+      'WebView',
+      'Service Locator',
+      'Product Flavors',
+      'Teste de unidade',
+      'Bitrise',
+      'Lottie',
+      'GoRouter',
+      'Spotify SDK',
+      'OAuth',
+      'Change Notifier',
+    ],
   },
-  
+
   {
     id: 2,
     company: 'Jera',
-    role: 'Desenvolvedor Android',
+    role: 'Desenvolvedor Mobile - Android',
     bannerUrl: jeraBanner,
-    description: '',
+    description:
+      'Desenvolvimento Android utilizando Kotlin: Injeção de dependências com Koin e Hilt, Room Database, consumo de RESTful APIs com Retrofit, Android Jetpack, Coroutines, Flows, Jetpack Compose, Configuração do Gradle e Android SDK. Além de aplicação de arquiteturas como MVVM e deploy da aplicação na Play Store.',
     startDate: '2022-09',
     finishDate: '2022-11',
-    skills: []
+    skills: [
+      'Android',
+      'Kotlin',
+      'Room',
+      'Android Jetpack',
+      'Android SDK',
+      'MVVM',
+      'Coroutines',
+      'Flow',
+      'Proguard R8',
+      'Koin',
+      'Hilt',
+      'Dagger',
+      'SQLite',
+      'Retrofit',
+      'Gson',
+      'SharedPreferences',
+      'Product Flavors',
+    ],
   },
-  
+
   {
     id: 3,
     company: 'Jera',
@@ -32,6 +77,6 @@ export const experiencesMock: IExperience[] = [
     description: '',
     startDate: '2024-11',
     finishDate: '2025-04',
-    skills: []
-  }
-]
+    skills: [],
+  },
+];

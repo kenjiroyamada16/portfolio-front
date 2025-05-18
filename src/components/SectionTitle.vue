@@ -71,7 +71,7 @@
           font-size: 16px;
           line-height: 16px;
           transform: none;
-          left: 50%;
+          left: 45%;
           top: -5%;
         }
       }
