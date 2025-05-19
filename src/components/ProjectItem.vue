@@ -1,7 +1,13 @@
 <template>
-  <div class="project">
+  <div
+    class="project"
+    @click.prevent="openApplicationByOs"
+  >
     <div class="image-container">
-      <div class="accesses-container">
+      <div
+        v-if="!mobile"
+        class="accesses-container"
+      >
         <a
           v-if="project.repoUrl"
           :href="project.repoUrl"
@@ -109,10 +115,28 @@
   import PlayStore from './icons/PlayStore.vue';
   import AppStore from './icons/AppStore.vue';
   import NewTab from './icons/NewTab.vue';
+  import { useDisplay } from 'vuetify';
+  import { getOs, OperatingSystem } from '@/helpers/handleOs';
+
+  const { mobile } = useDisplay({ mobileBreakpoint: 760 });
 
   const props = defineProps<{
     project: IProject;
   }>();
+
+  const openApplicationByOs = () => {
+    if (!mobile) return;
+
+    let url;
+
+    const os = getOs();
+
+    if (os == OperatingSystem.android) url = props.project.playstoreUrl;
+    if (os == OperatingSystem.ios) url = props.project.appstoreUrl;
+    if (!url) url = props.project.siteUrl;
+
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
 </script>
 
 <style scoped lang="scss">
@@ -249,6 +273,7 @@
         width: 100%;
         object-fit: contain;
         border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.044);
       }
     }
 
@@ -276,16 +301,17 @@
     .technologies-list {
       margin-top: auto;
       display: flex;
-      gap: 12px;
+      gap: 8px;
       flex-wrap: wrap;
 
       .technology {
-        padding: 8px 20px;
+        padding: 4px 12px;
         border-radius: 50px;
         border: 1px solid $primary-color;
 
         .technology-label {
           font-weight: 200;
+          font-size: 12px;
         }
       }
     }

@@ -14,7 +14,7 @@ export const projectsMock: IProject[] = [
     title: 'Lollapalooza Brasil',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/apps/details?id=br.com.lollapalooza.app&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=br.com.lollapalooza.app',
     appstoreUrl:
       'https://apps.apple.com/br/app/lollapalooza-brasil/id6473182317',
     shortDescription: {
@@ -33,7 +33,7 @@ export const projectsMock: IProject[] = [
     title: 'Rock in Rio',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/apps/details?id=br.com.rockinrio.app&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=br.com.rockinrio.app',
     appstoreUrl: 'https://apps.apple.com/br/app/rock-in-rio/id1478184797',
     shortDescription: {
       'pt-BR': 'O app oficial do Rock in Rio do ano de 2024!',
@@ -51,7 +51,7 @@ export const projectsMock: IProject[] = [
     title: 'The Town',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/apps/details?id=br.com.thetown.app&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=br.com.thetown.app',
     appstoreUrl: 'https://apps.apple.com/br/app/the-town/id6446201849',
     shortDescription: {
       'pt-BR': 'O app oficial do The Town dos anos de 2023 e 2025!',
@@ -69,7 +69,7 @@ export const projectsMock: IProject[] = [
     title: 'Rock in Rio Lisboa',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/apps/details?id=pt.com.rockinriolisboa.app&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=pt.com.rockinriolisboa.app',
     appstoreUrl:
       'https://apps.apple.com/br/app/rock-in-rio-lisboa/id1505341928',
     shortDescription: {
@@ -88,7 +88,7 @@ export const projectsMock: IProject[] = [
     title: 'ECX Pay',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/apps/details?id=br.com.ecx.ecxpay&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=br.com.ecx.ecxpay',
     appstoreUrl: 'https://apps.apple.com/br/app/ecx-pay/id1631237943',
     shortDescription: {
       'pt-BR':
@@ -107,7 +107,7 @@ export const projectsMock: IProject[] = [
     title: 'Encontre no Sesc',
     author: 'Jera Software',
     playstoreUrl:
-      'https://play.google.com/store/search?q=encontre+no+sesc+ms&c=apps&hl=pt_BR',
+      'https://play.google.com/store/apps/details?id=com.sesc.encontrems',
     appstoreUrl: 'https://apps.apple.com/us/app/encontre-no-sesc/id6443436934',
     shortDescription: {
       'pt-BR':
@@ -137,6 +137,7 @@ export const projectsMock: IProject[] = [
       { id: 5, name: 'Typescript', iconUrl: '' },
       { id: 6, name: 'Docker', iconUrl: '' },
       { id: 7, name: 'AWS', iconUrl: '' },
+      { id: 8, name: 'GitHub Actions', iconUrl: '' },
     ],
   },
 ];
