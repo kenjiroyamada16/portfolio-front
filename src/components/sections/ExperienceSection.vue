@@ -27,7 +27,7 @@
   import SectionTitle from '../SectionTitle.vue';
   import { KATAKANA_WORK_EXPERIENCE } from '@/helpers/constants';
   import { experiencesMock } from '@/helpers/experienceMock';
-  import ExperienceItem from './ExperienceItem.vue';
+  import ExperienceItem from '../ExperienceItem.vue';
 
   const emits = defineEmits([
     'onMouseEnterExperienceList',
@@ -63,10 +63,6 @@
       justify-content: center;
       transition: 0.4s;
 
-      &:has(.experiences-list:hover) {
-        background-color: #0a0b0b;
-      }
-
       .experiences-list {
         height: 100%;
         overflow-y: auto;
@@ -77,11 +73,6 @@
         width: 50%;
         transition: 0.4s;
         background-color: $background-color;
-
-        &:hover {
-          cursor: ns-resize;
-          background-color: #0a0b0b;
-        }
       }
     }
 
@@ -143,16 +134,29 @@
     }
 
     @media (min-width: $desktop-min-width) {
-      .container .experiences-list .experience-item:nth-child(odd) {
-        flex-direction: row;
+      .container {
+        &:has(.experiences-list:hover) {
+          background-color: #0a0b0b;
+        }
 
-        .experience-date-container {
-          .experience-date {
-            justify-content: end;
+        .experiences-list {
+          &:hover {
+            cursor: ns-resize;
+            background-color: #0a0b0b;
           }
 
-          .time-spent {
-            text-align: end;
+          .experience-item:nth-child(odd) {
+            flex-direction: row;
+
+            .experience-date-container {
+              .experience-date {
+                justify-content: end;
+              }
+
+              .time-spent {
+                text-align: end;
+              }
+            }
           }
         }
       }

@@ -5,6 +5,6 @@ export interface IExperience {
   bannerUrl: string;
   startDate: string;
   finishDate: string;
-  description: string;
+  description: Record<string, string>;
   skills: string[];
 }

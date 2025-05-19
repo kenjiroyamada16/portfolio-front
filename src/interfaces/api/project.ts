@@ -5,7 +5,7 @@ export interface IProject {
   title: string;
   author: string;
   url: string,
-  shortDescription: string;
+  shortDescription: Record<string, string>;
   bannerUrl: string;
   technologies: ITechnology[];
 }

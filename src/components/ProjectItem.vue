@@ -12,7 +12,11 @@
     />
     <div class="title">{{ project.title }}</div>
     <div class="author">{{ project.author }}</div>
-    <span class="short-description">{{ project.shortDescription }}</span>
+    <TranslatedText
+      :key="$i18n.locale"
+      class="short-description"
+      :translated-text="project.shortDescription"
+    />
     <div class="technologies-list">
       <div
         v-for="(technology, index) in project.technologies"
@@ -27,6 +31,7 @@
 
 <script lang="ts" setup>
   import { IProject } from '@/interfaces/api/project';
+  import TranslatedText from './TranslatedText.vue';
 
   const emit = defineEmits<{
     (e: 'click', project: IProject): void;

@@ -13,7 +13,10 @@ export const projectsMock: IProject[] = [
     title: 'Lollapalooza Brasil',
     author: 'Jera Software',
     url: 'https://play.google.com/store/apps/details?id=br.com.lollapalooza.app&hl=pt_BR',
-    shortDescription: 'O app oficial do #LollaBR dos anos de 2024 e 2025!',
+    shortDescription: {
+      'pt-BR': 'O app oficial do #LollaBR dos anos de 2024 e 2025!',
+      'en-US': 'The official #LollaBR app for the years 2024 and 2025!',
+    },
     bannerUrl: lollapaloozaBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
@@ -26,7 +29,10 @@ export const projectsMock: IProject[] = [
     title: 'Rock in Rio',
     author: 'Jera Software',
     url: 'https://play.google.com/store/apps/details?id=br.com.rockinrio.app&hl=pt_BR',
-    shortDescription: 'O app oficial do Rock in Rio do ano de 2024!',
+    shortDescription: {
+      'pt-BR': 'O app oficial do Rock in Rio do ano de 2024!',
+      'en-US': 'The official Rock in Rio app for the year 2024!',
+    },
     bannerUrl: rockinrioBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
@@ -39,7 +45,10 @@ export const projectsMock: IProject[] = [
     title: 'The Town',
     author: 'Jera Software',
     url: 'https://play.google.com/store/apps/details?id=br.com.thetown.app&hl=pt_BR',
-    shortDescription: 'O app oficial do The Town dos anos de 2023 e 2025!',
+    shortDescription: {
+      'pt-BR': 'O app oficial do The Town dos anos de 2023 e 2025!',
+      'en-US': 'The official The Town app for the years 2023 and 2025!',
+    },
     bannerUrl: theTownBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
@@ -52,7 +61,10 @@ export const projectsMock: IProject[] = [
     title: 'Rock in Rio Lisboa',
     author: 'Jera Software',
     url: 'https://play.google.com/store/apps/details?id=pt.com.rockinriolisboa.app&hl=pt_BR',
-    shortDescription: 'O app oficial do Rock in Rio Lisboa do ano de 2024!',
+    shortDescription: {
+      'pt-BR': 'O app oficial do Rock in Rio Lisboa do ano de 2024!',
+      'en-US': 'The official Rock in Rio Lisboa app for the year 2024!',
+    },
     bannerUrl: rockinriolisboaBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
@@ -65,8 +77,12 @@ export const projectsMock: IProject[] = [
     title: 'ECX Pay',
     author: 'Jera Software',
     url: 'https://play.google.com/store/apps/details?id=br.com.ecx.ecxpay&hl=pt_BR',
-    shortDescription:
-      'O app do melhor cartão multibenefícios do mercado, aceito em milhões de estabelecimentos pelo o mundo.',
+    shortDescription: {
+      'pt-BR':
+        'O app do melhor cartão multibenefícios do mercado, aceito em milhões de estabelecimentos pelo o mundo.',
+      'en-US':
+        'The app for the best multi-benefit card on the market, accepted in millions of establishments around the world.',
+    },
     bannerUrl: ecxpayBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
@@ -78,8 +94,12 @@ export const projectsMock: IProject[] = [
     title: 'Encontre no Sesc',
     author: 'Jera Software',
     url: 'https://play.google.com/store/search?q=encontre+no+sesc+ms&c=apps&hl=pt_BR',
-    shortDescription:
-      'Com o app Encontre no Sesc, você acessa sua credencial digital, confere eventos e programações das unidades, localiza comércios parceiros e aproveita descontos exclusivos.',
+    shortDescription: {
+      'pt-BR':
+        'Com o app Encontre no Sesc, você acessa sua credencial digital, confere eventos e programações das unidades, localiza comércios parceiros e aproveita descontos exclusivos.',
+      'en-US':
+        'With the Encontre no Sesc app, you can access your digital ID, check events and schedules at Sesc units, locate partner businesses, and enjoy exclusive discounts.',
+    },
     bannerUrl: sescBanner,
     technologies: [
       { id: 1, name: 'Flutter', iconUrl: '' },
