@@ -54,12 +54,20 @@
             <span
               v-if="isExpanded"
               class="details-tip"
-              >Esconder detalhes</span
+              >{{
+                $t(
+                  'features.portfolio.sections.experience.experience_item.hide_details_label',
+                )
+              }}</span
             >
             <span
               v-else
               class="details-tip"
-              >Mostrar detalhes</span
+              >{{
+                $t(
+                  'features.portfolio.sections.experience.experience_item.show_details_label',
+                )
+              }}</span
             >
             <v-icon
               icon="mdi-arrow-right"
@@ -362,8 +370,6 @@
     }
 
     @media (min-width: $desktop-min-width) {
-      
-
       &:nth-child(odd) {
         flex-direction: row;
 
