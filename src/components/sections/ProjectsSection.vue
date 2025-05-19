@@ -19,7 +19,6 @@
           :key="project.id"
         >
           <ProjectItem
-            @click="openProjectUrl(project.url)"
             :project="project"
           />
         </div>
@@ -55,10 +54,6 @@
     projectsList.value.scrollIntoView({
       behavior: 'smooth',
     });
-  };
-
-  const openProjectUrl = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const setupProjectsList = () => {

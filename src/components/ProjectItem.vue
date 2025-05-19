@@ -1,15 +1,88 @@
 <template>
-  <div
-    class="project"
-    @click.prevent="emit('click', project)"
-  >
-    <img
-      :src="project.bannerUrl"
-      :alt="project.title"
-      draggable="false"
-      class="banner"
-      loading="lazy"
-    />
+  <div class="project">
+    <div class="image-container">
+      <div class="accesses-container">
+        <a
+          v-if="project.repoUrl"
+          :href="project.repoUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="repo-access-container"
+        >
+          <Repository class="repo-icon" />
+          <span class="repo-access-label">Visite o repositório do projeto</span>
+        </a>
+        <a
+          class="project-access-container"
+          target="_blank"
+          rel="noopener noreferrer"
+          :href="
+            project.playstoreUrl || project.appstoreUrl
+              ? undefined
+              : project.siteUrl
+          "
+        >
+          <div
+            class="access-links-container"
+            v-if="project.playstoreUrl || project.appstoreUrl"
+          >
+            <a
+              v-if="project.playstoreUrl"
+              class="access-link"
+              :href="project.playstoreUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <v-tooltip text="Play Store">
+                <template v-slot:activator="{ props }">
+                  <PlayStore v-bind="props" />
+                </template>
+              </v-tooltip>
+            </a>
+            <a
+              v-if="project.appstoreUrl"
+              class="access-link"
+              :href="project.appstoreUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <v-tooltip text="App Store">
+                <template v-slot:activator="{ props }">
+                  <AppStore v-bind="props" />
+                </template>
+              </v-tooltip>
+            </a>
+            <a
+              v-if="
+                project.siteUrl && (project.playstoreUrl || project.appstoreUrl)
+              "
+              class="access-link"
+              :href="project.siteUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <v-tooltip text="Ir para o site">
+                <template v-slot:activator="{ props }">
+                  <NewTab v-bind="props" />
+                </template>
+              </v-tooltip>
+            </a>
+          </div>
+          <NewTab
+            v-if="!(project.appstoreUrl || project.playstoreUrl)"
+            class="newtab-icon"
+          />
+          <span class="access-label">Acessar aplicativo</span>
+        </a>
+      </div>
+      <img
+        :src="project.bannerUrl"
+        :alt="project.title"
+        draggable="false"
+        class="banner"
+        loading="lazy"
+      />
+    </div>
     <div class="title">{{ project.title }}</div>
     <div class="author">{{ project.author }}</div>
     <TranslatedText
@@ -32,10 +105,10 @@
 <script lang="ts" setup>
   import { IProject } from '@/interfaces/api/project';
   import TranslatedText from './TranslatedText.vue';
-
-  const emit = defineEmits<{
-    (e: 'click', project: IProject): void;
-  }>();
+  import Repository from './icons/Repository.vue';
+  import PlayStore from './icons/PlayStore.vue';
+  import AppStore from './icons/AppStore.vue';
+  import NewTab from './icons/NewTab.vue';
 
   const props = defineProps<{
     project: IProject;
@@ -54,18 +127,129 @@
     transition: 0.5s;
 
     &:hover {
-      cursor: pointer;
-      background-color: #1c1c1c;
+      .image-container .accesses-container {
+        opacity: 1;
+      }
     }
 
     & * {
       user-select: none;
     }
 
-    .banner {
-      margin: 4px 0;
-      width: 100%;
-      border-radius: 8px;
+    .image-container {
+      display: flex;
+      position: relative;
+
+      .accesses-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        opacity: 0;
+        transition: 0.4s;
+
+        .repo-access-container {
+          display: flex;
+          flex: 1;
+          gap: 8px;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #1111117f;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          transition: 0.5s;
+
+          &:hover {
+            backdrop-filter: blur(2px);
+            background-color: #111111ab;
+
+            .repo-icon {
+              width: 40px;
+              height: 40px;
+            }
+          }
+
+          .repo-icon {
+            width: 24px;
+            height: 24px;
+            transition: 0.4s;
+          }
+        }
+
+        .project-access-container {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #1111117d;
+          border-top-left-radius: 8px;
+          border-bottom-left-radius: 8px;
+          transition: 0.5s;
+
+          &:hover {
+            backdrop-filter: blur(2px);
+            background-color: #111111ab;
+
+            .access-links-container .access-link {
+              svg {
+                width: 40px;
+                height: 40px;
+              }
+            }
+
+            .newtab-icon {
+              width: 40px;
+              height: 40px;
+            }
+          }
+
+          .newtab-icon {
+            height: 24px;
+            width: 24px;
+            transition: 0.4s;
+          }
+
+          .access-links-container {
+            display: flex;
+            gap: 8px;
+
+            .access-link {
+              display: flex;
+              padding: 8px;
+              border-radius: 16px;
+              justify-content: center;
+              align-items: center;
+              background-color: #1c1c1c95;
+              transition: 0.4s;
+
+              svg {
+                width: 32px;
+                height: 32px;
+                transition: 0.2s;
+              }
+
+              &:hover {
+                background-color: #1c1c1c;
+              }
+            }
+          }
+        }
+
+        a {
+          text-align: center;
+          text-decoration: none;
+          color: $secondary-color;
+        }
+      }
+
+      .banner {
+        margin: 4px 0;
+        width: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
     }
 
     .title {
