@@ -4,8 +4,11 @@ export interface IProject {
   id: number;
   title: string;
   author: string;
-  url: string,
-  shortDescription: string;
+  repoUrl?: string,
+  playstoreUrl?: string,
+  appstoreUrl?: string,
+  siteUrl?: string,
+  shortDescription: Record<string, string>;
   bannerUrl: string;
   technologies: ITechnology[];
 }

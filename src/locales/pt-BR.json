@@ -7,7 +7,17 @@
     "kenji": "Kenji",
     "github": "Github",
     "linkedin": "LinkedIn",
-    "portfolio": "Portfolio"
+    "portfolio": "Portfolio",
+    "playstore": "Play Store",
+    "appstore": "App Store"
+  },
+  "conjunctives": {
+    "and": "e"
+   },
+  "date_time": {
+    "count_years": "{count}_ano | {count}_anos",
+    "count_months": "{count}_mês | {count}_meses",
+    "count_days": "{count}_dia | {count}_dias"
   },
   "features": {
     "portfolio": {
@@ -32,7 +42,21 @@
         },
         "projects": {
           "title": "Projetos",
-          "description": "Aqui você encontra todos os projetos em que já trabalhei, sejam pessoais ou aqueles realizados com vínculo empregatício, nos quais atuei no time de desenvolvimento."
+          "description": "Aqui você encontra todos os projetos em que já trabalhei, sejam pessoais ou aqueles realizados com vínculo empregatício, nos quais atuei no time de desenvolvimento.",
+          "project_item": {
+            "repo_access_label": "Visite o repositório do projeto",
+            "app_access_label": "Accessar o aplicativo",
+            "access_site_tip": "Ir para o site"
+          }
+        },
+        "experience": {
+          "title": "Experiência Profissional",
+          "navbar_title": "Experiência",
+          "description": "Conheça minha trajetória profissional, da atuação mais recente aos primeiros projetos.",
+          "experience_item": {
+            "show_details_label": "Mostrar detalhes",
+            "hide_details_label": "Esconder detalhes"
+          }
         },
         "skills": {
           "title": "Tecnologias",
@@ -60,7 +84,8 @@
             "html": "HTML",
             "css": "CSS",
             "scss": "SCSS",
-            "github": "Github",
+            "github": "GitHub",
+            "gitlab": "Gitlab",
             "git": "Git",
             "docker": "Docker",
             "firebase": "Firebase",

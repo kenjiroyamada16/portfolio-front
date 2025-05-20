@@ -21,7 +21,7 @@
             :href="section.navBarHref"
             @click.prevent="emits('scrollToSection', section.index)"
           >
-            {{ section.title }}
+            {{ section.navBarTitle || section.title }}
           </a>
         </li>
       </ul>
@@ -70,7 +70,7 @@
 
     .vertical-line {
       width: 1px;
-      height: 24px;
+      height: 16px;
       background-color: white;
     }
 
@@ -203,7 +203,7 @@
           }
 
           .nav-item {
-            font-size: 16px;
+            font-size: 12px;
             font-weight: 300;
             text-transform: uppercase;
             text-decoration: none;
