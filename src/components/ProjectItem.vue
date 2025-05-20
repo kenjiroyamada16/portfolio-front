@@ -1,7 +1,7 @@
 <template>
   <div
     class="project"
-    @click.prevent="openApplicationByOs"
+    @click="openApplicationByOs"
   >
     <div class="image-container">
       <div

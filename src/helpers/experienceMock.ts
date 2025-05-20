@@ -5,7 +5,10 @@ export const experiencesMock: IExperience[] = [
   {
     id: 1,
     company: 'Jera',
-    role: 'Desenvolvedor Mobile - Flutter',
+    role: {
+      'pt-BR': 'Desenvolvedor Mobile - Flutter',
+      'en-US': 'Mobile Developer - Flutter',
+    },
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':
@@ -46,7 +49,10 @@ export const experiencesMock: IExperience[] = [
   {
     id: 2,
     company: 'Jera',
-    role: 'Desenvolvedor Mobile - Android',
+    role: {
+      'pt-BR': 'Desenvolvedor Mobile - Android',
+      'en-US': 'Mobile Developer - Android',
+    },
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':
@@ -80,7 +86,10 @@ export const experiencesMock: IExperience[] = [
   {
     id: 3,
     company: 'Jera',
-    role: 'Desenvolvedor Full Stack',
+    role: {
+      'pt-BR': 'Desenvolvedor Full Stack',
+      'en-US': 'Full Stack Developer',
+    },
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':

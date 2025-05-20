@@ -31,7 +31,10 @@
         class="experience-details"
       >
         <span class="experience-company">{{ experience.company }}</span>
-        <span class="experience-role">{{ experience.role }}</span>
+        <TranslatedText
+          class="experience-role"
+          :translated-text="experience.role"
+        />
         <TranslatedText
           v-if="isExpanded"
           class="description"

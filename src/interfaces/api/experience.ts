@@ -1,7 +1,7 @@
 export interface IExperience {
   id: number;
   company: string;
-  role: string;
+  role: Record<string, string>;
   bannerUrl: string;
   startDate: string;
   finishDate: string;
