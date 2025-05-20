@@ -16,7 +16,11 @@
           class="repo-access-container"
         >
           <Repository class="repo-icon" />
-          <span class="repo-access-label">Visite o repositório do projeto</span>
+          <span class="repo-access-label">{{
+            $t(
+              'features.portfolio.sections.projects.project_item.repo_access_label',
+            )
+          }}</span>
         </a>
         <a
           class="project-access-container"
@@ -39,7 +43,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <v-tooltip text="Play Store">
+              <v-tooltip :text="$t('names.playstore')">
                 <template v-slot:activator="{ props }">
                   <PlayStore v-bind="props" />
                 </template>
@@ -52,7 +56,7 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <v-tooltip text="App Store">
+              <v-tooltip :text="$t('names.appstore')">
                 <template v-slot:activator="{ props }">
                   <AppStore v-bind="props" />
                 </template>
@@ -67,7 +71,13 @@
               target="_blank"
               rel="noopener noreferrer"
             >
-              <v-tooltip text="Ir para o site">
+              <v-tooltip
+                :text="
+                  $t(
+                    'features.portfolio.sections.projects.project_item.access_site_tip',
+                  )
+                "
+              >
                 <template v-slot:activator="{ props }">
                   <NewTab v-bind="props" />
                 </template>
@@ -78,7 +88,11 @@
             v-if="!(project.appstoreUrl || project.playstoreUrl)"
             class="newtab-icon"
           />
-          <span class="access-label">Acessar aplicativo</span>
+          <span class="access-label">{{
+            $t(
+              'features.portfolio.sections.projects.project_item.app_access_label',
+            )
+          }}</span>
         </a>
       </div>
       <img
@@ -125,7 +139,7 @@
   }>();
 
   const openApplicationByOs = () => {
-    if (!mobile) return;
+    if (!mobile.value) return;
 
     let url;
 

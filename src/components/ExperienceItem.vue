@@ -211,8 +211,8 @@
       }
 
       .thumb {
-        width: 16px;
-        height: 16px;
+        width: 12px;
+        height: 12px;
         background-color: white;
         border-radius: 50%;
       }
@@ -346,13 +346,13 @@
       padding: 16px 0;
 
       .experience-info {
-        flex: 4;
+        flex: 3;
       }
 
       .experience-date-container {
         .experience-date {
           flex-wrap: wrap;
-          justify-content: center;
+          justify-content: start;
           gap: 4px;
           font-size: 12px;
         }

@@ -223,7 +223,7 @@
     }
 
     @media (width <= 900px) {
-      padding: 16px;
+      padding: 16px 100px;
 
       .description {
         width: 100%;
