@@ -18,9 +18,7 @@
           v-for="project in projectsMock"
           :key="project.id"
         >
-          <ProjectItem
-            :project="project"
-          />
+          <ProjectItem :project="project" />
         </div>
       </div>
       <div
@@ -205,8 +203,21 @@
       }
     }
 
+    @media (width <= 900px) {
+      padding: 16px 100px;
+      justify-content: center;
+
+      .description {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+
     @media (width <= $desktop-min-width) {
-      padding: 24px;
+      max-height: unset;
+      min-height: unset;
+      height: 100%;
+      padding: 24px 24px 80px;
 
       .projects-container {
         .projects-list {
@@ -219,15 +230,6 @@
           top: 100%;
           transform: translateX(0);
         }
-      }
-    }
-
-    @media (width <= 900px) {
-      padding: 16px 100px;
-
-      .description {
-        width: 100%;
-        font-size: 16px;
       }
     }
   }
