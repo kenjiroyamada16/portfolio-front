@@ -6,9 +6,9 @@
   >
     <div class="experience-date-container">
       <div class="experience-date">
-        <span>{{ formatDate(experience.startDate) }}</span>
+        <span>{{ formatSimpleDate(experience.startDate) }}</span>
         <div class="dates-separator"></div>
-        <span>{{ formatDate(experience.finishDate) }}</span>
+        <span>{{ formatSimpleDate(experience.finishDate) }}</span>
       </div>
       <span class="time-spent">{{
         getTimeBetweenDates(experience.startDate, experience.finishDate)
@@ -84,6 +84,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { formatSimpleDate } from '@/helpers/stringExtensions';
   import { IExperience } from '@/interfaces/api/experience';
   import { computed, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
@@ -121,11 +122,6 @@
     'onMouseEnterExperienceList',
     'onMouseLeaveExperienceList',
   ]);
-
-  const formatDate = (date: string) => {
-    const [year, month] = date.split('-');
-    return `${month}/${year}`;
-  };
 
   const getTimeBetweenDates = (
     startDate: string,

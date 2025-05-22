@@ -217,7 +217,7 @@
       max-height: unset;
       min-height: unset;
       height: 100%;
-      padding: 24px 24px 80px;
+      padding: 80px 24px;
 
       .projects-container {
         .projects-list {
