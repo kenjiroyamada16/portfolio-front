@@ -50,6 +50,11 @@
         @on-mouse-enter-experience-list="toggleMainScroll(false)"
         ref="experienceSection"
       />
+      <EducationSection
+        ref="educationSection"
+        @on-mouse-leave-education-list="toggleMainScroll(true)"
+        @on-mouse-enter-education-list="toggleMainScroll(false)"
+      />
       <SkillsSection ref="skillsSection" />
       <ContactSection
         ref="contactSection"
@@ -192,8 +197,9 @@
   import { useDisplay } from 'vuetify';
   import SkillsSection from '@/components/sections/SkillsSection.vue';
   import { debouncer } from '@/helpers/debouncer';
+  import EducationSection from '@/components/sections/EducationSection.vue';
 
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
   const { mobile } = useDisplay({ mobileBreakpoint: 760 });
 
   const currentSectionIndex = ref(0);
@@ -201,6 +207,7 @@
   const introSection = ref();
   const projectsSection = ref();
   const experienceSection = ref();
+  const educationSection = ref();
   const contactSection = ref();
   const skillsSection = ref();
 
@@ -246,15 +253,23 @@
       navBarTitle: t('features.portfolio.sections.experience.navbar_title'),
     },
     {
-      id: 'skills',
+      id: 'education',
       index: 3,
+      title: t('features.portfolio.sections.education.title'),
+      ref: educationSection,
+      navBarHref: '#education',
+      navBarTitle: t('features.portfolio.sections.education.title'),
+    },
+    {
+      id: 'skills',
+      index: 4,
       title: t('features.portfolio.sections.skills.title'),
       ref: skillsSection,
       navBarHref: '#skills',
     },
     {
       id: 'contact',
-      index: 4,
+      index: 5,
       title: t('features.portfolio.sections.contact.title'),
       ref: contactSection,
       navBarHref: '#contact',

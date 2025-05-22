@@ -58,6 +58,18 @@
             "hide_details_label": "Hide details"
           }
         },
+        "education": {
+          "title": "Education",
+          "description": "All my degrees, courses, and certificates!",
+          "tabs": {
+            "formation": "Academic Background",
+            "certificates": "Courses and Certificates"
+          },
+          "status": {
+            "complete": "Completed",
+            "in_progress": "In Progress"
+          }
+        },
         "skills": {
           "title": "Technologies",
           "description": "Languages, frameworks, and tools I use in my day-to-day work.",

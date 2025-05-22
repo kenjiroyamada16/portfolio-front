@@ -85,7 +85,7 @@
     }
 
     @media (max-width: $desktop-min-width) {
-      padding: 16px 8px;
+      padding: 64px 8px;
       margin-bottom: 40px;
       min-height: fit-content;
 
