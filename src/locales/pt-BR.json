@@ -104,6 +104,16 @@
             "node": "Node.js"
           }
         },
+        "about": {
+          "title": "Sobre",
+          "description": {
+            "paragraphs": {
+              "introduction": "Desenvolvedor Mobile e Full Stack autodidata, com foco principal no desenvolvimento Mobile. Nascido e criado no Brasil, minha paixão por tecnologia começou ainda no ensino médio, quando tive a oportunidade de cursar uma grade curricular complementar com diversos conteúdos do universo tech. Nesse período, fui introduzido a algoritmos e a várias linguagens de programação, como Java, Javascript, PHP e MySQL, além de frameworks como Vue.js e React Native, entre muitos outros temas relacionados à Engenharia de Software e Computação — tanto na parte técnica quanto na gestão de projetos.",
+              "middle": "Iniciei minha carreira com um estágio em uma empresa de tecnologia que atendia clientes de diversos segmentos. Logo fui efetivado, tornando-me o mais novo desenvolvedor Mobile da equipe e, com o tempo, desenvolvedor Full Stack. Grande parte da minha experiência profissional foi adquirida nessa empresa, onde participei de projetos de pequeno, médio e grande porte, incluindo iniciativas com alcance internacional. Cada projeto trouxe seus próprios desafios e aprendizados, contribuindo muito para minha evolução técnica e pessoal.",
+              "conclusion": "Desde então, tenho buscado constantemente aprimorar minhas habilidades e conhecimentos por meio de novas experiências, novas soluções e, acima de tudo, novos desafios."
+            }
+          }
+        },
         "contact": {
           "title": "Contato",
           "description": "Sinta-se à vontade para entrar em contato e se conectar!",
