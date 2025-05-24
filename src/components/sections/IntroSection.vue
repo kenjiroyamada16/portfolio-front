@@ -3,6 +3,14 @@
     id="intro"
     class="present"
   >
+    <div class="stars-container">
+      <div
+        v-for="index in 50"
+        :key="index"
+        class="star"
+      ></div>
+    </div>
+    <Planet class="planet-icon" />
     <div class="profile-container">
       <div class="profile">
         <div class="name-container">
@@ -30,12 +38,6 @@
           >{{ t('features.portfolio.sections.intro.download_cv') }}</a
         >
       </div>
-      <div class="photo-container">
-        <img
-          src="/src/assets/images/profile_photo.webp"
-          loading="lazy"
-        />
-      </div>
     </div>
     <div :class="['scroll-tip-container', { gone: !isMobile }]">
       <ScrollTip class="scroll-tip" />
@@ -50,6 +52,7 @@
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import Planet from '../icons/Planet.vue';
 
   const { t } = useI18n();
 
@@ -83,6 +86,7 @@
     }
 
     startMainNameAnimation();
+    setupStars();
 
     setTimeout(() => {
       technologiesList.value.startAnimation();
@@ -90,6 +94,20 @@
 
     sortLettersName.value.addEventListener('mouseover', startMainNameAnimation);
   });
+
+  const setupStars = () => {
+    const starsContainer = document.querySelector('.stars-container');
+    const starsList = document.querySelectorAll(
+      '.star',
+    ) as NodeListOf<HTMLElement>;
+
+    starsList.forEach(element => {
+      element.style.top = `${Math.random() * starsContainer.clientHeight}px`;
+      element.style.left = `${Math.random() * starsContainer.clientWidth}px`;
+      element.style.animationDelay = `${Math.random() * 15 + 3}s`;
+      element.style.animationDuration = `${Math.random() * 10 + 3}s`;
+    });
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -98,14 +116,42 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
+    position: relative;
     animation: present-intro 3s forwards;
+
+    .stars-container {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+
+      .star {
+        z-index: -10;
+        scale: 0;
+        background-color: white;
+        width: 2px;
+        height: 2px;
+        margin: 32px;
+        position: absolute;
+        animation: twink 2s infinite;
+      }
+    }
+
+    .planet-icon {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: 400px;
+      height: 400px;
+      z-index: -1;
+      transition: opacity 1.2s;
+      transform: translate(-50%, -50%);
+    }
 
     .profile-container {
       display: flex;
       width: 100%;
       justify-content: space-between;
       align-items: center;
-      gap: 32px;
 
       .profile {
         height: 100%;
@@ -218,26 +264,6 @@
           }
         }
       }
-
-      .photo-container {
-        width: 280px;
-        height: 280px;
-        margin-right: 100px;
-        transition: 0.3s;
-        box-shadow: 2px 2px 1px 1px $background-color,
-          24px 24px 1px 1px $primary-color;
-
-        &:hover {
-          box-shadow: 2px 2px 1px 1px $background-color,
-            12px 12px 1px 1px $primary-color;
-        }
-
-        img {
-          object-fit: cover;
-          width: 280px;
-          height: 280px;
-        }
-      }
     }
 
     .scroll-tip-container {
@@ -259,6 +285,17 @@
         mask-position: bottom;
         animation: shimmer 2s infinite;
         box-sizing: content-box;
+      }
+    }
+  }
+
+  @media (max-width: 1300px) {
+    #intro {
+      .planet-icon {
+        width: 400px;
+        height: 400px;
+        top: 70%;
+        transform: translate(-10%, -50%);
       }
     }
   }
@@ -354,27 +391,6 @@
             }
           }
         }
-
-        .photo-container {
-          width: 140px;
-          margin-top: 40px;
-          margin-right: 0;
-          height: 140px;
-          transition: 0.3s;
-          box-shadow: 2px 2px 1px 1px $background-color,
-            24px 24px 1px 1px $primary-color;
-
-          &:hover {
-            box-shadow: 2px 2px 1px 1px $background-color,
-              12px 12px 1px 1px $primary-color;
-          }
-
-          img {
-            object-fit: cover;
-            width: 140px;
-            height: 140px;
-          }
-        }
       }
 
       .scroll-tip-container {
@@ -385,6 +401,16 @@
           margin: 0;
         }
       }
+    }
+  }
+
+  @keyframes twink {
+    0%,
+    100% {
+      scale: 0;
+    }
+    50% {
+      scale: 1;
     }
   }
 </style>

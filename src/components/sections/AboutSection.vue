@@ -131,11 +131,6 @@
           height: 200px;
           opacity: 0.4;
           transform: translate(-50%, -50%);
-
-          &:deep(#planet) {
-            animation: spin 40s linear infinite;
-            transform-origin: center;
-          }
         }
       }
 
@@ -329,12 +324,6 @@
           margin: 32px 0;
         }
       }
-    }
-  }
-
-  @keyframes spin {
-    to {
-      transform: rotateZ(360deg);
     }
   }
 </style>

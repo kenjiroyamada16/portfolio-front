@@ -24,14 +24,14 @@
     <defs>
       <linearGradient
         id="paint0_linear_483_57"
-        x1="219.953"
+        x1="300"
         y1="13.8932"
-        x2="118.886"
+        x2="10"
         y2="188.946"
         gradientUnits="userSpaceOnUse"
       >
         <stop
-          offset="0.375"
+          offset="0.4"
           stop-color="#0D0F12"
         />
         <stop
