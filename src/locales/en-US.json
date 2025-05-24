@@ -104,6 +104,33 @@
             "node": "Node.js"
           }
         },
+        "about": {
+          "title": "About",
+          "description": {
+            "paragraphs": {
+              "introduction": "Self-taught Mobile and Full Stack Developer, primarily focused on Mobile development. Born and raised in Brazil, my passion for technology began in high school when I had the opportunity to take a supplementary curriculum covering various tech-related topics. During this period, I was introduced to algorithms and several programming languages, such as Java, JavaScript, PHP, and MySQL, as well as frameworks like Vue.js and React Native, among many other subjects related to Software Engineering and Computing — both in technical aspects and project management.",
+              "middle": "I began my career with an internship at a technology company serving clients from various sectors. I was soon hired as the newest Mobile Developer on the team and, over time, became a Full Stack Developer. Most of my professional experience was gained at this company, where I participated in small, medium, and large-scale projects, including initiatives with international reach. Each project brought its own challenges and lessons, greatly contributing to my technical and personal growth.",
+              "conclusion": "Since then, I have been constantly seeking to improve my skills and knowledge through new experiences, new solutions, and, above all, new challenges."
+            }
+          },
+          "outer_wilds_quote": "As a child, I considered such unknowns sinister. Now, though, I understand they bear no ill will. The universe is, and we are.",
+          "languages_section": {
+            "title": "Languages",
+            "labels": {
+              "basic": "Basic",
+              "intermediary": "Intermediate",
+              "advanced": "Advanced",
+              "proficient": "Proficient",
+              "fluent": "Fluent",
+              "native": "Native"
+            },
+            "languages": {
+              "portuguese": "Portuguese",
+              "english": "English",
+              "japanese": "Japanese"
+            }
+          }
+        },
         "contact": {
           "title": "Contact",
           "description": "Feel free to reach out and connect!",

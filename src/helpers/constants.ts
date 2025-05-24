@@ -12,3 +12,4 @@ export const KATAKANA_SKILLS = 'テクノロジー';
 export const KATAKANA_EDUCATION = 'エヅケション';
 export const KATAKANA_WORK_EXPERIENCE = 'エンポロイメントイストリー';
 export const KATAKANA_ABOUT = 'アバウト';
+export const KATAKANA_NAME = 'ケンジ';

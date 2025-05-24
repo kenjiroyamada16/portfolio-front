@@ -24,42 +24,66 @@
       </div>
       <div class="profile-info">
         <div class="photo-container">
-          <span class="katakana-name">ケンジ</span>
+          <span class="katakana-name">{{ KATAKANA_NAME }}</span>
           <img
             src="/src/assets/images/profile_photo.webp"
             loading="lazy"
           />
         </div>
         <span class="quote"
-          ><q
-            >Quando criança, eu considerava o desconhecido assustador. Agora eu
-            sei que ele não é mau. Nós e o universo somos um com o desconhecido.
-            Eu estou pronto.</q
-          ></span
+          ><q>{{
+            $t('features.portfolio.sections.about.outer_wilds_quote')
+          }}</q></span
         >
         <div class="separator"></div>
-        <span class="languages-title">Idiomas</span>
+        <span class="languages-title">{{
+          $t('features.portfolio.sections.about.languages_section.title')
+        }}</span>
         <div class="languages-list">
           <div class="language-item">
-            <span class="label">Português</span>
+            <span class="label">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.languages.portuguese',
+              )
+            }}</span>
             <div class="progress-bar-container">
               <div class="progress-bar native"></div>
             </div>
-            <span class="level">Nativo</span>
+            <span class="level">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.labels.native',
+              )
+            }}</span>
           </div>
           <div class="language-item">
-            <span class="label">Inglês</span>
+            <span class="label">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.languages.english',
+              )
+            }}</span>
             <div class="progress-bar-container">
               <div class="progress-bar proficient"></div>
             </div>
-            <span class="level">Proficiente</span>
+            <span class="level">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.labels.proficient',
+              )
+            }}</span>
           </div>
           <div class="language-item">
-            <span class="label">Japonês</span>
+            <span class="label">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.languages.japanese',
+              )
+            }}</span>
             <div class="progress-bar-container">
               <div class="progress-bar basic"></div>
             </div>
-            <span class="level">Básico</span>
+            <span class="level">{{
+              $t(
+                'features.portfolio.sections.about.languages_section.labels.basic',
+              )
+            }}</span>
           </div>
         </div>
       </div>
@@ -68,7 +92,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { KATAKANA_ABOUT } from '@/helpers/constants';
+  import { KATAKANA_ABOUT, KATAKANA_NAME } from '@/helpers/constants';
   import SectionTitle from '../SectionTitle.vue';
   import Planet from '../icons/Planet.vue';
 </script>
@@ -184,6 +208,7 @@
           font-size: 24px;
           font-weight: 500;
           text-align: center;
+          margin-top: 24px;
           text-transform: uppercase;
         }
 

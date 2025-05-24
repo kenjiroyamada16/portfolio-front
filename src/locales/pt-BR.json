@@ -112,6 +112,23 @@
               "middle": "Iniciei minha carreira com um estágio em uma empresa de tecnologia que atendia clientes de diversos segmentos. Logo fui efetivado, tornando-me o mais novo desenvolvedor Mobile da equipe e, com o tempo, desenvolvedor Full Stack. Grande parte da minha experiência profissional foi adquirida nessa empresa, onde participei de projetos de pequeno, médio e grande porte, incluindo iniciativas com alcance internacional. Cada projeto trouxe seus próprios desafios e aprendizados, contribuindo muito para minha evolução técnica e pessoal.",
               "conclusion": "Desde então, tenho buscado constantemente aprimorar minhas habilidades e conhecimentos por meio de novas experiências, novas soluções e, acima de tudo, novos desafios."
             }
+          },
+          "outer_wilds_quote": "Quando criança, eu tinha medo do desconhecido. Agora eu sei que não há mal algum nele. O universo é, e nós também.",
+          "languages_section": {
+            "title": "Idiomas",
+            "labels": {
+              "basic": "Básico",
+              "intermediary": "Intermediário",
+              "advanced": "Avançado",
+              "proficient": "Proficiente",
+              "fluent": "Fluente",
+              "native": "Nativo"
+            },
+            "languages": {
+              "portuguese": "Português",
+              "english": "Inglês",
+              "japanese": "Japonês"
+            }
           }
         },
         "contact": {
