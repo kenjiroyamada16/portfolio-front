@@ -56,6 +56,7 @@
         @on-mouse-enter-education-list="toggleMainScroll(false)"
       />
       <SkillsSection ref="skillsSection" />
+      <AboutSection ref="aboutSection" />
       <ContactSection
         ref="contactSection"
         :social-links="socialLinks"
@@ -182,6 +183,7 @@
   import ProjectsSection from '@/components/sections/ProjectsSection.vue';
   import ContactSection from '@/components/sections/ContactSection.vue';
   import ExperienceSection from '@/components/sections/ExperienceSection.vue';
+  import AboutSection from '@/components/sections/AboutSection.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import {
     GITHUB_URL,
@@ -210,6 +212,7 @@
   const educationSection = ref();
   const contactSection = ref();
   const skillsSection = ref();
+  const aboutSection = ref();
 
   const content = ref();
 
@@ -268,8 +271,15 @@
       navBarHref: '#skills',
     },
     {
-      id: 'contact',
+      id: 'about',
       index: 5,
+      title: t('features.portfolio.sections.about.title'),
+      ref: aboutSection,
+      navBarHref: '#about',
+    },
+    {
+      id: 'contact',
+      index: 6,
       title: t('features.portfolio.sections.contact.title'),
       ref: contactSection,
       navBarHref: '#contact',
@@ -423,7 +433,7 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow: auto;
     background-color: #0d0f12ac;
     backdrop-filter: blur(16px);
     z-index: 20;
