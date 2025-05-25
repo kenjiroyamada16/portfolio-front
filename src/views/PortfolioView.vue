@@ -45,6 +45,18 @@
         ref="projectsSection"
         :social-links="socialLinks"
       />
+      <ExperienceSection
+        @on-mouse-leave-experience-list="toggleMainScroll(true)"
+        @on-mouse-enter-experience-list="toggleMainScroll(false)"
+        ref="experienceSection"
+      />
+      <EducationSection
+        ref="educationSection"
+        @on-mouse-leave-education-list="toggleMainScroll(true)"
+        @on-mouse-enter-education-list="toggleMainScroll(false)"
+      />
+      <SkillsSection ref="skillsSection" />
+      <AboutSection ref="aboutSection" />
       <ContactSection
         ref="contactSection"
         :social-links="socialLinks"
@@ -117,7 +129,7 @@
             :href="section.navBarHref"
             @click.prevent="mobileNavSection(section.index)"
           >
-            {{ section.title }}
+            {{ section.navBarTitle || section.title }}
           </a>
         </li>
       </ul>
@@ -170,6 +182,8 @@
   import IntroSection from '@/components/sections/IntroSection.vue';
   import ProjectsSection from '@/components/sections/ProjectsSection.vue';
   import ContactSection from '@/components/sections/ContactSection.vue';
+  import ExperienceSection from '@/components/sections/ExperienceSection.vue';
+  import AboutSection from '@/components/sections/AboutSection.vue';
   import LocaleSelector from '@/components/LocaleSelector.vue';
   import {
     GITHUB_URL,
@@ -183,15 +197,23 @@
   import { useI18n } from 'vue-i18n';
   import MainNavBar from '@/components/MainNavBar.vue';
   import { useDisplay } from 'vuetify';
+  import SkillsSection from '@/components/sections/SkillsSection.vue';
+  import { debouncer } from '@/helpers/debouncer';
+  import EducationSection from '@/components/sections/EducationSection.vue';
 
   const { t } = useI18n();
-  const { mobile } = useDisplay({ mobileBreakpoint: 600 });
+  const { mobile } = useDisplay({ mobileBreakpoint: 760 });
 
   const currentSectionIndex = ref(0);
 
   const introSection = ref();
   const projectsSection = ref();
+  const experienceSection = ref();
+  const educationSection = ref();
   const contactSection = ref();
+  const skillsSection = ref();
+  const aboutSection = ref();
+
   const content = ref();
 
   const isMobileMenuOpen = ref(false);
@@ -226,8 +248,38 @@
       navBarHref: '#projects',
     },
     {
-      id: 'contact',
+      id: 'experience',
       index: 2,
+      title: t('features.portfolio.sections.experience.title'),
+      ref: experienceSection,
+      navBarHref: '#experience',
+      navBarTitle: t('features.portfolio.sections.experience.navbar_title'),
+    },
+    {
+      id: 'education',
+      index: 3,
+      title: t('features.portfolio.sections.education.title'),
+      ref: educationSection,
+      navBarHref: '#education',
+      navBarTitle: t('features.portfolio.sections.education.title'),
+    },
+    {
+      id: 'skills',
+      index: 4,
+      title: t('features.portfolio.sections.skills.title'),
+      ref: skillsSection,
+      navBarHref: '#skills',
+    },
+    {
+      id: 'about',
+      index: 5,
+      title: t('features.portfolio.sections.about.title'),
+      ref: aboutSection,
+      navBarHref: '#about',
+    },
+    {
+      id: 'contact',
+      index: 6,
       title: t('features.portfolio.sections.contact.title'),
       ref: contactSection,
       navBarHref: '#contact',
@@ -293,6 +345,10 @@
   };
 
   const handleMainScroll = (event: WheelEvent) => {
+    debouncedMainNavigation(event);
+  };
+
+  const handleMainNavigation = (event: WheelEvent) => {
     if (mobile.value) return;
 
     const nextSection = sections.value[currentSectionIndex.value + 1];
@@ -310,6 +366,14 @@
   const mobileNavSection = (sectionIndex: number) => {
     scrollToSection(sectionIndex);
     closeMobileMenu();
+  };
+
+  const toggleMainScroll = (isActive: boolean) => {
+    if (isActive) {
+      window.addEventListener('wheel', handleMainScroll);
+    } else {
+      window.removeEventListener('wheel', handleMainScroll);
+    }
   };
 
   const openMobileMenu = () => (isMobileMenuOpen.value = true);
@@ -331,14 +395,15 @@
     if (nextSection) nextSection.classList.add('present');
   });
 
+  const debouncedMainNavigation = debouncer(handleMainNavigation, 100);
+
   onMounted(() => {
     scrollToSection(sections.value[0].index);
 
     setupInitialAnimations();
 
-    window.addEventListener('wheel', (event: WheelEvent) =>
-      handleMainScroll(event),
-    );
+    window.addEventListener('wheel', handleMainScroll);
+
     content.value.addEventListener(
       'scroll',
       () => (showMobileHeader.value = content.value.scrollTop >= 400),
@@ -351,6 +416,7 @@
     title: string;
     ref: Ref<HTMLElement>;
     navBarHref: string;
+    navBarTitle?: string;
   }
 
   export interface ISocialLink {
@@ -367,7 +433,7 @@
     left: 0;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
+    overflow: auto;
     background-color: #0d0f12ac;
     backdrop-filter: blur(16px);
     z-index: 20;
@@ -641,6 +707,7 @@
         opacity: 0;
         position: fixed;
         left: 50%;
+        transform: translate(-50%, 0);
         justify-content: center;
         align-items: center;
         animation: show-element 1s 3s forwards;

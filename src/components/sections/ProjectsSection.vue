@@ -1,13 +1,12 @@
 <template>
-  <section
-    ref="projectsSection"
-    id="projects"
-  >
-    <SectionTitle :jp-text="KATAKANA_PROJECT">{{
-      t('features.portfolio.sections.projects.title')
-    }}</SectionTitle>
+  <section id="projects">
+    <SectionTitle
+      :key="$i18n.locale"
+      :jp-text="KATAKANA_PROJECT"
+      >{{ $t('features.portfolio.sections.projects.title') }}</SectionTitle
+    >
     <div class="description">
-      <span>{{ t('features.portfolio.sections.projects.description') }}</span>
+      <span>{{ $t('features.portfolio.sections.projects.description') }}</span>
     </div>
     <div class="projects-container">
       <div
@@ -19,10 +18,7 @@
           v-for="project in projectsMock"
           :key="project.id"
         >
-          <ProjectItem
-            @click="openProjectUrl(project.url)"
-            :project="project"
-          />
+          <ProjectItem :project="project" />
         </div>
       </div>
       <div
@@ -47,9 +43,6 @@
   import { KATAKANA_PROJECT } from '@/helpers/constants';
   import { projectsMock } from '@/helpers/projectsMock';
   import { onMounted, ref } from 'vue';
-  import { useI18n } from 'vue-i18n';
-
-  const { t } = useI18n();
 
   const projectsList = ref();
   const projectsListPreviousButton = ref();
@@ -59,10 +52,6 @@
     projectsList.value.scrollIntoView({
       behavior: 'smooth',
     });
-  };
-
-  const openProjectUrl = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const setupProjectsList = () => {
@@ -214,8 +203,21 @@
       }
     }
 
+    @media (width <= 900px) {
+      padding: 16px 100px;
+      justify-content: center;
+
+      .description {
+        width: 100%;
+        font-size: 16px;
+      }
+    }
+
     @media (width <= $desktop-min-width) {
-      padding: 24px;
+      max-height: unset;
+      min-height: unset;
+      height: 100%;
+      padding: 80px 24px;
 
       .projects-container {
         .projects-list {
@@ -228,15 +230,6 @@
           top: 100%;
           transform: translateX(0);
         }
-      }
-    }
-
-    @media (width <= 900px) {
-      padding: 16px;
-
-      .description {
-        width: 100%;
-        font-size: 16px;
       }
     }
   }

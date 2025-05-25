@@ -44,10 +44,9 @@
         line-height: 24px;
         position: absolute;
         box-sizing: content-box;
-        top: 50%;
+        top: -5%;
         z-index: -1;
         left: 50%;
-        transform: translate(-10%, -120%);
         text-transform: uppercase;
         transition: 1s;
       }
@@ -58,13 +57,22 @@
       transition: 0.3s;
     }
 
-    @media (width <= $desktop-min-width) {
+    @media (width <= 800px) {
       span {
         font-size: 32px;
+      }
+    }
+
+    @media (width <= $desktop-min-width) {
+      span {
+        font-size: 28px;
 
         &::before {
-          font-size: 20px;
-          line-height: 20px;
+          font-size: 16px;
+          line-height: 16px;
+          transform: none;
+          left: 45%;
+          top: -5%;
         }
       }
     }

@@ -7,14 +7,24 @@
     "kenji": "Kenji",
     "github": "Github",
     "linkedin": "LinkedIn",
-    "portfolio": "Portfolio"
+    "portfolio": "Portfolio",
+    "playstore": "Play Store",
+    "appstore": "App Store"
+  },
+  "conjunctives": {
+    "and": "and"
+  },
+  "date_time": {
+    "count_years": "{count}_year | {count}_years",
+    "count_months": "{count}_month | {count}_months",
+    "count_days": "{count}_day | {count}_days"
   },
   "features": {
     "portfolio": {
       "technologies": {
         "flutter": "Flutter",
         "rails": "Ruby on Rails",
-        "dart": "dart",
+        "dart": "Dart",
         "vue": "Vue",
         "kotlin": "Kotlin"
       },
@@ -32,7 +42,94 @@
         },
         "projects": {
           "title": "Projects",
-          "description": "Here you can find all the projects I've worked on, whether personal or those done through employment, where I was part of the development team."
+          "description": "Here you can find all the projects I've worked on, whether personal or those done through employment, where I was part of the development team.",
+          "project_item": {
+            "repo_access_label": "Visit the project's repository",
+            "app_access_label": "Access app",
+            "access_site_tip": "Go to site"
+          }
+        },
+        "experience": {
+          "title": "Work Experience",
+          "navbar_title": "Experience",
+          "description": "Discover my professional journey, from the most recent roles to my earliest projects.",
+          "experience_item": {
+            "show_details_label": "Show details",
+            "hide_details_label": "Hide details"
+          }
+        },
+        "education": {
+          "title": "Education",
+          "description": "All my degrees, courses, and certificates!",
+          "tabs": {
+            "formation": "Academic Background",
+            "certificates": "Courses and Certificates"
+          },
+          "status": {
+            "complete": "Completed",
+            "in_progress": "In Progress"
+          }
+        },
+        "skills": {
+          "title": "Technologies",
+          "description": "Languages, frameworks, and tools I use in my day-to-day work.",
+          "used_in_portfolio_label": "This portfolio was built with:",
+          "areas": {
+            "mobile": "Mobile",
+            "backend": "Backend and Database",
+            "frontend": "Frontend",
+            "devops": "DevOps and Development"
+          },
+          "technologies": {
+            "flutter": "Flutter",
+            "rails": "Ruby on Rails",
+            "dart": "Dart",
+            "vue": "Vue.js",
+            "react": "React",
+            "kotlin": "Kotlin",
+            "android": "Android",
+            "mysql": "MySQL",
+            "redis": "Redis",
+            "javascript": "JavaScript",
+            "typescript": "TypeScript",
+            "aws": "AWS",
+            "html": "HTML",
+            "css": "CSS",
+            "scss": "SCSS",
+            "github": "GitHub",
+            "git": "Git",
+            "gitlab": "GitLab",
+            "docker": "Docker",
+            "firebase": "Firebase",
+            "node": "Node.js"
+          }
+        },
+        "about": {
+          "title": "About",
+          "description": {
+            "paragraphs": {
+              "introduction": "Self-taught Mobile and Full Stack Developer, primarily focused on Mobile development. Born and raised in Brazil, my passion for technology began in high school when I had the opportunity to take a supplementary curriculum covering various tech-related topics. During this period, I was introduced to algorithms and several programming languages, such as Java, JavaScript, PHP, and MySQL, as well as frameworks like Vue.js and React Native, among many other subjects related to Software Engineering and Computing — both in technical aspects and project management.",
+              "middle": "I began my career with an internship at a technology company serving clients from various sectors. I was soon hired as the newest Mobile Developer on the team and, over time, became a Full Stack Developer. Most of my professional experience was gained at this company, where I participated in small, medium, and large-scale projects, including initiatives with international reach. Each project brought its own challenges and lessons, greatly contributing to my technical and personal growth.",
+              "conclusion": "Since then, I have been constantly seeking to improve my skills and knowledge through new experiences, new solutions, and, above all, new challenges."
+            }
+          },
+          "outer_wilds_quote": "As a child, I considered such unknowns sinister. Now, though, I understand they bear no ill will. The universe is, and we are.",
+          "languages_section": {
+            "title": "Languages",
+            "labels": {
+              "basic": "Basic",
+              "intermediary": "Intermediate",
+              "advanced": "Advanced",
+              "proficient": "Proficient",
+              "fluent": "Fluent",
+              "native": "Native"
+            },
+            "languages": {
+              "portuguese": "Portuguese",
+              "english": "English",
+              "japanese": "Japanese"
+            }
+          }
         },
         "contact": {
           "title": "Contact",
