@@ -6,7 +6,7 @@
     <MainNavBar
       :sections="sections"
       :current-section-index="currentSectionIndex"
-      @scroll-to-section="scrollToSection"
+      @scroll-to-section="handleSectionClick"
     />
     <div :class="['mobile-menu-button', { hidden: !showMobileHeader }]">
       <v-icon
@@ -29,6 +29,11 @@
           class="social-link"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            triggerEvent(FirebaseEventsNames.socialLink, {
+              [FirebaseEventsParams.socialLink]: socialLink.label,
+            })
+          "
         >
           <component :is="socialLink.icon" />
         </a>
@@ -39,12 +44,8 @@
       <IntroSection
         ref="introSection"
         :is-mobile="mobile"
-        :social-links="socialLinks"
       />
-      <ProjectsSection
-        ref="projectsSection"
-        :social-links="socialLinks"
-      />
+      <ProjectsSection ref="projectsSection" />
       <ExperienceSection
         @on-mouse-leave-experience-list="toggleMainScroll(true)"
         @on-mouse-enter-experience-list="toggleMainScroll(false)"
@@ -94,7 +95,7 @@
         <div
           v-for="section in sections"
           :key="section.ref.value.id"
-          @click="scrollToSection(section.index)"
+          @click="handleSectionClick(section)"
           :class="[
             'navigation-bar',
             { active: currentSectionIndex == section.index },
@@ -151,6 +152,11 @@
           class="social-link"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            triggerEvent(FirebaseEventsNames.socialLink, {
+              [FirebaseEventsParams.socialLink]: socialLink.label,
+            })
+          "
         >
           <component :is="socialLink.icon" />
         </a>
@@ -163,6 +169,7 @@
           :href="GITHUB_REPO_URL"
           target="_blank"
           rel="noopener noreferrer"
+          @click="triggerEvent(FirebaseEventsNames.viewRepository)"
           >{{
             t('features.portfolio.sections.contact.footer.repo_tip.link')
           }}</a
@@ -200,6 +207,11 @@
   import SkillsSection from '@/components/sections/SkillsSection.vue';
   import { debouncer } from '@/helpers/debouncer';
   import EducationSection from '@/components/sections/EducationSection.vue';
+  import {
+    FirebaseEventsNames,
+    FirebaseEventsParams,
+    triggerEvent,
+  } from '@/plugins/firebase';
 
   const { t } = useI18n();
   const { mobile } = useDisplay({ mobileBreakpoint: 760 });
@@ -286,6 +298,14 @@
     },
   ]);
 
+  const handleSectionClick = (newSection: ISection) => {
+    triggerEvent(FirebaseEventsNames.appbarItem, {
+      [FirebaseEventsParams.appbarItem]: newSection.navBarHref,
+    });
+
+    scrollToSection(newSection.index);
+  };
+
   const scrollToSection = (newSectionIndex: number) => {
     const sectionInList = sections.value.find(
       section => section.index == newSectionIndex,
@@ -299,11 +319,12 @@
 
     currentSectionIndex.value = newSectionIndex;
     presentSections();
-    if (section) {
-      section.scrollIntoView({
-        behavior: 'smooth',
-      });
-    }
+
+    if (!section) return;
+
+    section.scrollIntoView({
+      behavior: 'smooth',
+    });
   };
 
   const presentSections = () => {
@@ -530,6 +551,7 @@
       justify-content: center;
       padding: 32px;
       gap: 24px;
+      margin-top: 64px;
 
       .repo-tip {
         display: flex;

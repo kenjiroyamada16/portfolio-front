@@ -35,6 +35,7 @@
           rel="noopener noreferrer"
           class="cv-link"
           download
+          @click="triggerEvent(FirebaseEventsNames.downloadCv)"
           >{{ t('features.portfolio.sections.intro.download_cv') }}</a
         >
       </div>
@@ -53,6 +54,7 @@
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import Planet from '../icons/Planet.vue';
+  import { FirebaseEventsNames, triggerEvent } from '@/plugins/firebase';
 
   const { t } = useI18n();
 

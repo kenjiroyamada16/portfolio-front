@@ -89,6 +89,11 @@
   import { computed, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import TranslatedText from './TranslatedText.vue';
+  import {
+    FirebaseEventsNames,
+    FirebaseEventsParams,
+    triggerEvent,
+  } from '@/plugins/firebase';
 
   const { t } = useI18n();
 
@@ -115,7 +120,15 @@
   });
 
   const toggleExpandable = () => {
-    if (enableDetails.value) isExpanded.value = !isExpanded.value;
+    if (!enableDetails.value) return;
+
+    isExpanded.value = !isExpanded.value;
+
+    if (isExpanded.value) {
+      triggerEvent(FirebaseEventsNames.viewExperience, {
+        [FirebaseEventsParams.experienceName]: props.experience.role['pt-BR'],
+      });
+    }
   };
 
   const emits = defineEmits([

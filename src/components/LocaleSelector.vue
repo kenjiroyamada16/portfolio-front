@@ -31,7 +31,7 @@
         class="item"
         v-for="language in languages"
         :key="language.locale"
-        @click="changeLocale(language.locale)"
+        @click="changeLocale(language)"
       >
         <span class="label">{{ language.label }}</span>
         <span class="description">{{ language.description }}</span>
@@ -41,6 +41,7 @@
 </template>
 
 <script lang="ts" setup>
+  import { FirebaseEventsNames, FirebaseEventsParams, triggerEvent } from '@/plugins/firebase';
   import { computed, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
 
@@ -53,7 +54,7 @@
     disableAnimation?: boolean;
   }>();
 
-  const languages = computed(() => [
+  const languages = computed<Language[]>(() => [
     {
       locale: 'en-US',
       description: t('features.portfolio.locale_select.description.en'),
@@ -69,11 +70,15 @@
     languages.value.find(language => language.locale == locale.value),
   );
 
-  const changeLocale = (newLocale: string) => {
-    if (locale.value == newLocale) return;
+  const changeLocale = (newLanguage: Language) => {
+    if (locale.value == newLanguage.locale) return;
+
+    triggerEvent(FirebaseEventsNames.changeLocale, {
+      [FirebaseEventsParams.locale]: newLanguage.label
+    });
 
     isOpen.value = false;
-    locale.value = newLocale;
+    locale.value = newLanguage.locale;
   };
 
   onMounted(() => {
@@ -83,6 +88,12 @@
       isOpen.value = false;
     });
   });
+
+  interface Language {
+    locale: string;
+    description: string;
+    label: string;
+  }
 </script>
 
 <style lang="scss" scoped>
