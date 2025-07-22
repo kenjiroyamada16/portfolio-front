@@ -19,7 +19,7 @@
           <a
             class="nav-item"
             :href="section.navBarHref"
-            @click.prevent="emits('scrollToSection', section.index)"
+            @click.prevent="emits('scrollToSection', section)"
           >
             {{ section.navBarTitle || section.title }}
           </a>
@@ -39,7 +39,7 @@
   const { t } = useI18n();
 
   const emits = defineEmits<{
-    (e: 'scrollToSection', index: number): void;
+    (e: 'scrollToSection', index: ISection): void;
   }>();
 
   const props = defineProps<{

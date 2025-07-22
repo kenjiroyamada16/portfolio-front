@@ -14,6 +14,12 @@
           target="_blank"
           rel="noopener noreferrer"
           class="repo-access-container"
+          @click="
+            triggerEvent(FirebaseEventsNames.viewProjectRepo, {
+              [FirebaseEventsParams.projectName]: project.title,
+              [FirebaseEventsParams.projectRepoUrl]: project.repoUrl,
+            })
+          "
         >
           <Repository class="repo-icon" />
           <span class="repo-access-label">{{
@@ -31,6 +37,13 @@
               ? undefined
               : project.siteUrl
           "
+          @click="
+            triggerEvent(FirebaseEventsNames.viewProject, {
+              [FirebaseEventsParams.projectName]: project.title,
+              [FirebaseEventsParams.projectUrl]:
+                project.appstoreUrl || project.playstoreUrl || project.siteUrl,
+            })
+          "
         >
           <div
             class="access-links-container"
@@ -42,6 +55,10 @@
               :href="project.playstoreUrl"
               target="_blank"
               rel="noopener noreferrer"
+              @click="triggerEvent(FirebaseEventsNames.viewProject, {
+                [FirebaseEventsParams.projectName]: project.title,
+                [FirebaseEventsParams.projectUrl]: project.playstoreUrl
+              })"
             >
               <v-tooltip :text="$t('names.playstore')">
                 <template v-slot:activator="{ props }">
@@ -55,6 +72,10 @@
               :href="project.appstoreUrl"
               target="_blank"
               rel="noopener noreferrer"
+              @click="triggerEvent(FirebaseEventsNames.viewProject, {
+                [FirebaseEventsParams.projectName]: project.title,
+                [FirebaseEventsParams.projectUrl]: project.appstoreUrl
+              })"
             >
               <v-tooltip :text="$t('names.appstore')">
                 <template v-slot:activator="{ props }">
@@ -70,6 +91,10 @@
               :href="project.siteUrl"
               target="_blank"
               rel="noopener noreferrer"
+              @click="triggerEvent(FirebaseEventsNames.viewProject, {
+                [FirebaseEventsParams.projectName]: project.title,
+                [FirebaseEventsParams.projectUrl]: project.siteUrl
+              })"
             >
               <v-tooltip
                 :text="
@@ -131,6 +156,11 @@
   import NewTab from './icons/NewTab.vue';
   import { useDisplay } from 'vuetify';
   import { getOs, OperatingSystem } from '@/helpers/handleOs';
+  import {
+    FirebaseEventsNames,
+    FirebaseEventsParams,
+    triggerEvent,
+  } from '@/plugins/firebase';
 
   const { mobile } = useDisplay({ mobileBreakpoint: 760 });
 

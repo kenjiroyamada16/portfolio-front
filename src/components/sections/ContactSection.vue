@@ -13,11 +13,13 @@
         <a
           :href="`mailto:${MY_EMAIL}`"
           class="email-contact"
+          @click="triggerEvent(FirebaseEventsNames.mailto)"
           >{{ MY_EMAIL }}</a
         >
         <div
           ref="clipboardButton"
           class="clipboard-button"
+          @click="copyEmailToClipboard"
         >
           <ClipboardCheck
             class="clipboard-checked"
@@ -38,6 +40,11 @@
           class="social-link"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            triggerEvent(FirebaseEventsNames.socialLink, {
+              [FirebaseEventsParams.socialLink]: socialLink.label,
+            })
+          "
         >
           <component :is="socialLink.icon" />
         </a>
@@ -53,6 +60,11 @@
           class="social-link"
           target="_blank"
           rel="noopener noreferrer"
+          @click="
+            triggerEvent(FirebaseEventsNames.socialLink, {
+              [FirebaseEventsParams.socialLink]: socialLink.label,
+            })
+          "
         >
           <component :is="socialLink.icon" />
         </a>
@@ -68,6 +80,7 @@
           :href="GITHUB_REPO_URL"
           target="_blank"
           rel="noopener noreferrer"
+          @click="triggerEvent(FirebaseEventsNames.viewProjectRepo)"
           >{{
             t('features.portfolio.sections.contact.footer.repo_tip.link')
           }}</a
@@ -93,10 +106,33 @@
   import { ISocialLink } from '@/views/PortfolioView.vue';
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import {
+    FirebaseEventsNames,
+    FirebaseEventsParams,
+    triggerEvent,
+  } from '@/plugins/firebase';
 
   const { t } = useI18n();
 
   const snackbarStore = useSnackbarStore();
+
+  const copyEmailToClipboard = () => {
+    if (clipboardShowCheck.value) return;
+
+    triggerEvent(FirebaseEventsNames.copyEmail);
+
+    navigator.clipboard.writeText(MY_EMAIL).then(() => {
+      clipboardShowCheck.value = true;
+
+      snackbarStore.showSnackbar(
+        t('features.portfolio.sections.contact.email_copied_message'),
+      );
+
+      setTimeout(() => {
+        clipboardShowCheck.value = false;
+      }, 3000);
+    });
+  };
 
   const props = defineProps<{
     socialLinks: ISocialLink[];
@@ -104,24 +140,6 @@
 
   const clipboardShowCheck = ref(false);
   const clipboardButton = ref();
-
-  onMounted(() => {
-    clipboardButton.value.addEventListener('click', () => {
-      if (clipboardShowCheck.value) return;
-
-      navigator.clipboard.writeText(MY_EMAIL).then(() => {
-        clipboardShowCheck.value = true;
-
-        snackbarStore.showSnackbar(
-          t('features.portfolio.sections.contact.email_copied_message'),
-        );
-
-        setTimeout(() => {
-          clipboardShowCheck.value = false;
-        }, 3000);
-      });
-    });
-  });
 </script>
 
 <style lang="scss" scoped>
