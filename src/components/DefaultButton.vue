@@ -1,6 +1,6 @@
 <template>
   <div
-    class="button-container"
+    :class="['button-container', { stretch: stretch }]"
     @click="$emit('click')"
   >
     <slot></slot>
@@ -8,17 +8,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineProps, onMounted } from 'vue';
+  import { defineProps } from 'vue';
 
   const props = defineProps<{
     stretch?: boolean;
   }>();
-
-  onMounted(() => {
-    if (props.stretch) {
-      document.querySelector('.button-container')?.classList.add('stretch');
-    }
-  });
 </script>
 
 <style lang="scss" scoped>

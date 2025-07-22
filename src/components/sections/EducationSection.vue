@@ -95,6 +95,11 @@
               target="_blank"
               rel="noopener noreferrer"
               class="certificate-item"
+              @click="
+                triggerEvent(FirebaseEventsNames.viewCertificate, {
+                  [FirebaseEventsParams.certificateUrl]: certificate.url,
+                })
+              "
             >
               <div class="certificate-info">
                 <Certificate class="certificate-icon" />
@@ -131,6 +136,11 @@
   import { formatSimpleDate } from '@/helpers/stringExtensions';
   import TranslatedText from '../TranslatedText.vue';
   import Certificate from '../icons/Certificate.vue';
+  import {
+    FirebaseEventsNames,
+    FirebaseEventsParams,
+    triggerEvent,
+  } from '@/plugins/firebase';
 
   const currentCategory = ref(0);
 
@@ -334,6 +344,20 @@
         height: 4px;
         border-radius: 100%;
         background-color: $primary-color;
+      }
+    }
+
+    @media (min-width: $desktop-min-width) {
+      .container {
+        .formations-list:hover {
+          cursor: ns-resize;
+          background-color: #0a0b0b;
+        }
+
+        .certificates-list:hover {
+          cursor: ns-resize;
+          background-color: #0a0b0b;
+        }
       }
     }
 
