@@ -55,7 +55,8 @@
           "description": "Conheça minha trajetória profissional, da atuação mais recente aos primeiros projetos.",
           "experience_item": {
             "show_details_label": "Mostrar detalhes",
-            "hide_details_label": "Esconder detalhes"
+            "hide_details_label": "Esconder detalhes",
+            "until_now_label": "Presente"
           }
         },
         "education": {

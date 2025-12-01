@@ -49,12 +49,16 @@
       <ExperienceSection
         @on-mouse-leave-experience-list="toggleMainScroll(true)"
         @on-mouse-enter-experience-list="toggleMainScroll(false)"
+        @scroll-next-section="goToNextSection"
+        @scroll-previous-section="goToPreviousSection"
         ref="experienceSection"
       />
       <EducationSection
         ref="educationSection"
         @on-mouse-leave-education-list="toggleMainScroll(true)"
         @on-mouse-enter-education-list="toggleMainScroll(false)"
+        @scroll-next-section="goToNextSection"
+        @scroll-previous-section="goToPreviousSection"
       />
       <SkillsSection ref="skillsSection" />
       <AboutSection ref="aboutSection" />
@@ -298,6 +302,26 @@
     },
   ]);
 
+  const goToNextSection = () => {
+    if (mobile.value) return;
+
+    const nextSection = sections.value[currentSectionIndex.value + 1];
+
+    if (nextSection?.ref.value) {
+      scrollToSection(nextSection.index);
+    }
+  };
+
+  const goToPreviousSection = () => {
+    if (mobile.value) return;
+
+    const previousSection = sections.value[currentSectionIndex.value - 1];
+
+    if (previousSection?.ref.value) {
+      scrollToSection(previousSection.index);
+    }
+  };
+
   const handleSectionClick = (newSection: ISection) => {
     triggerEvent(FirebaseEventsNames.appbarItem, {
       [FirebaseEventsParams.appbarItem]: newSection.navBarHref,
@@ -372,15 +396,12 @@
   const handleMainNavigation = (event: WheelEvent) => {
     if (mobile.value) return;
 
-    const nextSection = sections.value[currentSectionIndex.value + 1];
-    const previousSection = sections.value[currentSectionIndex.value - 1];
-
-    if (event.deltaY > 0 && nextSection?.ref.value) {
-      return scrollToSection(nextSection.index);
+    if (event.deltaY > 0) {
+      return goToNextSection();
     }
 
-    if (event.deltaY < 0 && previousSection?.ref.value) {
-      scrollToSection(previousSection.index);
+    if (event.deltaY < 0) {
+      goToPreviousSection();
     }
   };
 

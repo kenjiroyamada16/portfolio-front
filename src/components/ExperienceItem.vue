@@ -8,10 +8,16 @@
       <div class="experience-date">
         <span>{{ formatSimpleDate(experience.startDate) }}</span>
         <div class="dates-separator"></div>
-        <span>{{ formatSimpleDate(experience.finishDate) }}</span>
+        <span>{{
+          experience.finishDate
+            ? formatSimpleDate(experience.finishDate)
+            : $t(
+                'features.portfolio.sections.experience.experience_item.until_now_label',
+              )
+        }}</span>
       </div>
       <span class="time-spent">{{
-        getTimeBetweenDates(experience.startDate, experience.finishDate)
+        getPeriodTitle(experience.startDate, experience.finishDate)
       }}</span>
     </div>
     <div class="timeline">
@@ -136,12 +142,11 @@
     'onMouseLeaveExperienceList',
   ]);
 
-  const getTimeBetweenDates = (
-    startDate: string,
-    finishDate: string,
-  ): string => {
-    const differenceInMilliseconds =
-      Date.parse(finishDate) - Date.parse(startDate);
+  const getPeriodTitle = (startDate: string, finishDate?: string): string => {
+    const parsedStartDate = Date.parse(startDate);
+    const parsedFinishDate = finishDate ? Date.parse(finishDate) : Date.now();
+
+    const differenceInMilliseconds = parsedFinishDate - parsedStartDate;
     let differenceInDays = Math.round(
       differenceInMilliseconds / (1000 * 60 * 60 * 24),
     );

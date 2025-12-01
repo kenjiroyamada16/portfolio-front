@@ -1,5 +1,6 @@
 import { IExperience } from '@/interfaces/api/experience';
 import jeraBanner from '@/assets/images/jera_banner.jpg';
+import granBanner from '@/assets/images/gran_banner.png';
 
 export const experiencesMock: IExperience[] = [
   {
@@ -82,7 +83,6 @@ export const experiencesMock: IExperience[] = [
       'Product Flavors',
     ],
   },
-
   {
     id: 3,
     company: 'Jera',
@@ -109,6 +109,32 @@ export const experiencesMock: IExperience[] = [
       'Typescript',
       'SASS',
       'GitLab CI',
+    ],
+  },
+  {
+    id: 4,
+    company: 'GRAN',
+    role: {
+      'pt-BR': 'Desenvolvedor Mobile - Flutter',
+      'en-US': 'Mobile Developer - Flutter',
+    },
+    bannerUrl: granBanner,
+    description: {
+      'pt-BR':
+        'Atuo no desenvolvimento e manutenção de uma das principais aplicações da empresa, reestruturando funcionalidades legado e implementando novas funcionalidades para o aplicativo mobile com Flutter e Dart, utilizando arquitetura MVC com Clean Architecture e DDD (Domain-Driven Design), implementação de dados em cache com Hive DB, utilização de Design System, gerenciamento de estado e injeção de dependências com GetX e uso de Isolates para processamento pesado de dados em background de forma otimizada.',
+      'en-US':
+        "Currently working on the development and maintenance of one of the company's main applications by restructuring legacy features and implementing new functionality for the mobile app with Flutter and Dart, using an MVC architecture with Clean Architecture and DDD (Domain-Driven Design), implementing data caching with Hive DB, using a Design System, state management and dependency injection with GetX, and leveraging Isolates for optimized heavy data processing in the background.",
+    },
+    startDate: '2025-09',
+    skills: [
+      'Flutter',
+      'Dart',
+      'Flutter Isolates',
+      'Hive DB',
+      'GetX',
+      'MVC',
+      'BLoC',
+      'SQLite',
     ],
   },
 ];
