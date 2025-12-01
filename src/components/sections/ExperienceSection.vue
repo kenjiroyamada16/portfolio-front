@@ -9,7 +9,11 @@
       $t('features.portfolio.sections.experience.description')
     }}</span>
     <div class="container">
-      <div class="experiences-list">
+      <div
+        ref="experiencesList"
+        class="experiences-list"
+        @wheel="handleWheel"
+      >
         <ExperienceItem
           v-for="experience in sortedExperiences"
           :key="experience.id"
@@ -23,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import SectionTitle from '../SectionTitle.vue';
   import { KATAKANA_WORK_EXPERIENCE } from '@/helpers/constants';
   import { experiencesMock } from '@/helpers/experienceMock';
@@ -32,13 +36,37 @@
   const emits = defineEmits([
     'onMouseEnterExperienceList',
     'onMouseLeaveExperienceList',
+    'scrollNextSection',
+    'scrollPreviousSection',
   ]);
+
+  const experiencesList = ref<HTMLElement | null>(null);
 
   const sortedExperiences = computed(() => {
     return experiencesMock.sort((a, b) => {
       return Date.parse(b.startDate) - Date.parse(a.startDate);
     });
   });
+
+  const handleWheel = (event: WheelEvent) => {
+    const element = experiencesList.value;
+
+    if (!element) return;
+
+    const deltaY = event.deltaY;
+
+    if (deltaY === 0) return;
+
+    const atTop = element.scrollTop <= 0;
+    const atBottom =
+      element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+
+    if (deltaY > 0 && atBottom) {
+      emits('scrollNextSection');
+    } else if (deltaY < 0 && atTop) {
+      emits('scrollPreviousSection');
+    }
+  };
 </script>
 
 <style lang="scss" scoped>

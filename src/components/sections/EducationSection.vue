@@ -26,6 +26,7 @@
             class="formations-list"
             @mouseenter="emits('onMouseEnterEducationList')"
             @mouseleave="emits('onMouseLeaveEducationList')"
+            @wheel="handleWheel"
           >
             <div
               v-for="formation in formations"
@@ -87,6 +88,7 @@
             class="certificates-list"
             @mouseenter="emits('onMouseEnterEducationList')"
             @mouseleave="emits('onMouseLeaveEducationList')"
+            @wheel="handleWheel"
           >
             <a
               v-for="certificate in certificates"
@@ -169,7 +171,29 @@
   const emits = defineEmits([
     'onMouseEnterEducationList',
     'onMouseLeaveEducationList',
+    'scrollNextSection',
+    'scrollPreviousSection',
   ]);
+
+  const handleWheel = (event: WheelEvent) => {
+    const element = event.currentTarget as HTMLElement | null;
+
+    if (!element) return;
+
+    const deltaY = event.deltaY;
+
+    if (deltaY === 0) return;
+
+    const atTop = element.scrollTop <= 0;
+    const atBottom =
+      element.scrollTop + element.clientHeight >= element.scrollHeight - 1;
+
+    if (deltaY > 0 && atBottom) {
+      emits('scrollNextSection');
+    } else if (deltaY < 0 && atTop) {
+      emits('scrollPreviousSection');
+    }
+  };
 </script>
 
 <style lang="scss" scoped>

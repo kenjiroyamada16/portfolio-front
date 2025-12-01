@@ -4,7 +4,7 @@ export interface IExperience {
   role: Record<string, string>;
   bannerUrl: string;
   startDate: string;
-  finishDate: string;
+  finishDate?: string;
   description: Record<string, string>;
   skills: string[];
 }

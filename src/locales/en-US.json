@@ -55,7 +55,8 @@
           "description": "Discover my professional journey, from the most recent roles to my earliest projects.",
           "experience_item": {
             "show_details_label": "Show details",
-            "hide_details_label": "Hide details"
+            "hide_details_label": "Hide details",
+            "until_now_label": "Present"
           }
         },
         "education": {
