@@ -147,11 +147,11 @@
     const parsedFinishDate = finishDate ? Date.parse(finishDate) : Date.now();
 
     const differenceInMilliseconds = parsedFinishDate - parsedStartDate;
-    let differenceInDays = Math.round(
+    let differenceInDays = Math.floor(
       differenceInMilliseconds / (1000 * 60 * 60 * 24),
     );
-    let differenceInMonths = Math.round(differenceInDays / 30);
-    const differenceInYears = Math.round(differenceInMonths / 12);
+    let differenceInMonths = Math.floor(differenceInDays / 30);
+    const differenceInYears = Math.floor(differenceInMonths / 12);
 
     let initialText = '';
 
@@ -160,7 +160,11 @@
       differenceInYears != Infinity &&
       differenceInYears >= 1
     ) {
-      initialText += `${t('date_time.count_years', differenceInYears)} `;
+      initialText += `${t('date_time.count_years', differenceInYears).replace(' ', '_')} `;
+    }
+
+    if (differenceInYears >= 1) {
+      differenceInMonths = differenceInMonths - 12 * differenceInYears;
     }
 
     if (
@@ -168,11 +172,7 @@
       differenceInMonths != Infinity &&
       differenceInMonths >= 1
     ) {
-      if (differenceInYears >= 1) {
-        differenceInMonths = differenceInMonths - 12 * differenceInYears;
-      }
-
-      initialText += `${t('date_time.count_months', differenceInMonths)} `;
+      initialText += `${t('date_time.count_months', differenceInMonths).replace(' ', '_')} `;
     }
 
     let displayText = '';

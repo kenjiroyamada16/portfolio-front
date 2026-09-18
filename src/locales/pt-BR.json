@@ -15,9 +15,9 @@
     "and": "e"
   },
   "date_time": {
-    "count_years": "{count}_ano | {count}_anos",
-    "count_months": "{count}_mês | {count}_meses",
-    "count_days": "{count}_dia | {count}_dias"
+    "count_years": "{count} ano | {count} anos",
+    "count_months": "{count} mês | {count} meses",
+    "count_days": "{count} dia | {count} dias"
   },
   "features": {
     "portfolio": {
@@ -45,7 +45,7 @@
           "description": "Aqui você encontra todos os projetos em que já trabalhei, sejam pessoais ou aqueles realizados com vínculo empregatício, nos quais atuei no time de desenvolvimento.",
           "project_item": {
             "repo_access_label": "Visite o repositório do projeto",
-            "app_access_label": "Accessar o aplicativo",
+            "app_access_label": "Acessar o aplicativo",
             "access_site_tip": "Ir para o site"
           }
         },
