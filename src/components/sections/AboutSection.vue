@@ -70,21 +70,6 @@
               )
             }}</span>
           </div>
-          <div class="language-item">
-            <span class="label">{{
-              $t(
-                'features.portfolio.sections.about.languages_section.languages.japanese',
-              )
-            }}</span>
-            <div class="progress-bar-container">
-              <div class="progress-bar basic"></div>
-            </div>
-            <span class="level">{{
-              $t(
-                'features.portfolio.sections.about.languages_section.labels.basic',
-              )
-            }}</span>
-          </div>
         </div>
       </div>
     </div>

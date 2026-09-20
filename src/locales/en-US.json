@@ -15,9 +15,9 @@
     "and": "and"
   },
   "date_time": {
-    "count_years": "{count}_year | {count}_years",
-    "count_months": "{count}_month | {count}_months",
-    "count_days": "{count}_day | {count}_days"
+    "count_years": "{count} year | {count} years",
+    "count_months": "{count} month | {count} months",
+    "count_days": "{count} day | {count} days"
   },
   "features": {
     "portfolio": {

@@ -1,4 +1,5 @@
 import { IExperience } from '@/interfaces/api/experience';
+
 import jeraBanner from '@/assets/images/jera_banner.jpg';
 import granBanner from '@/assets/images/gran_banner.png';
 
@@ -13,40 +14,26 @@ export const experiencesMock: IExperience[] = [
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':
-        'Desenvolvimento multiplataformas (Android e iOS) utilizando Flutter. MVVM/MVVM-C como architecture pattern; Consumo de APIs RESTful com Dio; Implementação de serviços do Firebase como: Messaging, Remote Config, Firebase Events, Crashlytics, Analytics e App Distribution; Comunicação com código nativo (Kotlin e Swift) por meio de Method Channels e Platform Views; Permanência de dados do usuário por meio do Shared Preferencese, SQFlite e armazenamento de sessão com Flutter Secure Storage; Navegação e tratamento de Deeplinks feitos com GoRouter; Injeção de dependências por meio do Service Locator e a biblioteca GetIt; Animações dinâmicas com a biblioteca do Lottie para Flutter; Implementação do Spotify SDK para personalização da experiência do usuário; Integração de WebViews na aplicação para visualização de sites externos e implementação de Javascript Channels para comunicação entre a WebView e o código Flutter; OAuth com bibliotecas para a realização de login com redes como Google e Facebook; Publicação para as lojas de aplicativo, Play Store e App Store; Automação para publicação e atualização do aplicativo na App Store com Bitrise e recursos personalizados de geolocalização com o Google Maps SDK para Flutter.',
+        'Desenvolvimento e manutenção de aplicações mobile multiplataforma para Android e iOS, incluindo os aplicativos oficiais de eventos como Lollapalooza Brasil, Rock in Rio e The Town. Atuação em arquitetura MVVM/MVVM-C, integração com código nativo Kotlin/Swift via Method Channels, persistência local, serviços Firebase, Google Maps e automação de CI/CD com Bitrise, além da publicação dos aplicativos na App Store e Play Store.',
       'en-US':
-        'Cross-platform development (Android and iOS) using Flutter. MVVM/MVVM-C as the architecture pattern; Consumption of RESTful APIs with Dio; Implementation of Firebase services such as: Messaging, Remote Config, Firebase Events, Crashlytics, Analytics, and App Distribution; Communication with native code (Kotlin and Swift) via Method Channels and Platform Views; User data persistence through Shared Preferences, SQFlite, and session storage with Flutter Secure Storage; Navigation and Deeplink handling using GoRouter; Dependency injection via Service Locator and the GetIt library; Dynamic animations using the Lottie library for Flutter; Implementation of the Spotify SDK to personalize the user experience; Integration of WebViews in the application for external website viewing and implementation of Javascript Channels for communication between the WebView and Flutter code; OAuth with libraries for login using networks such as Google and Facebook; Publishing to app stores, Play Store and App Store; Automation for publishing and updating the app on the App Store using Bitrise, and custom geolocation features with the Google Maps SDK for Flutter.',
+        'Development and maintenance of cross-platform mobile applications for Android and iOS, including official apps for events such as Lollapalooza Brasil, Rock in Rio, and The Town. Experience with MVVM/MVVM-C architecture, Kotlin/Swift native integrations through Method Channels, local persistence, Firebase services, Google Maps, and CI/CD automation with Bitrise, as well as app releases on the App Store and Google Play.',
     },
     startDate: '2022-11',
     finishDate: '2025-04',
     skills: [
       'Flutter',
       'Dart',
-      'Dio',
-      'MVVM',
       'MVVM-C',
       'Native Bridge',
-      'Platform Channels',
       'Method Channels',
       'Firebase',
-      'Deeplinks',
-      'Shared Preferences',
-      'Flutter Secure Storage',
-      'SQFlite / SQLite',
-      'Google Maps SDK',
-      'WebView',
-      'Service Locator',
-      'Product Flavors',
-      'Unit Testing',
-      'Bitrise',
-      'Lottie',
       'GoRouter',
-      'Spotify SDK',
-      'OAuth',
-      'Change Notifier',
+      'SQFlite',
+      'Google Maps SDK',
+      'Bitrise',
+      'Product Flavors',
     ],
   },
-
   {
     id: 2,
     company: 'Jera',
@@ -57,30 +44,23 @@ export const experiencesMock: IExperience[] = [
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':
-        'Desenvolvimento Android utilizando Kotlin: Injeção de dependências com Koin e Hilt, Room Database, consumo de RESTful APIs com Retrofit, Android Jetpack, Coroutines, Flows, Jetpack Compose, Configuração do Gradle e Android SDK. Além de aplicação de arquiteturas como MVVM e deploy da aplicação na Play Store.',
+        'Desenvolvimento de aplicações Android nativas utilizando Kotlin e arquitetura MVVM, com implementação de interfaces em Jetpack Compose, consumo de APIs REST, persistência local e processamento assíncrono. Experiência com injeção de dependências utilizando Koin e Hilt, Room Database, Retrofit, Coroutines e Flow, além da publicação de releases na Google Play Store.',
       'en-US':
-        'Android development using Kotlin: Dependency injection with Koin and Hilt, Room Database, consumption of RESTful APIs with Retrofit, Android Jetpack, Coroutines, Flows, Jetpack Compose, Gradle and Android SDK configuration. Additionally, application of architectures such as MVVM and deployment to the Play Store.',
+        'Development of native Android applications using Kotlin and MVVM architecture, with reactive interfaces built with Jetpack Compose, REST API integration, local persistence, and asynchronous processing. Experience with dependency injection using Koin and Hilt, Room Database, Retrofit, Coroutines, and Flow, as well as publishing releases to the Google Play Store.',
     },
     startDate: '2021-07',
     finishDate: '2022-11',
     skills: [
       'Android',
       'Kotlin',
-      'Room',
-      'Android Jetpack',
-      'Android SDK',
-      'MVVM',
+      'Jetpack Compose',
       'Coroutines',
       'Flow',
-      'Proguard R8',
-      'Koin',
       'Hilt',
-      'Dagger',
-      'SQLite',
+      'Koin',
+      'Room',
       'Retrofit',
-      'Gson',
-      'SharedPreferences',
-      'Product Flavors',
+      'MVVM',
     ],
   },
   {
@@ -93,22 +73,19 @@ export const experiencesMock: IExperience[] = [
     bannerUrl: jeraBanner,
     description: {
       'pt-BR':
-        'Desenvolvimento Full Stack paralelo ao Desenvolvimento Mobile com Flutter (realizei os dois ao mesmo tempo). Criação de interfaces utilizando Vue.js com Typescript e desenvolvimento de APIs RESTful com Ruby on Rails; Deploy de aplicações na AWS (S3 e EC2) utilizando Gitlab CI; Desenvolvimento e deploy na AWS de API interna para mensagens automatizadas via Whatsapp, consumindo a Evolution API;',
+        'Atuação Full Stack em paralelo ao desenvolvimento mobile, ampliando minha experiência para aplicações web, APIs e infraestrutura. Desenvolvimento de interfaces web com Vue.js e TypeScript e APIs RESTful com Ruby on Rails, além da configuração e deploy de aplicações na AWS utilizando GitLab CI. Também desenvolvi uma API interna para automação de mensagens via WhatsApp utilizando a Evolution API, cobrindo desde a implementação do serviço até sua disponibilização em ambiente de produção.',
       'en-US':
-        'Full Stack development in parallel with Mobile Development using Flutter (I worked on both simultaneously). UI development using Vue.js with TypeScript and RESTful API development with Ruby on Rails; Application deployment on AWS (S3 and EC2) using GitLab CI; Development and deployment on AWS of an internal API for automated WhatsApp messaging, consuming the Evolution API.',
+        'Full Stack development alongside my mobile work, expanding my experience into web applications, APIs, and infrastructure. Built web interfaces with Vue.js and TypeScript and RESTful APIs with Ruby on Rails, while configuring and deploying applications on AWS using GitLab CI. I also developed an internal API for WhatsApp messaging automation using Evolution API, covering the service implementation through its deployment to production.',
     },
     startDate: '2024-11',
     finishDate: '2025-04',
     skills: [
       'Vue.js',
+      'TypeScript',
       'Ruby on Rails',
-      'AWS',
-      'HTML',
-      'CSS',
-      'Javascript',
-      'Typescript',
-      'SASS',
+      'AWS (S3/EC2)',
       'GitLab CI',
+      'REST APIs',
     ],
   },
   {
@@ -121,20 +98,19 @@ export const experiencesMock: IExperience[] = [
     bannerUrl: granBanner,
     description: {
       'pt-BR':
-        'Atuo no desenvolvimento e manutenção de uma das principais aplicações da empresa, reestruturando funcionalidades legado e implementando novas funcionalidades para o aplicativo mobile com Flutter e Dart, utilizando arquitetura MVC com Clean Architecture e DDD (Domain-Driven Design), implementação de dados em cache com Hive DB, utilização de Design System, gerenciamento de estado e injeção de dependências com GetX e uso de Isolates para processamento pesado de dados em background de forma otimizada.',
+        'Desenvolvimento e evolução da aplicação mobile principal da empresa, atuando na refatoração de código legado e implementação de novas funcionalidades com Flutter e Dart. Aplicação de princípios de Clean Architecture e DDD, gerenciamento de estado e injeção de dependências com GetX, cache local com Hive DB e processamento de tarefas intensivas em background utilizando Flutter Isolates.',
       'en-US':
-        "Currently working on the development and maintenance of one of the company's main applications by restructuring legacy features and implementing new functionality for the mobile app with Flutter and Dart, using an MVC architecture with Clean Architecture and DDD (Domain-Driven Design), implementing data caching with Hive DB, using a Design System, state management and dependency injection with GetX, and leveraging Isolates for optimized heavy data processing in the background.",
+        "Development and evolution of the company's primary mobile application, contributing to legacy code refactoring and the implementation of new features with Flutter and Dart. Applying Clean Architecture and DDD principles, managing state and dependency injection with GetX, implementing local caching with Hive DB, and processing intensive background tasks using Flutter Isolates.",
     },
     startDate: '2025-09',
     skills: [
       'Flutter',
       'Dart',
-      'Flutter Isolates',
-      'Hive DB',
+      'Clean Architecture',
+      'DDD',
       'GetX',
-      'MVC',
-      'BLoC',
-      'SQLite',
+      'Hive DB',
+      'Flutter Isolates',
     ],
   },
 ];
