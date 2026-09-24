@@ -124,10 +124,10 @@
     },
     {
       id: 4,
-      name: t('features.portfolio.sections.skills.technologies.android'),
+      name: t('features.portfolio.sections.skills.technologies.jetpack'),
       stack: t('features.portfolio.sections.skills.areas.mobile'),
       icon: defineAsyncComponent(
-        () => import('/src/components/icons/skills/AndroidLogo.vue'),
+        () => import('/src/components/icons/skills/JetpackLogo.vue'),
       ),
     },
     {
@@ -274,6 +274,14 @@
       stack: t('features.portfolio.sections.skills.areas.backend'),
       icon: defineAsyncComponent(
         () => import('/src/components/icons/skills/NodeLogo.vue'),
+      ),
+    },
+    {
+      id: 21,
+      name: t('features.portfolio.sections.skills.technologies.swift'),
+      stack: t('features.portfolio.sections.skills.areas.mobile'),
+      icon: defineAsyncComponent(
+        () => import('/src/components/icons/skills/SwiftLogo.vue'),
       ),
     },
   ]);
