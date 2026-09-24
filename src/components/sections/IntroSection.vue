@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts" setup>
-  import cvFile from '@/assets/files/Curriculo_Nicolas.pdf';
+  import cvFile from '@/assets/files/Curriculo_Nicolas_Yamada.pdf';
   import ScrollTip from '@/components/icons/ScrollTip.vue';
   import TechnologiesList from '../TechnologiesList.vue';
   import { sortLettersAnimation } from '@/helpers/sortLettersAnimation';
